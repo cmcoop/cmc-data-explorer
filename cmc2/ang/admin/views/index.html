@@ -1,0 +1,94 @@
+﻿<div ng-controller="indexController" ng-init="initialize()">
+    <div class="container">
+        <h2>Chesapeake Data Explorer</h2>
+        <div class="row">
+            <div class="col-sm-6">
+                <h4>{{subTitle}}</h4>
+                <!--<p ng-show="SamplesNotVerified.length > 0"class="bright">You uploaded {{SamplesNotVerified.length}} samples that are not yet verified.</p>
+                <p ng-show="SamplesNotPublished.length > 0" class="bright">You uploaded {{SamplesNotPublished.length}} samples that are not yet published.</p>-->
+            </div>
+            <div class="col-sm-6">
+                <h4>Quick Links:</h4>
+                <!-- Large button group -->
+                <div class="quickLinksBtn">
+                    <a href="/Admin/#/samplesAdmin/add" class="btn btn-warning btn-lg btn-block">
+                        Upload Data
+                    </a>
+                </div>
+                <div class="quickLinksBtn">
+                    <a href="/Admin/#/stationsSubmit/add" class="btn btn-warning btn-lg btn-block">
+                        Submit Station
+                    </a>
+                </div>
+                <div class="quickLinksBtn">
+                    <a href="{{'mailto:' + cmcAdminEmail}}" target="_top" class="btn btn-warning btn-lg btn-block">
+                        Contact CMC Service Provider
+                    </a>
+                </div>
+                <!--<div class="quickLinksBtn">s
+                    <a href="#" class="btn btn-warning btn-lg btn-block">
+                        Volunteer Hours
+                    </a>
+                </div>-->
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <h4>{{userGroup}}'s Activity this month</h4>
+                <div class="media">
+                    <div class="media-left" href="#">
+                        <i class="fa fa-users fa-4x fa-fw bright" aria-hidden="true"></i>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading">{{usersInGroup.length}}</h2>
+                        <span class="loginBadgeDesc">NEW USERS</span>
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media-left" href="#">
+                        <i class="fa fa-database fa-4x fa-fw bright" aria-hidden="true"></i>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading">{{newSamples.length}}</h2>
+                        <span class="loginBadgeDesc">NEW SAMPLES</span>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="col-md-3">
+                <div class="media">
+                    <div class="media-left" href="#">
+                        <i class="fa fa-list fa-4x fa-fw badgeBright" aria-hidden="true"></i>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading ">431</h2>
+                        <span class="loginBadgeDesc">BENTHIC-MACRO RECORDS</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="media">
+                    <div class="media-left" href="#">
+                        <i class="fa fa-tint fa-4x fa-fw badgeSuccess" aria-hidden="true"></i>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading ">113</h2>
+                        <span class="loginBadgeDesc">RIVERS/STREAMS</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="media">
+                    <div class="media-left" href="#">
+                        <i class="fa fa-star fa-4x fa-fw badgeSuccess" aria-hidden="true"></i>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading">573</h2>
+                        <span class="loginBadgeDesc">STATIONS</span>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+    </div>
+</div>

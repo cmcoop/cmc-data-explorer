@@ -1,0 +1,116 @@
+﻿<div  ng-init="initialize()" ng-show="groupsLoaded">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-responsive" >
+                <caption>
+                    <span class="col-md-3">Groups</span>                    
+                    
+                    <div class="col-md-2">
+                        <a class="btn btn-success" 
+                           ng-click="toggleGroupName()">
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{ showGroup == true ? 'Show All Groups' : 'Show My Group' }}
+                        </a>
+                    </div>    
+                    <div class="col-md-2" ng-hide="isMonitorOrCoordinator">
+                        <a class="btn btn-success" data-toggle="modal" data-backdrop="static" data-keyboard="false" 
+                           ng-click="addGroupBtnClick()" data-target="#addGroupModal">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Group
+                        </a>
+                    </div>    
+                    <div class="col-md-2">
+                        <a class="btn btn-success" ng-csv="groups" csv-header="headers" filename="cmcGroups.csv">
+                            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Download Groups
+                        </a>
+                    </div>    
+                </caption>
+                <thead>
+                    <tr>
+                        <th> 
+                            <div ng-click="sort('Name')">
+                                Name
+                                <span class="glyphicon sort-icon" ng-show="sortKeyName=='Name'"
+                                      ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                            </div>
+                            <div class="input-group">
+                                <input class="form-control" ng-model="search.Name" placeholder="Filter Name" />
+                            </div>
+                            
+                        </th>
+                        <th >
+                            <div ng-click="sort('Description')">
+                                Description
+                                <span class="glyphicon sort-icon" ng-show="sortKeyName=='Description'"
+                                      ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                            </div>
+                            <div class="input-group">
+                                <input class="form-control" ng-model="search.Description" placeholder="Filter Description" />
+                            </div>
+                            
+                        </th>
+                        <th >
+                            <div ng-click="sort('ContactEmail')">
+                                Email
+                                <span class="glyphicon sort-icon" ng-show="sortKeyName=='ContactEmail'"
+                                      ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                            </div>
+                            <div class="input-group">
+                                <input class="form-control" ng-model="search.ContactEmail" placeholder="Filter Email" />
+                            </div>
+                            
+                        </th>
+                        <th >
+                            <div ng-click="sort('cmcMembersConcat')">
+                                Cmc Members
+                                <span class="glyphicon sort-icon" ng-show="sortKeyName=='cmcMembersConcat'"
+                                      ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                            </div>
+                            <div class="input-group">
+                                <div>
+                                    <selectpicker data-array="tableCmcMemberList" data-model="search.cmcMembersConcat"></selectpicker>
+                                </div>
+                            </div>
+                        </th>
+
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr pagination-id="paginateGroups" dir-paginate="grp in groups | orderBy:sortKey:reverse | filter:search | itemsPerPage:10">
+                        <td>{{grp.Name}}</td>
+                        <td>{{grp.Description}}</td>
+                        <td>{{grp.ContactEmail}}</td>
+                        <td>{{grp.cmcMembersConcat}}</td>
+                        <td>
+                            <button type="button" class="btn btn-success" data-backdrop="static" data-keyboard="false" 
+                                    ng-click="setGroup(grp)" data-toggle="modal" data-target="#editGroupModal"
+                                    ng-hide="isMonitorOrCoordinator && grp.Id!=userGroupId">
+                                <span class="glyphicon glyphicon-th-list" aria-hidden="true" ></span> View Details / Edit
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls pagination-id="paginateGroups" max-size="5"
+                                     direction-links="true"
+                                     boundary-links="true">
+            </dir-pagination-controls>
+        </div>
+        <div class="modal" id="addGroupModal" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div ui-view="add"></div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        
+        <div class="modal" id="editGroupModal" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div ui-view="edit"></div>
+                </div>
+            </div>
+        </div><!-- /.modal -->
+    </div>
+    
+</div>

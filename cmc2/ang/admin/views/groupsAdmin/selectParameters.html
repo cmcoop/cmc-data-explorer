@@ -1,0 +1,109 @@
+﻿<div class="row col-md-12">
+    <span class="col-md-3">Parameters</span>
+    <div class="col-md-offset-1 col-md-8">
+        <div class="input-group">
+            <span class="input-group-addon">Filter</span>
+            <input id="search" class="filterTable form-control" ng-model="searchParameters" type="text" placeholder="Search Parameters...">
+        </div>
+    </div>
+</div>
+<div class="col-xs-12 verticalSpace20"></div>
+<div class="row col-md-12">
+    <table class="table table-responsive col-md-12" style="min-width:500px">
+        <thead>
+            <tr>
+                <th ng-click="sortParameter('Name')">
+                    Name
+                    <span class="glyphicon sort-icon" ng-show="parameterSortKeyName=='Name'"
+                          ng-class="{'glyphicon-chevron-up':!parameterReverse,'glyphicon-chevron-down':parameterReverse}"></span>
+                </th>
+                <th ng-click="sortParameter('Code')">
+                    Code
+                    <span class="glyphicon sort-icon" ng-show="parameterSortKeyName=='Code'"
+                          ng-class="{'glyphicon-chevron-up':!parameterReverse,'glyphicon-chevron-down':parameterReverse}"></span>
+                </th>
+                <th ng-click="sortParameter('Units')">
+                    Units
+                    <span class="glyphicon sort-icon" ng-show="parameterSortKeyName=='Equipment'"
+                          ng-class="{'glyphicon-chevron-up':!parameterReverse,'glyphicon-chevron-down':parameterReverse}"></span>
+                </th>
+                <th ng-click="sortParameter('Tier')">
+                    Tier
+                    <span class="glyphicon sort-icon" ng-show="parameterSortKeyName=='Tier'"
+                          ng-class="{'glyphicon-chevron-up':!parameterReverse,'glyphicon-chevron-down':parameterReverse}"></span>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr pagination-id="paginateParameters" dir-paginate="prm in parameters | orderBy:parameterSortKey:parameterReverse | 
+                    filter:searchParameters | itemsPerPage:5">
+                <td>{{prm.Name}}</td>
+                <td>{{prm.Code}}</td>
+                <td>{{prm.Units}}</td>
+                <td>{{prm.Tier}}</td>
+                <td>
+                    <button type="button" class="btn" ng-class="{'btn-success' : parameterSelected(prm), 'btn-danger' : !parameterSelected(prm)}"
+                            ng-click="toggleParameter(prm)">
+                        <span class="glyphicon" ng-class="{'glyphicon-check' : parameterSelected(prm), 'glyphicon-plus' : !parameterSelected(prm)}"
+                              aria-hidden="true"></span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+       
+    </table>
+    <dir-pagination-controls pagination-id="paginateParameters" max-size="5"
+                             direction-links="true"
+                             boundary-links="true">
+    </dir-pagination-controls>
+</div>
+<div class="col-xs-12 verticalSpace20"></div>
+<div class="row col-md-12">
+    <table class="table table-responsive col-md-12" style="min-width:500px">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th >
+                    Code
+                </th>
+                <th>
+                    Lab     
+                </th>
+                <th >
+                    Det. Limit
+                    
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="prmGrp in selectedParameters">
+                <!-- dir-paginate="prmGrp in selectedParameters | orderBy:selectedParameter SortKey:selectedParameterReverse |
+                    itemsPerPage:5">-->
+                <td>{{prmGrp.Name}}</td>
+                <td>{{prmGrp.Code}}</td>
+                <td>
+                    <selectpickersmall data-array="labList" data-model="prmGrp.LabId"></selectpickersmall>
+                    
+                </td>
+                <td>
+                    <div class="form-group" ng-class="{ 'has-error': updateGroupForm.DetLimit.$touched && updateGroupForm.DetLimit.$invalid }">                        
+                        <input name="DetLimit" type="text" class="form-control" placeholder="Enter Detection Limit"
+                               ng-model="prmGrp.DetectionLimit"
+                               required
+                               ng-pattern="/^-?[0-9]\d*(\.\d+)?$/" />
+                        <div class="help-block" ng-messages="updateGroupForm.DetLimit.$error" ng-show="updateGroupForm.DetLimit.$touched">
+                            <p ng-message="pattern">Must be a valid decimal (ex. 1.0, 0.02, etc.  )</p>
+                            <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                        </div>
+                        <!--<div class="formElementInfo">ex. 0.02; please enter decimal value</div>-->
+                    </div>
+                </td>
+               
+            </tr>
+        </tbody>
+
+    </table>
+</div>

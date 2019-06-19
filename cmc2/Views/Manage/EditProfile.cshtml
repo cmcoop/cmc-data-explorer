@@ -1,0 +1,187 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model cmc2.Models.IndexViewModel
+@using (Html.BeginForm("EditProfile", "Manage", FormMethod.Post,
+                            new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+<div class="row">
+    <div class="col-md-4">
+        <img src="@Url.Action("GetProfileImage", "Admin" )" id="manageProfImg" class="center-block" />
+        <br />
+        <p class="text-center ">Upload a different photo</p>
+        <div class="form-group">
+            <div class="col-md-8 col-md-offset-2">
+                <input type="file" name="ProfileImage" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" class="" />
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-8 col-md-offset-3">
+                <input type="submit" class="btn btn-success" data-loading-text="Loading..." onclick="$(this).button('loading');" value="Save" />
+                <a href="@Url.Action("Index", "Admin")" class="btn btn-danger">
+                    Cancel
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7 col-md-offset-1">
+        <h4 class="text-success">@ViewBag.StatusMessage</h4>
+        <div>
+            <h4>Change your account settings</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>Password:</dt>
+                <dd>
+                    [
+                    @if (Model.HasPassword)
+            {
+                        @Html.ActionLink("Change your password", "ChangePassword")
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Create", "SetPassword")
+                    }
+                    ]
+                </dd>
+
+            </dl>
+
+        </div>
+        <h4>Edit user information.</h4>
+        <hr />
+
+        
+                
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-3"})
+                <div class="input-group col-md-9">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FirstName, new { @class = "control-label  col-md-3" })
+                <div class="input-group col-md-9">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.FirstName)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-3" })
+                <div class="col-md-9 input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.LastName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.CellPhone, new { @class = "col-md-3 control-label" })
+                <div class="col-md-9 input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                    @Html.TextBoxFor(m => m.CellPhone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.CellPhone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.HomePhone, new { @class = "col-md-3 control-label" })
+                <div class="col-md-9 input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                    @Html.TextBoxFor(m => m.HomePhone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.HomePhone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EmergencyPhone, new { @class = "col-md-3 control-label" })
+                <div class="col-md-9 input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                    @Html.TextBoxFor(m => m.EmergencyPhone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.EmergencyPhone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.AddressFirst, new { @class = "col-md-3 control-label" })
+                <div class="col-md-9 input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                    @Html.TextBoxFor(m => m.AddressFirst, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.AddressSecond, new { @class = "col-md-3 control-label" })
+                <div class="col-md-9 input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                    @Html.TextBoxFor(m => m.AddressSecond, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.City, new { @class = "col-md-3 control-label" })
+                <div class="col-md-9 input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                    @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    Select State
+                </label>
+                <div class="col-md-9">
+                    <select class="selectpicker" id="stateSelect" name="State" data-size="5" data-width="auto" data-live-search="true" title="Choose a State...">
+                        @foreach (var item in Model.StatesList)
+                        {
+                            <option selected="@item.Selected" value="@Html.Raw(item.Value)">
+                                @Html.Raw(item.Text)
+                            </option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Zip, new { @class = "col-md-3 control-label" })
+                <div class="col-md-9 input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                    @Html.TextBoxFor(m => m.Zip, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    Select Group
+                </label>
+
+                <div class="col-md-9 input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    @Html.TextBoxFor(m => m.GroupName, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.GroupName, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <div class="form-group">
+                @Html.Label("Role", new { @class = "control-label col-md-3" })
+                <div class="col-md-9 input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    @Html.TextBoxFor(m => m.UserRole, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.VolunteerHours, new { @class = "col-md-3 control-label" })
+                <div class="col-md-9 input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    @Html.TextBoxFor(m => m.VolunteerHours, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.VolunteerHours, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+                
+        
+    </div>
+</div>
+}

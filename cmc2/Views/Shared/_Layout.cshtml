@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html >
+<html >
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    <!--<link href="@Url.Content("~/Content/allStyles.css")" rel="stylesheet" type="text/css" />-->
+    <link href="@Url.Content("~/Content/fonts/css/font-awesome.css")" rel="stylesheet" type="text/css" />
+    @Scripts.Render("~/bundles/modernizr")
+    
+</head>
+
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" rel="home" href=@Url.Action("Index", "Home") >
+                    <img src="~/Images/Logo/CMC_logo_highres.png">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "About" ? "active" : "")">@Html.ActionLink("About", "About", "Home")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Contact" ? "active" : "")">@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (User.IsInRole("Admin") | User.IsInRole("Officer") | User.IsInRole("Member") | User.IsInRole("Coordinator") | User.IsInRole("Monitor"))
+                    {
+
+                        <li>@Html.ActionLink("Admin", "Index", "Admin")</li>          
+                        
+                    }
+                    
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content" >
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Chesapeake Monitoring Cooperative</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/Scripts/allJsLibrariesBundle")
+   
+    @RenderSection("scripts", required: false)
+    @RenderSection("viewScripts", required: false)
+
+
+</body>
+</html>

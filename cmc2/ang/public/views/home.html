@@ -1,0 +1,393 @@
+﻿
+    
+    <div ng-controller="homeController" ng-init="initialize()">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Welcome to the Chesapeake Data Explorer!</h2>
+                <p>
+                    This is your gateway into data collected by a Chesapeake Basin-wide network of volunteer and non-traditional water quality monitors.
+                    Use the <b>Map tab</b> to investigate information about the database or to view Water Quality or Benthic Macroinvertebrate data on the map.
+                    Use the <b>Query tab</b> for more complex interactions and access to data download functions.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="bigNav nav nav-pills ">
+                    <li role="presentation" ng-class="{active: (current.name!=='home.query'),inactive: (current.name=='home.query')}" ng-click="refreshMap()"><a ui-sref="home">Map</a></li>
+                    <li role="presentation" ng-class="{active: (current.name=='home.query'),inactive: (current.name!=='home.query')}"><a ui-sref="home.query()">Query</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!--<pre>{{benthicStationCounts|json}}</pre>-->
+        <div class="row " ng-show="current.name=='home.query'">
+            <div class="col-md-12">
+                <div class="verticalSpace20"></div>
+                <div ui-view="query"></div>
+            </div>
+        </div>
+        <div>
+            <div class="col-md-12" ng-show="current.name!=='home.query'&&stationsLoading">
+                <h3><span class="fa fa-spinner fa-spin"> </span>  Map Data Loading...</h3>
+            </div>
+        </div>
+        <div class="" ng-show="current.name!=='home.query'&&!stationsLoading" >
+            <div class="verticalSpace20"></div>           
+            <div class="col-md-12">
+                <leaflet lf-center="center" class="absoluteMap" markers="markers" defaults="defaults" controls="controls" legend="legend" watch-markers="yes" layers="layers" height="650px" width="100%" id="mainMap"></leaflet>
+                <div class="slideLayersButton" ng-click="toggleLayersPanel()">
+                    <div class="slideLayersText">
+                        <span class="">Data Type</span>
+                    </div>
+                    <div class="slideLayersIcon"><span class="fa fa-chevron-left" ng-class="{'fa-chevron-left':showLayersPanel,'fa-chevron-right':!showLayersPanel}"></span></div>
+                </div>
+                <div class="slideLayersPanel" >
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div >
+                                <span class="title">Station Type</span>
+                                
+                                <label class="radio">
+                                    <input checked type="radio" name="mapOptions" id="inlineRadio1" ng-click="stationsToMapMarkers('wq')" value="wq"> Water Quality
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="mapOptions" id="inlineRadio2" value="benthic" ng-click="stationsToMapMarkers('benthic')"> Benthic Macroinvertebrate
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hideLayersPanel">
+                </div>
+                <div class="slideButton" ng-click="togglePanel()">
+                    <div class="slideText">
+                        <span class="">Instructions</span>
+                    </div>
+                    <div class="slideIcon"><span class="fa " ng-class="{'fa-chevron-left':!showPanel,'fa-chevron-right':showPanel}"></span></div>
+                </div>
+                <div class="slidePanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Data Explorer Map</h3>
+                            <hr />
+                            <p>On the Data Explorer map, you can view water quality and macroinvertebrate data for all of the monitoring locations within the Data Explorer.</p>
+                            <p>Use the radio buttons in the legend to toggle between viewing the water quality and benthic macroinvertebrate sampling locations.</p>
+                            <p>When you click a monitoring location on the map, a window will open displaying descriptive information about the location. 
+                            To view data and more detailed information about that station, click the "View Station Details" button.</p>                            
+
+                        </div>
+                    </div>
+                </div>  
+                <div class="hidePanel">
+                </div>
+            </div>            
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Database Statistics</h2>
+                    <p>The summary statics below provide an overview of the current scope of the Data Explorer.</p>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="media mediaStats">
+                        <div class="media-left" href="#">
+                            <i class="fa fa-list fa-4x fa-fw warning" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body">
+                            <h2 class="media-heading">{{cmcStats.SamplesCount}}</h2>
+                            <span class="loginBadgeDesc">WATER QUALITY RECORDS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="media mediaStats">
+                        <div class="media-left" href="#">
+                            <i class="fa fa-list fa-4x fa-fw bright" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body">
+                            <h2 class="media-heading ">{{cmcStats.BenthicSamplesCount}}</h2>
+                            <span class="loginBadgeDesc">BENTHIC MACROINVERTEBRATE RECORDS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="media mediaStats">
+                        <div class="media-left" href="#">
+                            <i aria-hidden="true" class="icon-stream2 success stream48"></i>
+                        </div>
+                        <div class="media-body">
+                            <h2 class="media-heading ">{{cmcStats.WaterBodyCount}}</h2>
+                            <span class="loginBadgeDesc">RIVERS/STREAMS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="media mediaStats">
+                        <div class="media-left" href="#">
+                            <i class="fa fa-star fa-4x fa-fw success" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body">
+                            <h2 class="media-heading">{{cmcStats.StationCount}}</h2>
+                            <span class="loginBadgeDesc">STATIONS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="media mediaStats">
+                        <div class="media-left" href="#">
+                            <i class="fa fa-star fa-4x fa-fw success" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body">
+                            <h2 class="media-heading">{{cmcStats.BenthicStationCount}}</h2>
+                            <span class="loginBadgeDesc">BENTHIC STATIONS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="media mediaStats">
+                        <div class="media-left" href="#">
+                            <i class="fa fa-user fa-4x fa-fw info" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body">
+                            <h2 class="media-heading ">{{cmcStats.MonitorsCount}}</h2>
+                            <span class="loginBadgeDesc">MONITORS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="media mediaStats">
+                        <div class="media-left" href="#">
+                            <i class="fa fa-clock-o fa-4x fa-fw success" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body">
+                            <h2 class="media-heading">{{cmcStats.MonitorHoursSum}}</h2>
+                            <span class="loginBadgeDesc">MONITORING HOURS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="media mediaStats">
+                        <div class="media-left" href="#">
+                            <i class="fa fa-users fa-4x fa-fw info" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body">
+                            <h2 class="media-heading ">{{cmcStats.GroupsCount}}</h2>
+                            <span class="loginBadgeDesc">ORGANIZATIONS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>     
+            
+        </div> 
+        <div class="verticalSpace25"></div>
+        <div class="modal front-end fade" id="myModal" role="dialog" modal-show="showDialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" id="headerHomeModal">
+                        <i class="fa fa-close pull-right" style="color:white;cursor:pointer" data-dismiss="modal"></i>
+                        <h3 id="stationNameHomeModal" >{{stationName}} <span ng-show="stationNameLong.length > 0"> - {{stationNameLong}}</span></h3>
+                        <hr/>
+                        <p id="groupNamesHomeModal"><b>Monitored by: </b>{{stationGroupNames}}</p>
+                    </div>
+                    <div class="modal-body" style="padding:20px 50px;">    
+                        <div class="row">
+                            <div class="col-md-12 small">
+                                <p><span ng-show="(!NoSamplesForStation&&!NoBenthicSamplesForStation)&&!plotLoading">Use the <b>Water Quality</b> or <b>Benthic Macroinvertebrates</b> buttons to select the type of data you want to view for this station. </span>
+                                Click a <b>Quick Plots</b> option to choose commonly viewed water quality data types. Click <b>Export Plot</b> to download the graph. 
+                                Click <b>Download Data</b> to be taken to a data query page for this station.</p>
+                            </div>
+                        </div>    
+                        <div class="row" ng-show="(!NoSamplesForStation&&!NoBenthicSamplesForStation)&&!plotLoading">
+                            <div class="col-md-12">
+                                <ul class="smallNav nav nav-pills">
+                                    <li ng-class="{ active:isSet(x.name),inactive:!isSet(x.name)}" ng-repeat="x in dataTypes">
+                                        <a ng-click="setTab(x.name)">{{x.name}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>       
+                        <div class="verticalSpace10"></div>
+                        <div class="row" ng-show="NoSamplesForStation&&NoBenthicSamplesForStation">
+                            <div class="col-md-12">
+                                <h4>There are no samples for this station. </h4>
+                            </div>
+                            
+                        </div>
+                        
+                        <div ng-show="!NoSamplesForStation||!NoBenthicSamplesForStation">
+                            <div class="row" ng-show="dataType=='wq'&&!plotLoading">
+                                <div class="col-md-12 ">
+                                    <div class="frontEndModalLabel">Quick Plots</div>
+                                    <div class="indent">
+                                        <span ng-repeat="prm in quickParams" class="frontEndModalInfo">
+                                            <a ng-click="quickParamClicked(prm)" style="cursor:pointer;" ng-class="{'bright':prm.selected}">
+                                                {{prm.name}}
+                                            </a>
+                                            <span ng-show="quickParams.length>1">|</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="verticalSpace10"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row" ng-show="!plotLoading">
+                                        <div class="col-md-7">
+                                            <div class="verticalSpace2"></div>
+                                            <span class="frontEndModalLabel" ng-show="dataType=='wq'">Water Quality Parameters</span>
+                                            <span class="frontEndModalLabel" ng-show="dataType=='benthic'">Benthic Metrics</span>
+                                        </div>
+                                        <div class="col-md-2" ng-show="!isTier2">
+                                            <div class="verticalSpace2"></div>
+                                            <button type="button" class="btn btn-sm btn-success " ng-click="exportPlot()">
+                                                Export Plot
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="verticalSpace2"></div>
+                                            <button type="button" class="btn btn-sm btn-success " ng-click="goToQuery(stationId,slctParam)" data-toggle="modal"
+                                                    data-target="#myModal">
+                                                Download Data
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="verticalSpace10"></div>
+                                    <div class="row">
+                                        <div class="col-md-6" ng-show="dataType=='wq'">
+                                            <selectpickersmall data-array="plotParameters" data-model="slctParam" ></selectpickersmall>
+                                        </div>
+                                        <div class="col-md-6 no-gutter" ng-show="(slctParam !== null && typeof(slctParam)!=='undefined') && dataType=='wq'">
+
+                                            <div class="col-md-4">
+                                                <div class="verticalSpace5"></div>
+                                                <span><b>Depth (m)</b></span>
+                                            </div>
+                                            <div class="col-md-8" >
+                                                <selectpickersmall data-array="depthsDrop" data-model="slctDepth"></selectpickersmall>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="verticalSpace10"></div>
+                            <div class="row" ng-show="dataType=='wq'">
+                                <div class="col-md-12" >
+                                    <span class="small">Values displayed on graph are daily means of duplicate samples.</span>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-md-12 padding-0">
+                                    <div class="hidePlotPanel" ng-show="plotLoading">
+                                        <div class="verticalSpace20"></div>
+                                        <div class="row">
+                                            <div class="col-md-12" >
+                                                <span class="fa fa-spinner fa-spin"></span> Loading plot data...
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="hidePlotPanel"  ng-show="isTier2 && !NoBenthicSamplesForStation && dataType =='benthic'">
+                                        <div class="verticalSpace20"></div>
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <h4>This station contains Tier 2 benthic data and no metrics are calculated at this time. Please feel free to download these data using the <b>Download</b> button above. </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="plotContainer">
+                                        <d3-to-image data-try-to-fix="true"
+                                                     callback="d3ToImageCallback"
+                                                     export="exportPNG">
+                                            <nvd3 id='stationTimeSeriesHome' options="options" data="data" api="api"></nvd3>
+                                        </d3-to-image>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" ng-hide="true">
+                                <div class="col-md-12">
+                                    <div class="text-center">Date Range Selection</div>
+                                </div>
+                            </div>
+                            <div class="verticalSpace20"></div>
+                            <div class="row" ng-show="!plotLoading">
+                                <div class="col-md-9" >
+                                    <span class="small" ng-show="dataType=='wq'">
+                                        Please note that parameters are consolidated in the plot where sampling methodologies may be different.
+                                        Please click the "Show Details" button for more information.
+                                    </span>
+                                </div>
+                                <div class="col-md-2" ng-show="dataType=='wq'">
+                                    <button title="Show Parameter Details" type="button" data-toggle="tooltip" data-placement="bottom"
+                                            ng-click="showParamInfo = !showParamInfo"
+                                            ng-class="{'btn-success':!showParamInfo,'btn-info':showParamInfo}"
+                                            class="btn btn-sm ">
+                                        <i class="fa " ng-class="{'fa-plus':!showParamInfo,'fa-minus':showParamInfo}"></i> Show Details
+                                    </button>
+                                </div>
+                                <div class="col-md-12" style="padding-right:2px;">
+                                    <div ng-show="dataType=='benthic'" >
+                                        <div class="pull-left">Ecological Condition: </div><div class="legend-block pull-left" style="background-color:rgba(255, 0, 0, 0.3)"></div><div class="pull-left"> Poor </div class="pull-left">
+                                        <div class="legend-block pull-left" style="background-color:rgba(255,255,0,0.3)"></div><div class="pull-left"> Fair </div>
+                                        <div class="legend-block pull-left" style="background-color:rgba(0, 255, 0, 0.3)"></div><span class="pull-left">Good </span>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="verticalSpace20"></div>
+                        <div ng-show="showParamInfo">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        {{slctParamName}}
+                                        <button title="Show Parameter Info" type="button" data-toggle="tooltip" data-placement="bottom"
+                                                onmouseenter="$(this).tooltip('show')" ng-click="showParamInfo = !showParamInfo"
+                                                class="btn btn-default btn-circle btn-sm pull-right">
+                                            <i class="fa fa-close"></i>
+                                        </button>
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <p>Equipment: {{slctParamEquip}}</p>
+                                    <p>Code: {{slctParamCode}}</p>
+                                    <p>
+                                        <button id="btnResultsParameters" title="Get Parameter Results" type="button" data-placement="bottom" ng-csv="getResultsParameters()" csv-header="headers" filename="cmcParameters.csv"
+                                                ng-class="{'disabled':downloading}"
+                                                class="btn btn-success">
+                                            <i class="fa fa-download"></i> Get Parameter Results
+                                        </button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6 pull-left">
+                                <h3>Station Profile</h3>
+                                <p><b>Description:</b> {{stationDescription}}</p>
+                                <p><b>Location:</b> {{stationLat}}, {{stationLong}}</p>
+                                <p><b>First Sampled:</b> {{stationFirstSample}}</p>
+                                <p><b>Most Recent Sample:</b> {{stationLastSample}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <leaflet lf-center="centerInset"  markers="markersInset" layers="layers" height="200px" width="100%" id="insetMap"></leaflet>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer ">
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div> 
+        
+    </div>

@@ -1,0 +1,283 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="clearNewParameter(addParameterForm)" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title">Add Parameter</h4>
+</div>
+<div class="modal-body" novalidate>
+    <form name="addParameterForm">
+        <div class="form-group" ng-class="{ 'has-error': addParameterForm.Name.$touched && addParameterForm.Name.$invalid }">
+            <label>Parameter Name</label>
+            <input name="Name" type="text" class="form-control" placeholder="Enter Parameter Name"
+                   ng-model="newParameter.Name"
+                   ng-minlength="2"
+                   ng-maxlength="1000"
+                   required>
+            <div class="help-block" ng-messages="addParameterForm.Name.$error" ng-show="addParameterForm.Name.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': editParameterForm.Description.$touched && editParameterForm.Description.$invalid }">
+            <label>Description</label>
+            <input name="Description" type="text" class="form-control" placeholder="Enter Parameter Description"
+                   ng-model="currentParameter.Description"
+                   ng-minlength="2"
+                   required>
+            <div class="help-block" ng-messages="editParameterForm.Description.$error" ng-show="editParameterForm.Description.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addParameterForm.Code.$touched && addParameterForm.Code.$invalid }">
+            <label>Code</label>
+            <input name="Code" type="text" class="form-control" placeholder="Enter Parameter Code"
+                   ng-model="newParameter.Code"
+                   ng-minlength="2"
+                   ng-maxlength="1000"
+                   required>
+            <div class="help-block" ng-messages="addParameterForm.Code.$error" ng-show="addParameterForm.Code.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Associated Water Quality Parameter</label>
+            <div>
+                <selectpickermulti data-array="wqParametersList" data-model="newParameter.wqParametersIds"></selectpickermulti>
+            </div>
+        </div>
+        <!--<div class="form-group" ng-class="{ 'has-error': addParameterForm.Method.$touched && addParameterForm.Method.$invalid }">
+            <label>Method</label>
+            <input name="Method" type="text" class="form-control" placeholder="Enter Bay Program Method"
+                   ng-model="newParameter.Method"
+                   ng-minlength="2"
+                   ng-maxlength="1000"
+                   ng-pattern="/^[0-9]*$/"
+                   >
+            <div class="help-block" ng-messages="addParameterForm.Method.$error" ng-show="addParameterForm.Method.$touched">
+                <p ng-message="pattern">Must be a valid integer (ex. 1, 495).</p>
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>-->
+        
+        <div class="form-group">
+            <label>Units</label>
+            <div>
+                <selectpicker data-array="unitsList" data-model="newParameter.Units"></selectpicker>                
+            </div>
+        </div>
+        <!--<div class="form-group">
+            <label>Tier</label>
+            <div>
+                <selectpicker data-array="tierList" data-model="newParameter.Tier"></selectpicker>               
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Matrix</label>
+            <div>
+                <selectpicker data-array="matrixList" data-model="newParameter.Matrix"></selectpicker>                               
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': !addParameterForm.$pristine && addParameterForm.requiresDuplicate.$error.required }">
+            <label>Requires Duplicate Option?</label>
+            <div>
+                <selectpicker name="requiresDuplicate" data-array="binaryList" data-model="newParameter.requiresDuplicate" required></selectpicker>
+            </div>
+            <span class="help-block" ng-show="addParameterForm.requiresDuplicate.$error.required && !addParameterForm.$pristine">Must choose if parameter requires an option for a duplicate on the upload form.</span>
+            <div class="help-block" ng-messages="addParameterForm.requiresDuplicate.$error.required" ng-show="addParameterForm.requiresDuplicate.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <!--<div class="form-group" ng-class="{ 'has-error': !addParameterForm.$pristine && addParameterForm.requiresSampleDepth.$error.required }">
+            <label>Requires Sample Depth?</label>
+            <div>
+                <selectpicker name="requiresSampleDepth" data-array="binaryList" data-model="newParameter.requiresSampleDepth" required></selectpicker>
+            </div>
+            <span class="help-block" ng-show="addParameterForm.requiresSampleDepth.$error.required && !addParameterForm.$pristine">Must choose if parameter requires an associated sampling depth.</span>
+            <div class="help-block" ng-messages="addParameterForm.requiresSampleDepth.$error.required" ng-show="addParameterForm.requiresSampleDepth.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': !addParameterForm.$pristine && addParameterForm.isCalibrationParameter.$error.required }">
+            <label>Is Calibration Parameter?</label>
+            <div>
+                <selectpicker name="isCalibrationParameter" data-array="binaryList" data-model="newParameter.isCalibrationParameter" required></selectpicker>
+            </div>
+            <span class="help-block" ng-show="addParameterForm.isCalibrationParameter.$error.required && !addParameterForm.$pristine">Must choose if parameter is for calibration purposes rather than water quality sample.</span>
+            <div class="help-block" ng-messages="addParameterForm.isCalibrationParameter.$error.required" ng-show="addParameterForm.isCalibrationParameter.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': !addParameterForm.$pristine && addParameterForm.SampleType.$error.required }">
+            <label>Sample Type</label>
+            <div>
+                <selectpicker name="SampleType" data-array="sampleTypeList" data-model="newParameter.SampleType"></selectpicker>
+            </div>
+            <span class="help-block" ng-show="addParameterForm.SampleType.$error.required && !addParameterForm.$pristine">Must choose a Sample Type</span>
+            <div class="help-block" ng-messages="addParameterForm.SampleType.$error.required" ng-show="addParameterForm.SampleType.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Tidal</label>
+            <div>
+                <selectpicker data-array="binaryList" data-model="newParameter.Tidal"></selectpicker>                 
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Non-Tidal</label>
+            <div>
+                <selectpicker data-array="binaryList" data-model="newParameter.NonTidal"></selectpicker>                
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addParameterForm.AnalyticalMethod.$touched && addParameterForm.AnalyticalMethod.$invalid }">
+            <label>Analytical Method</label>
+            <div>
+                <selectpicker name="AnalyticalMethod" data-array="analyticalMethodList" data-model="newParameter.AnalyticalMethod"></selectpicker>
+            </div>
+
+            <div class="help-block" ng-messages="addParameterForm.AnalyticalMethod.$error" ng-show="addParameterForm.AnalyticalMethod.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addParameterForm.ApprovedProcedure.$touched && addParameterForm.ApprovedProcedure.$invalid }">
+            <label>Approved Procedure</label>
+            <input name="ApprovedProcedure" type="text" class="form-control" placeholder="Enter Approved Procedure"
+                   ng-model="newParameter.ApprovedProcedure"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addParameterForm.ApprovedProcedure.$error" ng-show="addParameterForm.ApprovedProcedure.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addParameterForm.Equipment.$touched && addParameterForm.Equipment.$invalid }">
+            <label>Equipment</label>
+            <input name="Equipment" type="text" class="form-control" placeholder="Enter Equipment"
+                   ng-model="newParameter.Equipment"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addParameterForm.Equipment.$error" ng-show="addParameterForm.Equipment.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addParameterForm.Precision.$touched && addParameterForm.Precision.$invalid }">
+            <label>Precision</label>
+            <input name="Precision" type="text" class="form-control" placeholder="Enter Precision"
+                   ng-model="newParameter.Precision"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addParameterForm.Precision.$error" ng-show="addParameterForm.Precision.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addParameterForm.Accuracy.$touched && addParameterForm.Accuracy.$invalid }">
+            <label>Accuracy</label>
+            <input name="Accuracy" type="text" class="form-control" placeholder="Enter Accuracy"
+                   ng-model="newParameter.Accuracy"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addParameterForm.Accuracy.$error" ng-show="addParameterForm.Accuracy.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addParameterForm.Range.$touched && addParameterForm.Range.$invalid }">
+            <label>Range</label>
+            <input name="Range" type="text" class="form-control" placeholder="Enter Range"
+                   ng-model="newParameter.Range"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addParameterForm.Range.$error" ng-show="addParameterForm.Range.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>In Situ or Lab</label>
+            <div>
+                <selectpicker data-array="inSituOrLabList" data-model="newParameter.InSituOrLab"></selectpicker>
+                
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addParameterForm.QcCriteria.$touched && addParameterForm.QcCriteria.$invalid }">
+            <label>Quality Control Criteria</label>
+            <input name="QcCriteria" type="text" class="form-control" placeholder="Enter Quality Control Criteria"
+                   ng-model="newParameter.QcCriteria"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addParameterForm.QcCriteria.$error" ng-show="addParameterForm.QcCriteria.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>        
+        <div class="form-group">
+            <label>Inspection Frequency</label>
+            <div>
+                <selectpicker data-array="inspectionFrequencyList" data-model="newParameter.InspectionFreq"></selectpicker>                
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addParameterForm.InspectionType.$touched && addParameterForm.InspectionType.$invalid }">
+            <label>Inspection Type</label>
+            <input name="InspectionType" type="text" class="form-control" placeholder="Enter Inspection Type"
+                   ng-model="newParameter.InspectionType"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addParameterForm.InspectionType.$error" ng-show="addParameterForm.InspectionType.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div> 
+        <div class="form-group" ng-class="{ 'has-error': addParameterForm.CalibrationFrequency.$touched && addParameterForm.CalibrationFrequency.$invalid }">
+            <label>Calibration Frequency</label>
+            <input name="CalibrationFrequency" type="text" class="form-control" placeholder="Enter Calibration Frequency"
+                   ng-model="newParameter.CalibrationFrequency"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addParameterForm.CalibrationFrequency.$error" ng-show="addParameterForm.CalibrationFrequency.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div> 
+        <div class="form-group" ng-class="{ 'has-error': addParameterForm.StandardOrCalInstrumentUsed.$touched && addParameterForm.StandardOrCalInstrumentUsed.$invalid }">
+            <label>Standard Or Calibration Instrument Used</label>
+            <input name="CalibrationFrequency" type="text" class="form-control" placeholder="Enter Standard Or Cal. Instrument Used"
+                   ng-model="newParameter.StandardOrCalInstrumentUsed"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addParameterForm.StandardOrCalInstrumentUsed.$error" ng-show="addParameterForm.StandardOrCalInstrumentUsed.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div> 
+        <div class="form-group" ng-class="{ 'has-error': addParameterForm.TierIIAdditionalReqs.$touched && addParameterForm.TierIIAdditionalReqs.$invalid }">
+            <label>Tier II Additional Requirements</label>
+            <input name="TierIIAdditionalReqs" type="text" class="form-control" placeholder="Enter Tier II Additional Requirements"
+                   ng-model="newParameter.TierIIAdditionalReqs"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addParameterForm.TierIIAdditionalReqs.$error" ng-show="addParameterForm.TierIIAdditionalReqs.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div> 
+        <div class="form-group" ng-class="{ 'has-error': addParameterForm.HoldingTime.$touched && addParameterForm.HoldingTime.$invalid }">
+            <label>Holding Time</label>
+            <input name="HoldingTime" type="text" class="form-control" placeholder="Enter Holding Time"
+                   ng-model="newParameter.HoldingTime"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addParameterForm.HoldingTime.$error" ng-show="addParameterForm.HoldingTime.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div> 
+        <div class="form-group" ng-class="{ 'has-error': addParameterForm.SamplePreservation.$touched && addParameterForm.SamplePreservation.$invalid }">
+            <label>Sample Preservation</label>
+            <input name="SamplePreservation" type="text" class="form-control" placeholder="Enter Sample Preservation"
+                   ng-model="newParameter.SamplePreservation"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addParameterForm.SamplePreservation.$error" ng-show="addParameterForm.SamplePreservation.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div> -->
+
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-success" ng-click="addParameter(addParameterForm)">
+        <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Save
+    </button>
+    <button type="button" class="btn btn-danger" ng-click="clearNewParameter(addParameterForm)" data-dismiss="modal">
+        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Cancel
+    </button>
+</div>

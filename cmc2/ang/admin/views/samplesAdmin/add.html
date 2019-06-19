@@ -1,0 +1,608 @@
+﻿<div ng-init="initialize()" ng-cloak>
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="bright" ng-show='isMonitorOrCoordinator'>
+                Hi {{userName}}, welcome to the data upload page! Using the fields below, you can enter data into the Chesapeake Data Explorer for Sampling Sites belonging to {{userGroup}}.
+            </h4>
+            <h4 class="bright" ng-show='!isMonitorOrCoordinator'>
+                Hi {{userName}}, welcome to the data upload page! Here you can enter data for any group and station in the Chesapeake Data Explorer.
+            </h4>
+        </div>
+    </div>
+    <div class="verticalSpace20"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class='row' ng-show="loading">
+                <div class="col-md-7">
+                    <h3><span class="fa fa-spinner fa-spin"> </span>  Loading...</h3>
+                </div>
+            </div>            
+            <form name="addSampleForm">
+                <h3 ng-show="groupHasNoParameters">Water Quality Parameters have not been assigned to your group yet.</h3>
+                <div ng-show="!loading  && !groupHasNoParameters">
+                    <div class="form-group" ng-hide='isMonitorOrCoordinator' ng-class="{ 'has-error': !addSampleForm.$pristine && addSampleForm.Group.$error.required }">
+                        <label>Group</label>
+                        <selectpicker name="Group" data-array="groupsList" data-model="slctGroupId" required></selectpicker>
+                        <span class="help-block" ng-show="addSampleForm.Group.$error.required && !addSampleForm.$pristine">Must Select a Group</span>
+                        <div class="help-block" ng-messages="addSampleForm.Group.$error.required" ng-show="addSampleForm.Group.$touched">
+                            <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                        </div>
+                        <div class="danger" ng-messages="addSampleForm.Group.$error">
+                            <div ng-message="eventExistsError">
+                                Sampling Event exists in database.
+                                Please check that this combination of Group, Station, Sample Date, and Sample Time does not exist in the database.
+                            </div>
+                        </div>
+                        <div class="formElementInfo">Use the dropdown list to choose the group for which you will be uploading data.</div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': !addSampleForm.$pristine && addSampleForm.Station.$error.required }">
+                        <label>Sampling Site</label>
+                        <selectpicker name="Station" data-array="stationsList" data-model="newEvent.StationId" required ></selectpicker>
+                        <span class="help-block" ng-show="addSampleForm.Station.$error.required && !addSampleForm.$pristine">Must Select a Station</span>
+                        <div class="help-block" ng-messages="addSampleForm.Station.$error.required" ng-show="addSampleForm.Station.$touched">
+                            <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                        </div>
+                        <div class="danger">{{noStations}}</div>
+                        <div class="danger" ng-messages="addSampleForm.Station.$error">
+                            <div ng-message="eventExistsError">
+                                Sampling Event exists in database.
+                                Please check that this combination of Group, Station, Sample Date, and Sample Time does not exist in the database.
+                            </div>
+                        </div>
+                        <div class="formElementInfo">Use the dropdown list to choose the sampling station for which you will be uploading data.</div>
+                    </div>
+                    <div ng-hide="noStations !== ''">
+                        <div class="form-group" ng-class="{ 'has-error': addSampleForm.SampleDate.$touched && addSampleForm.SampleDate.$invalid }">
+                            <label>Sample Date</label>
+                            <input name="SampleDate" class="form-control" placeholder="Enter Sample Date"
+                                   ng-model="newEvent.SampleDate"
+                                   ng-model-options="{ updateOn: 'blur' }"
+                                   format="YYYY-MM-DD"
+                                   max-date="maxDateMoment"
+                                   autocomplete="off"
+                                   moment-picker="newEvent.SampleDate"
+                                   required>
+                            <div class="help-block" ng-messages="addSampleForm.SampleDate.$error" ng-show="addSampleForm.SampleDate.$touched">
+                                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                            </div>
+                            <div class="danger" ng-messages="addSampleForm.SampleDate.$error">
+                                <div ng-message="eventExistsError">
+                                    Sampling Event exists in database.
+                                    Please check that this combination of Group, Station, Sample Date, and Sample Time does not exist in the database.
+                                </div>
+                            </div>
+                            <div class="formElementInfo">Click on text box above and use the calendar that opens to choose the sample date</div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error': addSampleForm.SampleTime.$touched && addSampleForm.SampleTime.$invalid }">
+                            <label>Sample Time</label>
+                            <input name="SampleTime" class="form-control" placeholder="Enter Sample Time"
+                                   moment-picker="newEvent.SampleTime"
+                                   format="h:mm A"
+                                   ng-model="newEvent.SampleTime"
+                                   ng-model-options="{ updateOn: 'blur' }"
+                                   show-header=false
+                                   autocomplete="off"
+                                   required>
+                            <div class="help-block" ng-messages="addSampleForm.SampleTime.$error" ng-show="addSampleForm.SampleTime.$touched">
+                                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                            </div>
+                            <div class="danger" ng-messages="addSampleForm.SampleTime.$error" >
+                                <div ng-message="eventExistsError">Sampling Event exists in database. 
+                                Please check that this combination of Group, Station, Sample Date, and Sample Time does not exist in the database.</div>
+                            </div>
+                            <div class="formElementInfo">Click on the text box above to select the sample time</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="bright">
+                                    Conditions During Sampling
+                                </h4>
+                                <p class="success">First choose the set of conditions that you would like to include on the form. 
+                                Next, use the added fields to describe conditions at the sampling location at the time sampling occurred.</p>
+                            </div>
+                        </div>                        
+                        <div class="verticalSpace20"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <selectpicker name="conditionSetDrop" data-array="conditionSetList" data-model="conditionSetValue" title="Choose Conditions Set"></selectpicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-hide="conditionSetValue == null">
+                            <div class="col-md-12">
+                                <div ng-repeat="condition in conditions">
+                                    <div class="col-md-4" ng-if="!condition.isCategorical" ng-show="conditionSetArray.indexOf(condition.Code) !== -1">
+                                        <label>{{condition.Name}}</label>
+                                        <div class="form-group" ng-class="{ 'has-error': addSampleForm[condition.Name].$touched && addSampleForm[condition.Name].$invalid }">
+                                            <input ng-model="condition.Value"
+                                                   name="{{condition.Name}}"
+                                                   class="form-control"
+                                                   type="text"
+                                                   placeholder="Enter {{condition.Name}}" />
+
+                                            <div class="help-block" ng-messages="addSampleForm[condition.Name].$error" ng-show="addSampleForm[condition.Name].$touched">
+                                                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                            </div>
+                                            <div class="formElementInfo" ng-show="condition.Name == 'Stream Conditions'">("Calm, Ripple, Waves, or Whitecaps")</div>
+                                            <div class="formElementInfo" ng-show="condition.Name == 'Stream Flow'">("High, Normal, Low, or NA")</div>
+                                            <div class="formElementInfo" ng-show="condition.Name == 'Water Color'">("Normal or Abnormal")</div>
+                                            <div class="formElementInfo" ng-show="condition.Name == 'Water Color Description'">(ex. "Clear, Brown, Green, etc")</div>
+                                            <div class="formElementInfo" ng-show="condition.Name == 'Weather Conditions'">(ex. "Sunny or Partly Cloudy or Overcast or Fog/Haze or Drizzle or Intermittent Rain or Rain or Snow")</div>
+                                            <div class="formElementInfo" ng-show="condition.Name == 'Rainfall'">(Total in mm the week prior to sampling; ex. 2.3)</div>
+                                            <div class="formElementInfo" ng-show="condition.Name == 'Tide State'">("High, Outgoing, Incoming, Low, NA")</div>
+                                            <div class="formElementInfo" ng-show="condition.Name == 'Rainfall Within 48 Hours'">(Total in mm 48 hours prior to sampling; ex. 1.2)</div>
+                                            <div class="formElementInfo" ng-show="condition.Name == 'Other Conditions'">(ex. "Sea Nettles or Dead Fish or Dead Crabs or SAV or Oil Slick or Ice or Debris or Erosion or Foam or Bubbles or Odor")</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" ng-if="condition.isCategorical" ng-show="conditionSetArray.indexOf(condition.Code) !== -1">
+                                        <label>{{condition.Name}}</label>
+                                        <div class="form-group">
+                                            <selectpicker name="{{condition.Name}}" data-array="condition.Categories" data-model="condition.Value" title=""></selectpicker>
+                                        </div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-hide="testNoCal">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4 class="bright">Calibration</h4>
+                                    <p class="success">
+                                        Use the fields in this section to input calibration information.
+                                    </p>
+                                </div>
+                            </div>
+                            <div ng-repeat="ind in prmSetIndices">
+                                <div ng-repeat="prm in parametersNoSampleDepth | orderBy: 'Code'" ng-if="prm.isCalibrationParameter">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>{{prm.Description}} ({{prm.Units}})</label>
+                                        </div>
+                                        <div ng-show="prm.Code == 'C.DO.1'" class="col-md-4">
+                                            <span class="success">Note: Conduct second test if results are < 9.4 or > 10.0. Do not run DO test if 2 sodium thiosulfate check results are not within 0.4 mg/l of each other.</span>
+                                        </div>
+                                    </div>
+                                    <div class="verticalSpace10"></div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <button title="Add Duplicate" type="button" data-toggle="tooltip" data-placement="bottom"
+                                                    onmouseenter="$(this).tooltip('show')"
+                                                    class="btn btn-success btn-circle btn-sm pull-right" ng-hide="show_me_dup||prm.requiresDuplicate == false" ng-click="show_me_dup = !show_me_dup;">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="verticalSpace5"></div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+
+                                            <div class="form-group " ng-class="{ 'has-error': addSampleForm[prm.Code + ind +'_Value'].$touched && addSampleForm[prm.Code + ind +'_Value'].$invalid }">
+
+                                                <input ng-model="newSamples[prm.Code + ind]['Value']"
+                                                       name="{{prm.Code + ind}}_Value"
+                                                       ng-change="checkValueForWarning(newSamples[prm.Code + ind])"
+                                                       class="form-control"
+                                                       type="text"
+                                                       placeholder="Enter {{prm.Description}} ({{prm.Units}})"
+                                                       ng-pattern="/^-?[0-9]\d*(\.\d+)?$/" step="0.00001">
+                                                <div class="errorText" ng-show="newSamples[prm.Code + ind].warning">{{newSamples[prm.Code + ind].warningText}}</div>
+                                                <div class="help-block" ng-messages="addSampleForm[prm.Code + ind +'_Value'].$error" ng-show="addSampleForm[prm.Code + ind +'_Value'].$touched">
+                                                    <p ng-message="pattern">Must be a valid decimal (ex. 1, -76.0646, 0.2353).</p>
+                                                    <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="duplicate" ng-hide="!show_me_dup">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group " ng-class="{ 'has-error': addSampleForm[prm.Code + ind + 'dup_Value'].$touched && addSampleForm[prm.Code + ind +'dup_Value'].$invalid }">
+                                                    <input ng-model="newSamples[prm.Code + ind + 'dup']['Value']"
+                                                           name="{{prm.Code + ind}}dup_Value"
+                                                           ng-change="checkValueForWarning(newSamples[prm.Code + ind + 'dup'])"
+                                                           class="form-control"
+                                                           type="text"
+                                                           placeholder="Enter {{prm.Description}} ({{prm.Units}})"
+                                                           ng-pattern="/^-?[0-9]\d*(\.\d+)?$/" step="0.00001">
+                                                    <div class="errorText" ng-show="newSamples[prm.Code + ind + 'dup'].warning">{{newSamples[prm.Code + ind + 'dup'].warningText}}</div>
+                                                    <div class="help-block" ng-messages="addSampleForm[prm.Code + ind +'dup_Value'].$error" ng-show="addSampleForm[prm.Code + ind + dup +'dup_Value'].$touched">
+                                                        <p ng-message="pattern">Must be a valid decimal (ex. 1, -76.0646, 0.2353).</p>
+                                                        <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-hide="testNoDepthIndependent">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4 class="bright">Surface Sample</h4>
+                                    <p class="success">
+                                        Use the fields in this section to input data that is taken at the surface (default is 0.3m)
+                                        <button title="Choose a different depth" type="button" data-toggle="tooltip" data-placement="bottom"
+                                                onmouseenter="$(this).tooltip('show')"
+                                                class="btn btn-success btn-circle btn-sm btn-upload-form" ng-hide="show_me_depth" ng-click="show_me_depth = !show_me_depth;">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+
+                                    </p>
+                                    <div class="row col-md-4" ng-show="show_me_depth">
+                                        <label>Surface Sample Depth (m)</label>
+                                        <div class="form-group">
+                                            <selectpicker name="surfaceDepthDrop" data-array="surfaceDepthsList" data-model="surfaceDepth" title="Choose Surface Depth"></selectpicker>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                            </div>
+                            <div ng-repeat="ind in prmSetIndices">
+                                <div ng-repeat="prm in parametersNoSampleDepth | orderBy: 'Code'" ng-if="!prm.isCalibrationParameter">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>{{prm.Description}} ({{prm.Units}})</label>
+                                        </div>
+                                        <div ng-show="prm.Code == 'WC.3' || prm.Code == 'WC.4'" class="col-md-4">
+                                            <span class="success">Note: If reading is greater than the value entered choose the > symbol from the qualifier code field.</span>
+                                        </div>
+                                    </div>
+                                    <div class="verticalSpace10"></div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <button title="Add Qualifier" type="button" data-toggle="tooltip" data-placement="bottom"
+                                                    onmouseenter="$(this).tooltip('show')"
+                                                    class="btn btn-caution btn-circle btn-sm pull-right btn-upload-form" ng-hide="show_me_qual" ng-click="show_me_qual = !show_me_qual;">
+                                                <i class="fa fa-asterisk"></i>
+                                            </button>
+                                            <button title="Add Problem Code" type="button" data-toggle="tooltip" data-placement="bottom"
+                                                    onmouseenter="$(this).tooltip('show')"
+                                                    class="btn btn-danger btn-circle btn-sm pull-right btn-upload-form" ng-hide="show_me_prob" ng-click="show_me_prob = !show_me_prob;">
+                                                <i class="fa fa-exclamation"></i>
+                                            </button>
+                                            <button title="Add Duplicate" type="button" data-toggle="tooltip" data-placement="bottom"
+                                                    onmouseenter="$(this).tooltip('show')"
+                                                    class="btn btn-success btn-circle btn-sm pull-right btn-upload-form" ng-hide="show_me_dup||prm.requiresDuplicate == false" ng-click="show_me_dup = !show_me_dup;">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="verticalSpace5"></div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group " ng-class="{ 'has-error': addSampleForm[prm.Code + ind +'_Value'].$touched && addSampleForm[prm.Code + ind +'_Value'].$invalid }">
+                                                <input ng-model="newSamples[prm.Code + ind]['Value']"
+                                                       name="{{prm.Code + ind}}_Value"
+                                                       ng-change="checkValueForWarning(newSamples[prm.Code + ind])"
+                                                       class="form-control"
+                                                       type="text"
+                                                       placeholder="Enter {{prm.Description}} ({{prm.Units}})"
+                                                       ng-pattern="/^-?[0-9]\d*(\.\d+)?$/" step="0.00001">
+                                                <div class="errorText" ng-show="newSamples[prm.Code + ind].warning">{{newSamples[prm.Code + ind].warningText}}</div>
+                                                <div class="help-block" ng-messages="addSampleForm[prm.Code + ind +'_Value'].$error" ng-show="addSampleForm[prm.Code + ind +'_Value'].$touched">
+                                                    <p ng-message="pattern">Must be a valid decimal (ex. 1, -76.0646, 0.2353).</p>
+                                                    
+                                                    <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" ng-show="show_me_prob">
+                                            <div class="form-group">
+                                                <selectpicker name="{{[prm.Code + ind]['ProblemId']}}" data-array="problemsList" data-model="newSamples[prm.Code + ind]['ProblemId']" title="Choose Problem"></selectpicker>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" ng-show="show_me_qual">
+                                            <div class="form-group">
+                                                <selectpicker name="{{[prm.Code + ind]['QualifierId']}}" data-array="qualifiersList" data-model="newSamples[prm.Code + ind]['QualifierId']" title="Choose Qualifier"></selectpicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="duplicate" ng-hide="!show_me_dup">
+                                        <div class="row" ng-hide="true">
+                                            <div class="col-md-4">
+                                                <div class="form-group" ng-class="{ 'has-error': addSampleForm[prm.Code + ind + 'dup_Depth'].$touched && addSampleForm[prm.Code + ind + 'dup_Depth'].$invalid }">
+                                                    <input ng-model="newSamples[prm.Code + ind+ 'dup']['Depth']"
+                                                           name="{{prm.Code + ind + 'dup'}}_Depth"
+                                                           class="form-control"
+                                                           type="text"
+                                                           placeholder="Enter Sample Depth (m)"
+                                                           ng-pattern="/^-?[0-9]\d*(\.\d+)?$/" step="0.00001">
+                                                    <div class="help-block" ng-messages="addSampleForm[prm.Code + ind + 'dup_Depth'].$error" ng-show="addSampleForm[prm.Code + ind + 'dup_Depth'].$touched">
+                                                        <p ng-message="pattern">Must be a valid decimal (ex. 1, -76.0646, 0.2353).</p>
+                                                        <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group " ng-class="{ 'has-error': addSampleForm[prm.Code + ind + 'dup_Value'].$touched && addSampleForm[prm.Code + ind +'dup_Value'].$invalid }">
+                                                    <input ng-model="newSamples[prm.Code + ind + 'dup']['Value']"
+                                                           name="{{prm.Code + ind}}dup_Value"
+                                                           ng-change="checkValueForWarning(newSamples[prm.Code + ind + 'dup'])"
+                                                           class="form-control"
+                                                           type="text"
+                                                           placeholder="Enter {{prm.Description}} ({{prm.Units}})"
+                                                           ng-pattern="/^-?[0-9]\d*(\.\d+)?$/" step="0.00001">
+                                                    <div class="errorText" ng-show="newSamples[prm.Code + ind + 'dup'].warning">{{newSamples[prm.Code + ind + 'dup'].warningText}}</div>
+                                                    <div class="help-block" ng-messages="addSampleForm[prm.Code + ind +'dup_Value'].$error" ng-show="addSampleForm[prm.Code + ind + dup +'dup_Value'].$touched">
+                                                        <p ng-message="pattern">Must be a valid decimal (ex. 1, -76.0646, 0.2353).</p>
+                                                        <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" ng-show="show_me_prob">
+                                                <div class="form-group">
+                                                    <selectpicker name="{{[prm.Code + ind + 'dup']['ProblemId']}}" data-array="problemsList" data-model="newSamples[prm.Code + ind + 'dup']['ProblemId']" title="Choose Problem"></selectpicker>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" ng-show="show_me_qual">
+                                                <div class="form-group">
+                                                    <selectpicker name="{{[prm.Code + ind + 'dup']['QualifierId']}}" data-array="qualifiersList" data-model="newSamples[prm.Code + ind + 'dup']['QualifierId']" title="Choose Qualifier"></selectpicker>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-hide="noDepthProfileParameters">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4 class="bright">Depth Profile</h4>
+                                </div>
+                            </div>
+
+                            <div ng-repeat="ind in prmSetIndices">
+                                <div class="success" ng-show="ind == 0">
+                                    <p>
+                                        Use the fields in this section to enter samples.
+                                        You can enter data for additional depths by clicking the “Add Sample Depth” button.
+                                        This will add another complete set of water quality data fields (referred to as “Water Quality Sample Sets”).
+                                        If you do not sample all parameters each depth, please leave those fields blank.
+                                    </p>
+                                    <div class="danger" ng-show="profileDepthError">
+                                        Please check that for each sample depth, that has at least one value,
+                                        that there is also an associated sample depth. Please either delete the sample value(s) in this set or add a sample depth.
+                                    </div>
+                                </div>
+                                <div class="verticalSpace20"></div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Sample Depth (m)</label><span class="success">&nbsp;&nbsp;Note: If surface sample, enter 0.3 for Sample Depth</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group" ng-class="{ 'has-error': addSampleForm[ind +'_Depth'].$touched && addSampleForm[ind +'_Depth'].$invalid }">
+                                            <!--ng-change="sampleDepthChange(ind, this)"-->
+                                            <input ng-model="depths[ind]['Depth']"
+                                                    name="{{ind}}_Depth"
+                                                    class="form-control"
+                                                    type="text"
+                                                    placeholder="Enter Sample Depth (m)"
+                                                    ng-pattern="/^-?[0-9]\d*(\.\d+)?$/" step="0.00001">
+                                            <div class="help-block" ng-messages="addSampleForm[ind +'_Depth'].$error" ng-show="addSampleForm[ind +'_Depth'].$touched">
+                                                <p ng-message="pattern">Must be a valid decimal (ex. 1, -76.0646, 0.2353).</p>
+                                                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-repeat="prm in parameters | orderBy: 'Code'">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>{{prm.Description}} ({{prm.Units}})</label><span></span>
+                                        </div>
+                                        <div class="col-md-4">
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p ng-show="prm.isCalibrationParameter" class="bright">*Note: this parameter is used for verification purposes only.</p>
+                                        </div>
+                                    </div>
+                                    <div class="verticalSpace10"></div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <button title="Add Qualifier" type="button" data-toggle="tooltip" data-placement="bottom"
+                                                    onmouseenter="$(this).tooltip('show')"
+                                                    class="btn btn-caution btn-circle btn-sm pull-right btn-upload-form" ng-hide="show_me_qual" ng-click="show_me_qual = !show_me_qual;">
+                                                <i class="fa fa-asterisk"></i>
+                                            </button>
+                                            <button title="Add Problem Code" type="button" data-toggle="tooltip" data-placement="bottom"
+                                                    onmouseenter="$(this).tooltip('show')"
+                                                    class="btn btn-danger btn-circle btn-sm pull-right btn-upload-form" ng-hide="show_me_prob" ng-click="show_me_prob = !show_me_prob;">
+                                                <i class="fa fa-exclamation"></i>
+                                            </button>
+                                            <button title="Add Duplicate" type="button" data-toggle="tooltip" data-placement="bottom"
+                                                    onmouseenter="$(this).tooltip('show')"
+                                                    class="btn btn-success btn-circle btn-sm pull-right btn-upload-form"
+                                                    ng-hide="show_me_dup||prm.requiresDuplicate == false" ng-click="show_me_dup = !show_me_dup;">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="verticalSpace5"></div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group " ng-class="{ 'has-error': addSampleForm[prm.Code + ind +'_Value'].$touched && addSampleForm[prm.Code + ind +'_Value'].$invalid }">
+                                                <input ng-model="newSamples[prm.Code + ind]['Value']"
+                                                        name="{{prm.Code + ind}}_Value"
+                                                        ng-change="checkValueForWarning(newSamples[prm.Code + ind])"
+                                                        class="form-control"
+                                                        type="text"
+                                                        placeholder="Enter {{prm.Description}} ({{prm.Units}})"
+                                                        ng-pattern="/^-?[0-9]\d*(\.\d+)?$/" step="0.00001">
+                                                <div class="errorText" ng-show="newSamples[prm.Code + ind].warning">{{newSamples[prm.Code + ind].warningText}}</div>
+                                                <div class="help-block" ng-messages="addSampleForm[prm.Code + ind +'_Value'].$error" ng-show="addSampleForm[prm.Code + ind +'_Value'].$touched">
+                                                    <p ng-message="pattern">Must be a valid decimal (ex. 1, -76.0646, 0.2353).</p>
+                                                    <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" ng-show="show_me_prob">
+                                            <div class="form-group">
+                                                <selectpicker name="{{[prm.Code + ind]['ProblemId']}}" data-array="problemsList" data-model="newSamples[prm.Code + ind]['ProblemId']" title="Choose Problem"></selectpicker>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" ng-show="show_me_qual">
+                                            <div class="form-group">
+                                                <selectpicker name="{{[prm.Code + ind]['QualifierId']}}" data-array="qualifiersList" data-model="newSamples[prm.Code + ind]['QualifierId']" title="Choose Qualifier"></selectpicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="duplicate" ng-hide="!show_me_dup">
+                                        <div class="row" ng-hide="true">
+                                            <div class="col-md-4">
+                                                <div class="form-group" ng-class="{ 'has-error': addSampleForm[prm.Code + ind + 'dup_Depth'].$touched && addSampleForm[prm.Code + ind + 'dup_Depth'].$invalid }">
+                                                    <input ng-model="newSamples[prm.Code + ind+ 'dup']['Depth']"
+                                                            name="{{prm.Code + ind + 'dup'}}_Depth"
+                                                            class="form-control"
+                                                            type="text"
+                                                            placeholder="Enter Sample Depth (m)"
+                                                            ng-pattern="/^-?[0-9]\d*(\.\d+)?$/" step="0.00001">
+                                                    <div class="help-block" ng-messages="addSampleForm[prm.Code + ind + 'dup_Depth'].$error" ng-show="addSampleForm[prm.Code + ind + 'dup_Depth'].$touched">
+                                                        <p ng-message="pattern">Must be a valid decimal (ex. 1, -76.0646, 0.2353).</p>
+                                                        <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group " ng-class="{ 'has-error': addSampleForm[prm.Code + ind + 'dup_Value'].$touched && addSampleForm[prm.Code + ind +'dup_Value'].$invalid }">
+                                                    <input ng-model="newSamples[prm.Code + ind + 'dup']['Value']"
+                                                            name="{{prm.Code + ind}}dup_Value"
+                                                            ng-change="checkValueForWarning(newSamples[prm.Code + ind + 'dup'])"
+                                                            class="form-control"
+                                                            type="text"
+                                                            placeholder="Enter {{prm.Description}} ({{prm.Units}})"
+                                                            ng-pattern="/^-?[0-9]\d*(\.\d+)?$/" step="0.00001">
+                                                    <div class="errorText" ng-show="newSamples[prm.Code + ind + 'dup'].warning">{{newSamples[prm.Code + ind + 'dup'].warningText}}</div>
+                                                    <div class="help-block" ng-messages="addSampleForm[prm.Code + ind +'dup_Value'].$error" ng-show="addSampleForm[prm.Code + ind + dup +'dup_Value'].$touched">
+                                                        <p ng-message="pattern">Must be a valid decimal (ex. 1, -76.0646, 0.2353).</p>
+                                                        <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" ng-show="show_me_prob">
+                                                <div class="form-group">
+                                                    <selectpicker name="{{[prm.Code + ind + 'dup']['ProblemId']}}" data-array="problemsList" data-model="newSamples[prm.Code + ind + 'dup']['ProblemId']" title="Choose Problem"></selectpicker>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" ng-show="show_me_dup">
+                                                <div class="form-group">
+                                                    <selectpicker name="{{[prm.Code + ind + 'dup']['QualifierId']}}" data-array="qualifiersList" data-model="newSamples[prm.Code + ind + 'dup']['QualifierId']" title="Choose Qualifier"></selectpicker>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <hr />
+                            </div>
+
+                            <button type="button" class="btn btn-default bright" ng-click="addParameterSet()">
+                                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Sample Depth
+                            </button>
+                        </div>
+                        <div class="verticalSpace20"></div>
+                        <div class="row bright">
+                            <div class="col-md-4">
+                                <label>Volunteer Hours</label>
+                                <button title="Add Volunteer and Hours" type="button" data-toggle="tooltip" data-placement="bottom"
+                                        onmouseenter="$(this).tooltip('show')" ng-click="addMonitorEl()"
+                                        class="btn btn-success btn-circle btn-sm pull-right btn-upload-form">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>                                                        
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 success">                                
+                                Use the field in this section to enter volunteer hours spent monitoring. Be sure to select yourself, as well as, any additional monitors participating in this sampling event.             
+                            </div>
+                        </div>
+                        <div class="verticalSpace10"></div>
+                        <div data-ng-repeat="monitor in monitors track by $index" ng-if="monitors.length>0">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <selectpicker name="{{'monitor' + $index + 'Name'}}" data-array="groupUsersList" data-model="monitor.Id" title="Choose Monitor"></selectpicker>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group " ng-class="{ 'has-error': addSampleForm['monitor' + $index + 'Hours'].$touched && addSampleForm['monitor' + $index + 'Hours'].$invalid }">
+                                        <input ng-model="monitor.Hours"
+                                                name="{{'monitor' + $index + 'Hours'}}"
+                                                class="form-control"
+                                                type="text"
+                                                placeholder="Enter Monitoring Hours for selected User"
+                                                ng-pattern="/^-?[0-9]\d*(\.\d+)?$/" step="0.00001">
+                                        <div class="help-block" ng-messages="addSampleForm['monitor' + $index + 'Hours'].$error" ng-show="addSampleForm['monitor' + $index + 'Hours'].$touched">
+                                            <p ng-message="pattern">Must be a valid decimal (ex. 1, -76.0646, 0.2353).</p>
+                                            <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button" class="btn btn-danger" ng-click="clearMonitor(monitor)">
+                                        <i class="fa fa-remove"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="verticalSpace20"></div>
+                        <div class="form-group" ng-class="{ 'has-error': addSampleForm.Comments.$touched && addSampleForm.Comments.$invalid }">
+                            <label>Comments</label>
+                            <textarea name="Comments" rows="5" class="form-control" placeholder="Enter Comments"
+                                        ng-model="newEvent.Comments"
+                                        ng-minlength="1"></textarea>
+                            <div class="help-block" ng-messages="addSampleForm.Comments.$error" ng-show="addSampleForm.Comments.$touched">
+                                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success" ng-click="addSamples(addSampleForm)">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Save
+                        </button>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal " id="warningsModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div ui-view="warnings"></div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal " id="noSamplesModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">No Water Quality Samples</h4>
+                </div>
+                <div class="modal-body" novalidate>
+                    <p>
+                        The form you submitted does not include any water quality samples. Would you like to proceed with the save?
+                    </p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="confirmNoSamples()" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Proceed with Upload
+                    </button>
+                    <button type="button" class="btn btn-danger" ng-click="" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Cancel
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal --->
+</div>

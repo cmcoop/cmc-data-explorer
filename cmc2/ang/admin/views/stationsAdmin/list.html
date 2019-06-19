@@ -1,0 +1,182 @@
+﻿<h3 ng-show="!stationsLoaded">Loading...</h3>  
+<div  ng-init="initialize()" ng-show="stationsLoaded">  
+    
+    <div class="row" >
+        
+        
+        <div class="col-md-12"  >
+            <div class="col-md-5">
+                <div class="input-group">
+                    <span class="input-group-addon">Filter</span>
+                    <input id="search" class="filterTable form-control" ng-model="search" type="text" placeholder="Search Stations...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary"  ng-click="search = ''" type="button">x</button>
+                    </span>                    
+                </div>
+            </div>
+            <div ng-hide="isMonitor">
+                <div class="col-md-offset-1 col-md-2">
+                    <a class="btn btn-success" data-toggle="modal" data-backdrop="static" data-keyboard="false"
+                       data-target="#addStationModal" ng-click="openAddStationModal()">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Station
+                    </a>
+                </div>
+                <div class="col-md-2">
+                    <a href="../Admin/#/stationsAdmin/addBulk" role="button" class="btn btn-success">
+                        <span class="fa fa-upload" aria-hidden="true"></span> Upload Bulk Stations
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <a class="btn btn-success" ng-csv="stations" csv-header="headers" filename="cmcStations.csv">
+                    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Download Stations
+                </a>
+            </div>
+            
+        </div>
+    </div>
+    <div class="row verticalSpace20"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <table class="table table-responsive">
+
+                    <thead>
+                        <tr>
+                            <th ng-click="sort('Name')">
+                                Name
+                                <span class="glyphicon sort-icon" ng-show="sortKeyName=='Name'"
+                                      ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                            </th>
+                            <th ng-click="sort('GroupNames')">
+                                Group Name(s)
+                                <span class="glyphicon sort-icon" ng-show="sortKeyName=='GroupNames'"
+                                      ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                            </th>
+                            <th ng-click="sort('Lat')">
+                                Latitude
+                                <span class="glyphicon sort-icon" ng-show="sortKeyName=='Lat'"
+                                      ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                            </th>
+                            <th ng-click="sort('Long')">
+                                Longitude
+                                <span class="glyphicon sort-icon" ng-show="sortKeyName=='Long'"
+                                      ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                            </th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr pagination-id="paginateStations" dir-paginate="stn in stations | orderBy:sortKey:reverse | filter:search | itemsPerPage:10">
+                            <td style="word-break: break-word; min-width:100px;">{{stn.Name}}</td>
+                            <td >{{stn.GroupNames}}</td>
+                            <td >{{stn.Lat.toFixed(2)}}</td>
+                            <td >{{stn.Long.toFixed(2)}}</td>
+
+                            <td>
+                                <button type="button" class="btn btn-primary pull-right" data-backdrop="static" data-keyboard="false"
+                                        ng-click="setStation(stn)" ng-hide="isMonitorOrCoordinator && stationsInGroup.indexOf(stn.Id) == -1"
+                                        data-toggle="modal" data-target="#editStationModal">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                            <td>
+                                <button id="{{stn.Id + 'r'}}" type="button" class="btn btnRetire {{getButtonStatus(stn)}}" ng-click="openActivateModal(stn)"
+                                        ng-hide="isMonitor || (isMonitorOrCoordinator && stationsInGroup.indexOf(stn.Id) == -1)"
+                                        >
+                                    <span class="glyphicon " ng-class="stn.Status == true ? 'glyphicon-ban-circle' : 'glyphicon-plus'" aria-hidden="true"></span>
+                                    {{getButtonText(stn)}}
+                                </button>
+                            </td>
+                            <!--<td>
+                            <button type="button" class="btn btn-danger" ng-click="deleteStation(stn)" data-dismiss="modal">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </td>-->
+                        </tr>
+                    </tbody>
+                </table>
+                <dir-pagination-controls pagination-id="paginateStations" max-size="5"
+                                         direction-links="true"
+                                         boundary-links="true">
+                </dir-pagination-controls>
+            </div>
+            <div class="col-md-4">
+                <leaflet lf-center="center" markers="markers" layers="layers" height="400px" width="100%"></leaflet>
+            </div>
+        </div>
+        
+
+    </div>
+    <div class="modal " id="editStationModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div ui-view="edit"></div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+    <div class="modal " id="addStationModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div ui-view="add"></div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal " id="activateStationModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Activate Station</h4>
+                </div>
+                <div class="modal-body" novalidate>
+                    <h3>Are you sure you want to activate this station?</h3>
+                
+                    <p><b>Name</b>: {{activationStation.Name}}</p>
+                    <p><b>Code</b>: {{activationStation.Code}}</p>
+                    <p><b>Lat</b>: {{activationStation.Lat}}</p>
+                    <p><b>Long</b>: {{activationStation.Long}}</p>
+                </div>
+                <div class="modal-footer">
+                    <div>
+                        <button type="button" class="btn btn-success" ng-click="activateConfirmation(activationStation)">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>Yes
+                        </button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>No
+                        </button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal " id="deactivateStationModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">De-Activate Station</h4>
+                </div>
+                <div class="modal-body" novalidate>
+                    <h3>Are you sure you want to de-activate this station?</h3>
+                
+                    <p><b>Name</b>: {{activationStation.Name}}</p>
+                    <p><b>Code</b>: {{activationStation.Code}}</p>
+                    <p><b>Lat</b>: {{activationStation.Lat}}</p>
+                    <p><b>Long</b>: {{activationStation.Long}}</p>
+                </div>
+                <div class="modal-footer">
+                    <div>
+                        <button type="button" class="btn btn-success " ng-class="{'disabled':deactivating,'':!deactivating}" ng-click="deactivateConfirmation(activationStation)">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>Yes
+                        </button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>No
+                        </button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>

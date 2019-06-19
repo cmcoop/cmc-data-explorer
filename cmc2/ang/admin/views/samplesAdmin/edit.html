@@ -1,0 +1,79 @@
+﻿<div ng-init="initialize()" ng-cloak>  
+    <div class="row">
+        <div class="col-md-12" ng-show='isMonitorOrCoordinator'>
+            <h4 class="bright">
+                Hi {{userName}}, welcome to the Data View & Download page.
+            </h4>
+            <p class="success">
+                Here, you can view and download data for {{userGroup}}.
+                The table below displays all the data for your group.                 
+            </p>
+        </div>
+        <div class="col-md-12"  ng-show='!isMonitorOrCoordinator'>
+            <h4 class="bright">
+                Hi {{userName}}, welcome to the Data View & Download page.
+            </h4>
+            <p class="success">
+                Here you can View and Download all data that has been
+                uploaded to the Data Explorer. The table below displays sampling events for the selected group.                
+            </p>                
+        </div>
+    </div>  
+    <div class="row">
+        <div class="col-md-3" ng-hide="isMonitorOrCoordinator">
+            <label>Group</label>
+            <selectpicker data-array="groupsList" data-model="slctGroupId"></selectpicker>
+            <div class="danger" ng-hide="hideNoStationForGroup">{{noStations}}</div>
+            <div class="formElementInfo hide">Use the dropdown list to choose the group for which you will be editing data.</div> 
+        </div>
+        <div class="col-md-3">
+            <label>Sampling Site</label>
+            <selectpicker name="Station" data-array="stationsList" data-model="stationId" required></selectpicker>
+        </div>
+        <div class="col-md-3">
+            <label>Start Date</label>
+            <input name="SampleDate" class="form-control" placeholder="Enter Sample Date"                   
+                   format="YYYY-MM-DD"
+                   max-date="maxDateMoment"
+                   moment-picker="startDate"
+                   required>            
+        </div>
+        <div class="col-md-3">
+            <label>End Date</label>
+            <input name="SampleDate" class="form-control" placeholder="Enter Sample Date"
+                   format="YYYY-MM-DD"
+                   max-date="maxDateMoment"
+                   moment-picker="endDate"
+                   required>
+        </div>        
+    </div>
+    
+    <div class="row">
+        <div class="verticalSpace20"></div>
+        <div class="col-md-12">
+            <div ui-grid="gridOptions" ui-grid-resize-columns ui-grid-exporter ui-grid-edit ui-grid-row-edit ui-grid-cellNav 
+                 class="ui-grid-tall" ng-if="gridOptions"></div>
+        </div>       
+        
+    </div>  
+    <div class="modal " id="deleteModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Delete Sample(s)?</h3>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete these sample(s)?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="deleteSample(deleteSampleId)">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Yes
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+</div>

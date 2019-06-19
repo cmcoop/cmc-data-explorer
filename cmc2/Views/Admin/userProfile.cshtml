@@ -1,0 +1,127 @@
+﻿@model cmc2.Models.ApplicationUser
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <img src="@Url.Action("GetProfileImage", "Admin", new { id = Model.Id } )" id="manageProfImg" class="center-block" />      
+        <br/>  
+        <a href="@Url.Action("EditProfile", "Manage")" class="btn btn-default btn-block btnLogin center-block" >
+            Edit Profile
+        </a>
+    </div>
+    <div class="col-md-7 col-md-offset-1">
+        <br />
+        <dl class="dl-horizontal">
+            <dt>
+                User Name
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>
+                First Name
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>
+                Last Name
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+        </dl>
+        <!--<dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+            <dd>
+                Activated?
+                @Html.DisplayFor(model => model.Status)
+
+            </dd>
+        </dl>-->
+        <dl class="dl-horizontal">
+            <dt>
+                Role
+            </dt>
+            @foreach (var item in ViewBag.RoleNames)
+            {
+                <dd>
+                    @item
+                </dd>
+            }
+            @if (ViewBag.RoleNames.Count == 0)
+            {
+                <dd>
+                    No roles found for this user.
+                </dd>
+            }
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>
+                Group
+            </dt>
+            @foreach (var item in ViewBag.GroupName)
+            {
+                <dd>
+                    @item
+                </dd>
+            }
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>
+                Volunteer Hours
+            </dt>
+            
+                <dd>
+                    @ViewBag.VolunteerHours
+                    </dd>
+           
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>
+                Cell Phone
+            </dt>
+            <dd>
+                @cmc2.Helpers.Extensions.formatPhone(@Html.DisplayFor(model => model.CellPhone).ToString())
+
+            </dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>
+                Home Phone
+            </dt>
+            <dd>
+                @cmc2.Helpers.Extensions.formatPhone(@Html.DisplayFor(model => model.HomePhone).ToString())
+
+            </dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>
+                Emergency Phone
+            </dt>
+            <dd>
+                @cmc2.Helpers.Extensions.formatPhone(@Html.DisplayFor(model => model.EmergencyPhone).ToString())
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt>
+                Address
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AddressFirst)
+                @Html.DisplayFor(model => model.AddressSecond)
+                @Html.DisplayFor(model => model.City), @Html.DisplayFor(model => model.State) @Html.DisplayFor(model => model.Zip)
+            </dd>
+        </dl>
+    </div>
+ </div>

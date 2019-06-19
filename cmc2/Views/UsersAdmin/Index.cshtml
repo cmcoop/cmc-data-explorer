@@ -1,0 +1,202 @@
+﻿@*@model IEnumerable<cmc2.Models.UserViewModel>*@
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div ng-app="cmcUsers">
+    <div ng-controller="indexController" ng-init="initialize(@ViewBag.jsonUsers)" ng-cloak>
+        <p ng-show="isMonitorOrCoordinator">
+           {{userName}}, on this page you can manage the individuals that belong to the {{userGroupName}} monitoring group. 
+            You can search for a particular individual by using the “Filter” box at the top of the table. 
+            Click “View Details/Edit” to edit the information for an individual. If you need to Retire an individual, click “Retire User”.  
+            Use the “Bulk File” button to upload a large number of users to your group. A template for this file can be downloaded 
+            <a class="success" href="../../../../Documents/Templates/cmcBulkUsersTemplate.csv">here</a>.
+        </p>
+        <p ng-show="!isMonitorOrCoordinator">
+            {{userName}}, on this page you can manage all of the individuals in the Data Explorer whose user level is at or below your user level. 
+            You can search for a particular individual by using the “Filter” box at the top of the table. 
+            You can also sort the table by clicking the column headers. Click “View Details/Edit” to edit the information for an individual or
+             change their user level. If you need to Retire an individual, click “Retire User”.  
+            Use the “Bulk File” button to upload a large number of users to your group. A template for this file can be downloaded 
+            <a class="success" href="../../../../Documents/Templates/cmcBulkUsersTemplate.csv">here</a>.
+        </p>
+        <h3  id="reloadingText">Reloading Users...</h3>
+        <table class="table table-responsive" id="userTable">
+            <caption>
+                <span class="col-md-3">Users</span>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <span class="input-group-addon">Filter</span>
+                        <input id="search" class="filterTable form-control" ng-model="search" type="text" placeholder="Search Users...">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <a href="../Admin/#/usersAdmin/addBulk" role="button" class="btn btn-success pull-right">
+                        <span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Bulk File
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a class="btn btn-success" ng-csv="usersDownload" csv-header="headers" filename="cmcUsers.csv">
+                        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Download Users
+                    </a>
+                </div>    
+            </caption>
+            <thead>
+                <tr>
+                    <th ng-click="sort('FirstName')">
+                        First Name
+                        <span class="glyphicon sort-icon" ng-show="sortKeyName=='FirstName'"
+                              ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                    </th>
+                    <th ng-click="sort('LastName')">
+                        Last Name
+                        <span class="glyphicon sort-icon" ng-show="sortKeyName=='LastName'"
+                              ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                    </th>
+                    <th ng-click="sort('Role')">
+                        Role
+                        <span class="glyphicon sort-icon" ng-show="sortKeyName=='Role'"
+                              ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                    </th>
+                    <th ng-click="sort('State')">
+                        State
+                        <span class="glyphicon sort-icon" ng-show="sortKeyName=='State'"
+                              ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                    </th>
+                    <th ng-click="sort('GroupName')">
+                        Group
+                        <span class="glyphicon sort-icon" ng-show="sortKeyName=='GroupName'"
+                              ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                    </th>
+                    <th></th>
+                    <th ng-click="sort('StatusOrder')">
+                        Status
+                        <span class="glyphicon sort-icon" ng-show="sortKeyName=='StatusOrder'"
+                              ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr pagination-id="paginateGroups" dir-paginate="usr in users | orderBy:sortKey:reverse | filter:search | itemsPerPage:10">
+                    <td>{{usr.FirstName}}</td>
+                    <td>{{usr.LastName}}</td>
+                    <td>{{usr.Role}}</td>
+                    <td>{{usr.State}}</td>
+                    <td>{{usr.GroupName}}</td>                    
+                    
+                    <td>
+                        <button id="{{usr.Id}}" type="button" class="btn btn-primary btnEdit"  ng-click="edit(usr.Id)">
+                            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> View Details / Edit
+                        </button>
+                    </td>
+                    <td>
+                        <button id="{{usr.Id + 'r'}}" type="button" class="btn btnRetire {{getButtonStatus(usr)}}"  ng-click="retire(usr)">
+                            <span class="glyphicon " ng-class="usr.Status == true ? 'glyphicon-ban-circle' : 'glyphicon-plus'" aria-hidden="true"></span> 
+                            {{getButtonText(usr)}}
+                        </button>
+                    </td>
+                    <td class="hide">{{usr.StatusOrder}}</td>
+                </tr>
+            </tbody>
+
+        </table>
+        <dir-pagination-controls pagination-id="paginateGroups" max-size="5"
+                                 direction-links="true"
+                                 boundary-links="true">
+        </dir-pagination-controls>
+        <div class="verticalSpace20 "></div>
+        <div class="row">
+            <div class="bright col-md-12">Note: Bulk uploaded users were assigned a generic email on upload.</div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"></button>
+                            <h4 class="modal-title">
+                                Edit User
+                            </h4>
+                        </div>
+                        <div class="modal-body" id="Preview">
+                            <!--partialview-->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="retiredModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        
+                        <div class="modal-body" id="PreviewRetire">
+                            
+                        </div>
+                       
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="registerModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <div class="modal-body" id="PreviewRegister">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/Scripts/angularUsersModule")
+    @Scripts.Render("~/Scripts/allAngularUsersCustom")
+    <script>
+            angular.module("cmcUsers").value("userRole", "@ViewBag.userRole");
+            angular.module("cmcUsers").value("userName", "@ViewBag.userName");
+        angular.module("cmcUsers").value("userGroup", "@ViewBag.userGroupName");
+        $('#reloadingText').hide();
+        $('#userTable').show();
+        function onSubmitSuccess(data) {
+            console.log(data);
+            console.log(data.responseText);
+            console.log('test');
+            console.log("@ViewBag.test");
+            console.log($("#testText").html());
+            var testText = $("#testText").html();
+            if (testText === "false") {
+                toastr.clear();
+                toastr.error('Please check form. It appears there was an error.', 'Something went wrong');
+            } else if (testText === 'foundEmail') {
+                toastr.clear();
+                toastr.error('Please check form. It appears that this email already exists in the database.', 'Something went wrong');
+                $('#duplicateEmail').show();
+                $('.modal').find('#duplicateEmail').html('This email already exists for another user.');
+            } else {
+                toastr.clear();
+                toastr.success('User Saved', 'User Saved');
+                $('#myModal').modal('hide');
+                $('#reloadingText').show();
+                $('#userTable').hide();
+                location.reload();
+            }
+        }
+        
+    </script>
+}

@@ -1,0 +1,25 @@
+﻿
+<div ng-init="initialize()" ng-show="showContent">
+    <p>There are two different methods for uploading data to the Data Explorer: 
+        Single sample event data uploads through a data entry form OR multiple sample event uploads by uploading a spreadsheet file.  
+        The file for latter method needs to adhere to a very specific file format, a template for which can be downloaded 
+        <a class="success" href="../../../../Documents/Templates/cmcBulkSamplesTemplate.csv">here</a>. 
+        Additional details can be found in the <a  class="success" href="../../../../Documents/UserGuide.pdf">Data Explorer User’s Manual</a>.
+    </p>
+    <p>Choose the type of upload you would like to do today:</p>
+    <div class="row">
+        <div class="col-md-6 ">
+            <a href="../Admin/#/benthicSamplesAdmin/add" role="button" class="btn btn-success" aria-label="Left Align">
+                <span class="fa fa-list-ul" aria-hidden="true"></span> Form
+            </a>
+        </div>
+    </div>
+    <div class="verticalSpace20"></div>
+    <div class="row">
+        <div class="col-md-6 ">
+            <a href="../Admin/#/benthicSamplesAdmin/addBulk" role="button" class="btn btn-success pull-left" aria-label="Left Align">
+                <span class="fa fa-file-excel-o" aria-hidden="true"></span> Bulk File
+            </a>
+        </div>
+    </div>
+</div>

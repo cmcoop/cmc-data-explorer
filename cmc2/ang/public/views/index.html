@@ -1,0 +1,138 @@
+﻿
+    
+    <div ng-controller="indexController" ng-init="initialize()">
+        <h2>Welcome to the Chesapeake Data Explorer!</h2>
+        <p>This is your gateway into data collected by a Chesapeake Basin-wide network of monitors. Use the
+            map below to explore the efforts of our monitoring community</p>        
+        <leaflet lf-center="center" markers="markers" layers="layers" height="400px" width="100%"></leaflet>          
+        <h2>Database Statistics</h2>
+        <h3>What's new this quarter?</h3>
+        <div class="verticalSpace20"></div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="media">
+                    <div class="media-left" href="#">
+                        <i class="fa fa-user fa-4x fa-fw info" aria-hidden="true"></i>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading">5</h2>
+                        <span class="loginBadgeDesc">NEW MONITORS</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="media">
+                    <div class="media-left" href="#">
+                        <i class="fa fa-users fa-4x fa-fw info" aria-hidden="true"></i>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading ">3</h2>
+                        <span class="loginBadgeDesc">NEW ORGANIZATIONS</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="media">
+                    <div class="media-left" href="#">
+                        <i class="fa fa-star fa-4x fa-fw success" aria-hidden="true"></i>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading">4</h2>
+                        <span class="loginBadgeDesc">NEW STATIONS</span>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <hr />
+        <h3>Overall stats</h3>
+        <div class="verticalSpace20"></div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="media">
+                    <div class="media-left" href="#">
+                        <i class="fa fa-list fa-4x fa-fw warning" aria-hidden="true"></i>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading">4 813</h2>
+                        <span class="loginBadgeDesc">WATER QUALITY RECORDS</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="media">
+                    <div class="media-left" href="#">
+                        <i class="fa fa-list fa-4x fa-fw bright" aria-hidden="true"></i>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading ">431</h2>
+                        <span class="loginBadgeDesc">BENTHIC-MACRO RECORDS</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="media">
+                    <div class="media-left" href="#">
+                        <i aria-hidden="true" class="icon-stream2 success stream48"></i>
+                        <!--<i class="fa fa-tint fa-4x fa-fw success" aria-hidden="true"></i>-->
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading ">113</h2>
+                        <span class="loginBadgeDesc">RIVERS/STREAMS</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="media">
+                    <div class="media-left" href="#">
+                        <i class="fa fa-star fa-4x fa-fw success" aria-hidden="true"></i>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading">573</h2>
+                        <span class="loginBadgeDesc">STATIONS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="verticalSpace30"></div>
+        <div class="row">
+           
+            <div class="col-md-3">
+                <div class="media">
+                    <div class="media-left" href="#">
+                        <i class="fa fa-user fa-4x fa-fw info" aria-hidden="true"></i>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading ">273</h2>
+                        <span class="loginBadgeDesc">MONITORS</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="media">
+                    <div class="media-left" href="#">
+                        <i class="fa fa-clock-o fa-4x fa-fw success" aria-hidden="true"></i>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading">527</h2>
+                        <span class="loginBadgeDesc">MONITORING HOURS</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="media">
+                    <div class="media-left" href="#">
+                        <i class="fa fa-users fa-4x fa-fw info" aria-hidden="true"></i>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading ">43</h2>
+                        <span class="loginBadgeDesc">ORGANIZATIONs</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+
+            </div>
+        </div>
+    </div>

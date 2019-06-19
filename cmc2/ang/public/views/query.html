@@ -1,0 +1,228 @@
+﻿
+    
+    <div ng-controller="queryController" ng-init="initialize()">        
+        <div class="row">
+            <div class="col-sm-12">
+                <p>
+                    On this page you can download data from the CMC Data Explorer database.  Use the form below to build a query that will identify the specific data you want to download.
+                    As you step through the form, each selection will narrow down the possible options in subsequent steps. For example, if you choose James River from the “Watershed” selection box,
+                    then the subsequent selection boxes (sub-watershed, groups, stations, etc) will only show options available in the James River watershed. At the bottom of the form,
+                    use the check boxes to select the associated metadata you would like to include with your download. When you are finished making your selection, click 
+                    <b>Get Results</b> to download your .csv file(s) of data.
+                </p>
+            </div>
+            <div class="col-sm-12" ng-show="!loaded">
+                <h3><span class="fa fa-spinner fa-spin"> </span>  Query Data Loading...</h3>
+            </div>
+        </div>
+
+        <div class="row" ng-show="loaded">
+          
+            
+            <div class="col-sm-12">
+                
+                <div class="verticalSpace20"></div>
+                <div class="row">
+                    <div class="col-sm-8" ng-class="{disableddiv: disableDataTypeFilter}">
+                        <label>Data Type</label>
+                        <selectpicker data-array="dataTypeList" data-model="dataType"></selectpicker>
+                    </div>
+                </div>  
+                <div class="verticalSpace10"></div>
+                <div class="row">
+                    <div class="col-sm-8" ng-class="{disableddiv: disableGeographyFilter}">
+                        <label>Geographical Type</label>
+                        <selectpicker data-array="geographyList" data-model="slctGeography"></selectpicker>
+                    </div>
+                </div>  
+                <div class="verticalSpace10" ng-show="showPoliticalFilters"></div>
+                <div class="row" ng-show="showPoliticalFilters" ng-class="{disableddiv: disableStateFilter}">
+                    <div class="col-sm-8" >
+                        <label>States (Pick all that apply)</label>
+                        <selectpickermulti data-array="statesList" title='All States' data-model="slctState"></selectpickermulti>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="verticalSpace25"></div>
+                        <button ng-show="hasValues(slctState)" type="button" class="btn btn-danger" ng-click="stateClear()">
+                            <i class="fa fa-remove"></i>
+                        </button>
+                    </div>
+                </div>  
+                <div class="verticalSpace10" ng-show="showPoliticalFilters"></div>
+                <div class="row" ng-show="showPoliticalFilters" ng-class="{disableddiv: disableCityCountyFilter}">
+                    <div class="col-sm-8">
+                        <label>City/County (Pick all that apply)</label>
+                        <selectpickermulti data-array="cityCountyList"  title='All Cities and Counties'  data-model="slctCityCounty"></selectpickermulti>                        
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="verticalSpace25"></div>
+                        <button ng-show="hasValues(slctCityCounty)" type="button" class="btn btn-danger" ng-click="cityCountyClear()">
+                            <i class="fa fa-remove"></i>
+                        </button>
+                    </div>
+                </div>  
+                <div class="verticalSpace10" ng-show="showWatershedFilters"></div>
+                <div class="row" ng-show="showWatershedFilters" ng-class="{disableddiv: disableHuc6Filter}">
+                    <div class="col-sm-8" >
+                        <label>Watershed (Pick all that apply)</label>
+                        <selectpickermulti data-array="huc6List" title='All Watersheds' data-model="slctHuc6"></selectpickermulti>  
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="verticalSpace25"></div>
+                        <button ng-show="hasValues(slctHuc6)" type="button" class="btn btn-danger" ng-click="huc6Clear()">
+                            <i class="fa fa-remove"></i>
+                        </button>
+                    </div>
+                </div>  
+                <div class="verticalSpace10"  ng-show="showWatershedFilters"></div>
+                <div class="row" ng-show="showWatershedFilters" ng-class="{disableddiv: disableHuc12Filter}">
+                    <div class="col-sm-8" >
+                        <label>Subwatershed (Pick all that apply)</label>
+                        <selectpickermulti data-array="huc12List" data-model="slctHuc12" title='All Subwatersheds' ></selectpickermulti>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="verticalSpace25"></div>
+                        <button ng-show="hasValues(slctHuc12)" type="button" class="btn btn-danger" ng-click="huc12Clear()">
+                            <i class="fa fa-remove"></i>
+                        </button>
+                    </div>
+                </div>  
+                <div class="verticalSpace10"></div>
+                <div class="row" ng-class="{disableddiv: disableGroupFilter}">
+                    <div class="col-sm-8" >
+                        <label>Groups (Pick all that apply)</label>
+                        <selectpickermulti data-array="groupsList" title='All Groups'  data-model="slctGroupId"></selectpickermulti>   
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="verticalSpace25"></div>
+                        <button ng-show="hasValues(slctGroupId)" type="button" class="btn btn-danger" ng-click="groupClear()">
+                            <i class="fa fa-remove"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="verticalSpace10"></div>
+                <div class="row" ng-class="{disableddiv: disableStationFilter}">
+                    <div class="col-sm-8" >
+                        <label>Stations (Pick all that apply)</label>
+                        <selectpickermulti data-array="stationsList" title='All Stations'  data-model="slctStationId" ></selectpickermulti>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="verticalSpace25"></div>
+                        <button ng-show="hasValues(slctStationId)" type="button" class="btn btn-danger" ng-click="stationClear()">
+                            <i class="fa fa-remove"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="verticalSpace10" ng-show="dataType == 'waterQuality'"></div>
+                <div class="row" ng-show="dataType == 'waterQuality'">
+                    <div class="col-sm-8">
+                        <label>Parameters (Pick all that apply)</label>
+                        <selectpickermulti data-array="parameterList" title='All Parameters'  data-model="slctParameterId"></selectpickermulti>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="verticalSpace25"></div>
+                        <button ng-show="hasValues(slctParameterId)" type="button" class="btn btn-danger" ng-click="parameterClear()">
+                            <i class="fa fa-remove"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="verticalSpace10"></div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Start Date</label>
+                        <div name="StartDate" class="form-control" placeholder="Enter Start Date"
+                             format="YYYY-MM-DD"
+                             moment-picker="startDate">{{startDate}}</div>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>End Date</label>
+                        <div name="EndDate" class="form-control" placeholder="Enter End Date"
+                             format="YYYY-MM-DD"
+                             moment-picker="endDate">{{endDate}}</div>
+                    </div> 
+                    <div class="col-sm-3">
+                        <div class="verticalSpace25"></div>
+                        <button ng-show="dateHasValue()" type="button" class="btn btn-danger" ng-click="datesClear()">
+                            <i class="fa fa-remove"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="verticalSpace10"></div>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <label>Choose Optional Metadata to Include With Download:</label>
+                        <div class="form-inline">
+                            <div class="queryCheckbox"><input type="checkbox" ng-model="metadata.includeGroups" >  Groups</div>
+                            <div class="queryCheckbox" ng-show="dataType == 'waterQuality'"><input type="checkbox" ng-model="metadata.includeParameters">  Parameters</div>
+                            <div class="queryCheckbox"><input type="checkbox" ng-model="metadata.includeStations" >  Stations</div>
+                            <div class="queryCheckbox" ng-show="dataType == 'waterQuality'"><input type="checkbox" ng-model="metadata.includeCalibration">  Calibration Samples</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="verticalSpace20"></div>
+                <div class="row">
+                    <div class="col-sm-2" ng-show="dataType == 'waterQuality'">
+                        <button id="btnResults" title="Get Results" type="button" data-placement="bottom" ng-csv="getResults()" csv-header="headers" filename="cmcWaterQualitySamples.csv"
+                                ng-class="{'disabled':downloading}"
+                                class="btn btn-success">
+                            <i class="fa fa-download"></i> Get Results
+                        </button>
+                    </div>
+                    <div class="col-sm-2" ng-show="dataType == 'benthic'">
+                        <button id="btnResults" title="Get Results" type="button" data-placement="bottom" ng-csv="getResults()" csv-header="headers" filename="cmcBenthicSamples.csv"
+                                ng-class="{'disabled':downloading}"
+                                class="btn btn-success">
+                            <i class="fa fa-download"></i> Get Results
+                        </button>
+                    </div>
+                    <div class="col-sm-2" ng-hide="true">
+                        <button id="btnResultsStations" title="Get Station Results" type="button" data-placement="bottom" ng-csv="getResultsStations()" csv-header="headers" filename="cmcStations.csv"
+                                ng-class="{'disabled':downloading}"
+                                class="btn btn-success">
+                            <i class="fa fa-download"></i> Get Station Results
+                        </button>
+                    </div>
+                    <div class="col-sm-2" ng-hide="true">
+                        <button id="btnResultsGroups" title="Get Group Results" type="button" data-placement="bottom" ng-csv="getResultsGroups()" csv-header="headers" filename="cmcGroups.csv"
+                                ng-class="{'disabled':downloading}"
+                                class="btn btn-success">
+                            <i class="fa fa-download"></i> Get Group Results
+                        </button>
+                    </div>
+
+                    <div class="col-sm-2" ng-hide="true">
+                        <button id="btnResultsParameters" title="Get Parameter Results" type="button" data-placement="bottom" ng-csv="getResultsParameters()" csv-header="headers" filename="cmcParameters.csv"
+                                ng-class="{'disabled':downloading}"
+                                class="btn btn-success">
+                            <i class="fa fa-download"></i> Get Parameter Results
+                        </button>
+                    </div>
+                    <div class="col-sm-2" ng-hide="true">
+                        <button id="btnResultsCalibration" title="Get Calibration Results" type="button" data-placement="bottom" ng-csv="getResultsCalibration()" csv-header="headers" filename="cmcCalibrationSamples.csv"
+                                ng-class="{'disabled':downloading}"
+                                class="btn btn-success">
+                            <i class="fa fa-download"></i> Get Calibration Results
+                        </button>
+                    </div>
+                    <div class="col-sm-3">
+                        <button title="Get Results" type="button" class="btn btn-danger" ng-click="clearFilters()">
+                            <i class="fa fa-close"></i> Clear All Filters
+                        </button>
+                    </div>
+                    
+                </div>  
+               
+                <div class='row' ng-show="downloading">
+                    <hr />
+                    <div class="col-sm-7">
+                        <span class="fa fa-spinner fa-spin"> </span>  Downloading...
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+        
+
+    </div>

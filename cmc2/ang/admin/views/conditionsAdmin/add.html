@@ -1,0 +1,51 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="clearNewCondition(addConditionForm)" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title">Add Condition</h4>
+</div>
+<div class="modal-body" novalidate>
+    <form name="addConditionForm">
+        <div class="form-group" ng-class="{ 'has-error': addConditionForm.Name.$touched && addConditionForm.Name.$invalid }">
+            <label>Condition Name</label>
+            <input name="Name" type="text" class="form-control" placeholder="Enter Condition Name"
+                   ng-model="newCondition.Name"
+                   ng-minlength="1"
+                   ng-maxlength="1000"
+                   required>
+            <div class="help-block" ng-messages="addLabForm.Name.$error" ng-show="addConditionForm.Name.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>        
+        <div class="form-group" ng-class="{ 'has-error': addConditionForm.Name.$touched && addConditionForm.Name.$invalid }">
+            <label>Condition Code</label>
+            <input name="Code" type="text" class="form-control" placeholder="Enter Condition Code"
+                   ng-model="newCondition.Code"
+                   ng-minlength="1"
+                   ng-maxlength="1000"
+                   required>
+            <div class="help-block" ng-messages="addConditionForm.Code.$error" ng-show="addConditionForm.Code.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>     
+        <div class="form-group" ng-class="{ 'has-error': addConditionForm.Description.$touched && addConditionForm.Description.$invalid }">
+            <label>Condition Description</label>
+            <input name="Description" type="text" class="form-control" placeholder="Enter Condition Description"
+                   ng-model="newCondition.Description"
+                   ng-minlength="1"
+                   ng-maxlength="1000"
+                   >
+            <div class="help-block" ng-messages="addConditionForm.Description.$error" ng-show="addConditionForm.Description.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>   
+        
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-success" ng-click="addCondition(addConditionForm)">
+        <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Save
+    </button>
+    <button type="button" class="btn btn-danger" ng-click="clearNewCondition(addConditionForm)" data-dismiss="modal">
+        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Cancel
+    </button>
+</div>

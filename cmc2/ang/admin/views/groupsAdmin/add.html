@@ -1,0 +1,168 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="clearNewGroup(addGroupForm)" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title">Add Group</h4>
+</div>
+<div class="modal-body" novalidate>
+    <form name="addGroupForm">
+        <div class="form-group" ng-class="{ 'has-error': addGroupForm.Name.$touched && addGroupForm.Name.$invalid }">
+            <label>Group Name</label>
+            <input name="Name" type="text" class="form-control" placeholder="Enter Group Name"
+                   ng-model="newGroup.Name"
+                   ng-minlength="2"
+                   ng-maxlength="1000"
+                   groupunique
+                   required>
+            <div class="help-block" ng-messages="addGroupForm.Name.$error" ng-show="addGroupForm.Name.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>            
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addGroupForm.Code.$touched && addGroupForm.Code.$invalid }">
+            <label>Group Code</label>
+            <input name="Code" type="text" class="form-control"
+                   disabled
+                   ng-model="newGroup.Code"
+                   ng-minlength="1"
+                   ng-maxlength="1000"
+                   required>
+            <div class="help-block" ng-messages="addGroupForm.Code.$error" ng-show="addGroupForm.Code.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addGroupForm.ContactName.$touched && addGroupForm.ContactName.$invalid }">
+            <label>Contact Name</label>
+            <input name="ContactName" type="text" class="form-control" placeholder="Enter Contact Name"
+                   ng-model="newGroup.ContactName"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addGroupForm.ContactName.$error" ng-show="addGroupForm.ContactName.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': addGroupForm.ContactEmail.$touched && addGroupForm.ContactEmail.$invalid }">
+            <label>Contact Email</label>
+            <input name="ContactEmail" type="email" class="form-control" placeholder="Enter Contact Email"
+                   ng-model="newGroup.ContactEmail">
+            <div class="help-block" ng-messages="addGroupForm.ContactEmail.$error" ng-show="addGroupForm.ContactEmail.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addGroupForm.ContactCellPhone.$touched && addGroupForm.ContactCellPhone.$invalid }">
+            <label>Contact Cell Phone</label>
+            <input name="ContactCellPhone" type="text" class="form-control" placeholder="Enter Contact Cell Phone"
+                   ng-model="newGroup.ContactCellPhone"
+                   ng-pattern="/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/" />
+            <div class="help-block" ng-messages="addGroupForm.ContactCellPhone.$error" ng-show="addGroupForm.ContactCellPhone.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addGroupForm.ContactOfficePhone.$touched && addGroupForm.ContactOfficePhone.$invalid }">
+            <label>Contact Office Phone</label>
+            <input name="ContactOfficePhone" type="text" class="form-control" placeholder="Enter Contact Office Phone"
+                   ng-model="newGroup.ContactOfficePhone"
+                   ng-pattern="/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/" />
+            <div class="help-block" ng-messages="addGroupForm.ContactOfficePhone.$error" ng-show="addGroupForm.ContactOfficePhone.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addGroupForm.Description.$touched && addGroupForm.Description.$invalid }">
+            <label>Description</label>
+            <textarea name="Description" type="text" rows="3" class="form-control" placeholder="Enter Group Description"
+                      ng-model="newGroup.Description"
+                      ng-minlength="1"
+                      ng-maxlength="500"></textarea>
+            <div class="help-block" ng-messages="addGroupForm.Description.$error" ng-show="addGroupForm.Description.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addGroupForm.Url.$touched && addGroupForm.Url.$invalid }">
+            <label>Group Url</label>
+            <input name="Url" type="text" class="form-control" placeholder="Enter Url for Group Website"
+                   ng-model="newGroup.Url"
+                   ng-maxlength="1000"
+                   ng-pattern="/^((https?|ftp)://)?([a-z]+[.])?[a-z0-9-]+([.][a-z]{1,4}){1,2}(/.*[?].*)?$/">
+            <div class="help-block" ng-messages="addGroupForm.Url.$error" ng-show="addGroupForm.Url.$touched">
+                <p ng-message="pattern">Must be a valid url (ex. www.vecos.org, http://www.vecos.org )</p>
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addGroupForm.AddressFirst.$touched && addGroupForm.AddressFirst.$invalid }">
+            <label>Address - First Line</label>
+            <input name="AddressFirst" type="text" class="form-control" placeholder="Enter Address - First Line"
+                   ng-model="newGroup.AddressFirst"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addGroupForm.AddressFirst.$error" ng-show="addGroupForm.AddressFirst.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addGroupForm.AddressSecond.$touched && addGroupForm.AddressSecond.$invalid }">
+            <label>Address - Second Line</label>
+            <input name="AddressSecond" type="text" class="form-control" placeholder="Enter Address - Second Line"
+                   ng-model="newGroup.AdressSecond"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addGroupForm.AddressSecond.$error" ng-show="addGroupForm.AddressSecond.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addGroupForm.City.$touched && addGroupForm.City.$invalid }">
+            <label>City</label>
+            <input name="City" type="text" class="form-control" placeholder="Enter City"
+                   ng-model="newGroup.City"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addGroupForm.City.$error" ng-show="addGroupForm.City.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>State</label>
+            <div>
+                <selectpicker data-array="usStatesList" data-model="newGroup.State"></selectpicker>                           
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': addGroupForm.Zip.$touched && addGroupForm.Zip.$invalid }">
+            <label>Zip Code</label>
+            <input name="Zip" type="text" class="form-control" placeholder="Enter Zip Code"
+                   ng-model="newGroup.Zip"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="addGroupForm.Zip.$error" ng-show="addGroupForm.Zip.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="!isMonitorOrCoordinator">
+            <label>Allow Coordinator to delete and publish?</label>
+            <div>
+                <selectpicker data-array="binaryListNoNull" data-model="newGroup.coordinatorCanPublish"></selectpicker>
+            </div>
+        </div>
+        <div class="form-group" ng-if="!isMonitorOrCoordinator">
+            <label>Uses CMC QAPP/Method Manual?</label>
+            <div>
+                <selectpicker data-array="binaryList" data-model="newGroup.cmcQapp"></selectpicker>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>BenthicMethod</label>
+            <div>
+                <selectpicker data-array="benthicMethodsList" data-model="newGroup.BenthicMethod"></selectpicker>
+            </div>
+        </div>        
+        <div class="form-group" ng-if="!isMonitorOrCoordinator">
+            <label>Managing CMC Administrator</label>
+            <div>
+                <selectpickermulti3 data-array="cmcMemberList" data-model="newGroup.cmcMembers"></selectpickermulti3>
+            </div>
+        </div>       
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-success" ng-click="addGroup(addGroupForm)" >
+        <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Save
+    </button>
+    <button type="button" class="btn btn-danger" ng-click="clearNewGroup(addGroupForm)" data-dismiss="modal">
+        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Cancel
+    </button>
+</div>

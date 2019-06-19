@@ -1,0 +1,8 @@
+﻿<h3 ng-show="loading">Loading...</h3>
+<div ng-init="initialize()" ng-show="!loading">
+    <ul>
+        <li ng-repeat="s in submissions">
+            <a class="cmcLink" href="../Documents/submissions/{{s.Name}}.zip" style="cursor:pointer;">{{s.Name}}</a>, last updated {{s.Date}}
+        </li>
+    </ul>        
+</div>

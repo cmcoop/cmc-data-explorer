@@ -1,0 +1,55 @@
+﻿@model cmc2.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Retire";
+}
+
+@if (Model.Status != true)
+{
+    <h3>Are you sure you want to activate this user?</h3>
+}
+else
+{
+    <h3>Are you sure you want to retire this user?</h3>
+}
+<div>
+    
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="verticalSpace20"></div>
+        <div class="form-group">
+            
+            <label>User</label>
+
+            <div>
+               @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName) (@Html.DisplayFor(model => model.UserName))
+            </div>
+        </div>
+
+
+        if (Model.Status != true)
+        {
+            <label>Role</label>
+            <div class="form-group">
+                @foreach (var item in ViewBag.RolesList)
+                {
+                    <div class="row">
+                        <div class="radio">
+                            <label><input type="radio" name="SelectedRole" value="@item.Value" checked="@item.Selected" class="checkbox-inline">@item.Value</label>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Yes" class="btn btn-success" />
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        </div>
+
+
+
+    }
+</div>
+

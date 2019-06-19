@@ -1,0 +1,1465 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.2.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.2.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{92E38587-8AFC-431D-A583-9AE15FEAEA90}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>cmc2</RootNamespace>
+    <AssemblyName>cmc2</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort>44337</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Excel, Version=2.1.2.3, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.2.1.2.3\lib\net45\Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FileTagger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FileTagger.1.1.0\lib\FileTagger.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.7\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.3.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.3.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.3.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.3.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.3.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.3.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.8.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.8.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.1.1.1\lib\netstandard1.1\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.1.1\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.OData.Core, Version=6.16.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.OData.Core.6.16.0\lib\portable-net45+win+wpa81\Microsoft.OData.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.OData.Edm, Version=6.16.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.OData.Edm.6.16.0\lib\portable-net45+win+wpa81\Microsoft.OData.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.1.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.1.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.1.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.1.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Spatial, Version=6.16.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Spatial.6.16.0\lib\portable-net45+win+wpa81\Microsoft.Spatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Spatial, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.8.2\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.OData, Version=5.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.3.1\lib\net45\System.Web.Http.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.OData, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.OData.5.6.0\lib\net45\System.Web.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ApplicationUsersController.cs" />
+    <Compile Include="Controllers\BenthicConditionCategoriesController.cs" />
+    <Compile Include="Controllers\BenthicConditionsController.cs" />
+    <Compile Include="Controllers\BenthicEventConditionsController.cs" />
+    <Compile Include="Controllers\BenthicEventsController.cs" />
+    <Compile Include="Controllers\BenthicMonitorLogsController.cs" />
+    <Compile Include="Controllers\BenthicParametersController.cs" />
+    <Compile Include="Controllers\PublicBenthicSamplesController.cs" />
+    <Compile Include="Controllers\BenthicSamplesController.cs" />
+    <Compile Include="Controllers\ConditionCategoriesController.cs" />
+    <Compile Include="Controllers\ConditionsController.cs" />
+    <Compile Include="Controllers\EventConditionsController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
+    <Compile Include="Controllers\GroupsController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LabsController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MonitorLogsController.cs" />
+    <Compile Include="Controllers\ParameterGroupsController.cs" />
+    <Compile Include="Controllers\ParametersController.cs" />
+    <Compile Include="Controllers\ProblemsController.cs" />
+    <Compile Include="Controllers\QaFlagsController.cs" />
+    <Compile Include="Controllers\QualifiersController.cs" />
+    <Compile Include="Controllers\RelatedParametersController.cs" />
+    <Compile Include="Controllers\PublicSamplesController.cs" />
+    <Compile Include="Controllers\SamplesController.cs" />
+    <Compile Include="Controllers\StationGroupsController.cs" />
+    <Compile Include="Controllers\StationSamplingMethodsController.cs" />
+    <Compile Include="Controllers\CustomApiController.cs" />
+    <Compile Include="Controllers\StationsController.cs" />
+    <Compile Include="Controllers\GroupAdminController.cs" />
+    <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\adminLogic.cs" />
+    <Compile Include="Helpers\ApplicationUserManger.cs" />
+    <Compile Include="Helpers\AuthorizeLogic.cs" />
+    <Compile Include="Helpers\Extensions.cs" />
+    <Compile Include="Migrations\201611291849311_Initial.cs" />
+    <Compile Include="Migrations\201611291849311_Initial.Designer.cs">
+      <DependentUpon>201611291849311_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701262037042_addGroupIdToStation.cs" />
+    <Compile Include="Migrations\201701262037042_addGroupIdToStation.Designer.cs">
+      <DependentUpon>201701262037042_addGroupIdToStation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702162144306_addProblemCodes.cs" />
+    <Compile Include="Migrations\201702162144306_addProblemCodes.Designer.cs">
+      <DependentUpon>201702162144306_addProblemCodes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702171512149_updateSampleWProblems.cs" />
+    <Compile Include="Migrations\201702171512149_updateSampleWProblems.Designer.cs">
+      <DependentUpon>201702171512149_updateSampleWProblems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702171611369_addQualifier.cs" />
+    <Compile Include="Migrations\201702171611369_addQualifier.Designer.cs">
+      <DependentUpon>201702171611369_addQualifier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703311658331_updatedecimal.cs" />
+    <Compile Include="Migrations\201703311658331_updatedecimal.Designer.cs">
+      <DependentUpon>201703311658331_updatedecimal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704032118319_addQaFlag.cs" />
+    <Compile Include="Migrations\201704032118319_addQaFlag.Designer.cs">
+      <DependentUpon>201704032118319_addQaFlag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704032127479_addNullableQualifierAndProblemIds.cs" />
+    <Compile Include="Migrations\201704032127479_addNullableQualifierAndProblemIds.Designer.cs">
+      <DependentUpon>201704032127479_addNullableQualifierAndProblemIds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704041418196_defineForeignKeysSample.cs" />
+    <Compile Include="Migrations\201704041418196_defineForeignKeysSample.Designer.cs">
+      <DependentUpon>201704041418196_defineForeignKeysSample.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704041930169_idsnullable.cs" />
+    <Compile Include="Migrations\201704041930169_idsnullable.Designer.cs">
+      <DependentUpon>201704041930169_idsnullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704042005470_removeidsnullableQualifierQaFlagProblem.cs" />
+    <Compile Include="Migrations\201704042005470_removeidsnullableQualifierQaFlagProblem.Designer.cs">
+      <DependentUpon>201704042005470_removeidsnullableQualifierQaFlagProblem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704181936359_expandStationAndAddStationGroupRelationship.cs" />
+    <Compile Include="Migrations\201704181936359_expandStationAndAddStationGroupRelationship.Designer.cs">
+      <DependentUpon>201704181936359_expandStationAndAddStationGroupRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705081827052_addLab.cs" />
+    <Compile Include="Migrations\201705081827052_addLab.Designer.cs">
+      <DependentUpon>201705081827052_addLab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705121929280_updateEventsAndAddConditionTable.cs" />
+    <Compile Include="Migrations\201705121929280_updateEventsAndAddConditionTable.Designer.cs">
+      <DependentUpon>201705121929280_updateEventsAndAddConditionTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705121954294_updateEventsUserIdtoString.cs" />
+    <Compile Include="Migrations\201705121954294_updateEventsUserIdtoString.Designer.cs">
+      <DependentUpon>201705121954294_updateEventsUserIdtoString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705161819272_addCodeToParameterGroupStationTables.cs" />
+    <Compile Include="Migrations\201705161819272_addCodeToParameterGroupStationTables.Designer.cs">
+      <DependentUpon>201705161819272_addCodeToParameterGroupStationTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705161827036_fixLabInParameterGroup.cs" />
+    <Compile Include="Migrations\201705161827036_fixLabInParameterGroup.Designer.cs">
+      <DependentUpon>201705161827036_fixLabInParameterGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705161831126_renameLabInParameterGroup.cs" />
+    <Compile Include="Migrations\201705161831126_renameLabInParameterGroup.Designer.cs">
+      <DependentUpon>201705161831126_renameLabInParameterGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705162107540_createMonitorLogAndEventConditionTables.cs" />
+    <Compile Include="Migrations\201705162107540_createMonitorLogAndEventConditionTables.Designer.cs">
+      <DependentUpon>201705162107540_createMonitorLogAndEventConditionTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705162114404_AddUserCode.cs" />
+    <Compile Include="Migrations\201705162114404_AddUserCode.Designer.cs">
+      <DependentUpon>201705162114404_AddUserCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705171947336_makeTierIntParameter.cs" />
+    <Compile Include="Migrations\201705171947336_makeTierIntParameter.Designer.cs">
+      <DependentUpon>201705171947336_makeTierIntParameter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705171959064_makeLabIdnullableAndAddDetectionLimitToParameterGroup.cs" />
+    <Compile Include="Migrations\201705171959064_makeLabIdnullableAndAddDetectionLimitToParameterGroup.Designer.cs">
+      <DependentUpon>201705171959064_makeLabIdnullableAndAddDetectionLimitToParameterGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705181845360_makeMethodIntInParameters.cs" />
+    <Compile Include="Migrations\201705181845360_makeMethodIntInParameters.Designer.cs">
+      <DependentUpon>201705181845360_makeMethodIntInParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705181856020_makeDetectionLimitDecimalInParameterGroup.cs" />
+    <Compile Include="Migrations\201705181856020_makeDetectionLimitDecimalInParameterGroup.Designer.cs">
+      <DependentUpon>201705181856020_makeDetectionLimitDecimalInParameterGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705191224365_createdby-and-modifiedby.cs" />
+    <Compile Include="Migrations\201705191224365_createdby-and-modifiedby.Designer.cs">
+      <DependentUpon>201705191224365_createdby-and-modifiedby.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705221607115_addDescriptionToLab.cs" />
+    <Compile Include="Migrations\201705221607115_addDescriptionToLab.Designer.cs">
+      <DependentUpon>201705221607115_addDescriptionToLab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706011811360_addSampleTypeToParameters.cs" />
+    <Compile Include="Migrations\201706011811360_addSampleTypeToParameters.Designer.cs">
+      <DependentUpon>201706011811360_addSampleTypeToParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706091340374_add-key-to-event-add-fields-to-sample.cs" />
+    <Compile Include="Migrations\201706091340374_add-key-to-event-add-fields-to-sample.Designer.cs">
+      <DependentUpon>201706091340374_add-key-to-event-add-fields-to-sample.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706120102106_makeCodesUnique.cs" />
+    <Compile Include="Migrations\201706120102106_makeCodesUnique.Designer.cs">
+      <DependentUpon>201706120102106_makeCodesUnique.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706120108090_addStatusToCondictionGroupLabParameterStation.cs" />
+    <Compile Include="Migrations\201706120108090_addStatusToCondictionGroupLabParameterStation.Designer.cs">
+      <DependentUpon>201706120108090_addStatusToCondictionGroupLabParameterStation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706121542399_formatMonitorLogHoursToDecimal.cs" />
+    <Compile Include="Migrations\201706121542399_formatMonitorLogHoursToDecimal.Designer.cs">
+      <DependentUpon>201706121542399_formatMonitorLogHoursToDecimal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706271436150_addCreatedAndModifiedByToStation.cs" />
+    <Compile Include="Migrations\201706271436150_addCreatedAndModifiedByToStation.Designer.cs">
+      <DependentUpon>201706271436150_addCreatedAndModifiedByToStation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706271438514_addCreatedAndModifiedByToStationGroup.cs" />
+    <Compile Include="Migrations\201706271438514_addCreatedAndModifiedByToStationGroup.Designer.cs">
+      <DependentUpon>201706271438514_addCreatedAndModifiedByToStationGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706271449052_addCreatedAndModifiedByToMonitorLog.cs" />
+    <Compile Include="Migrations\201706271449052_addCreatedAndModifiedByToMonitorLog.Designer.cs">
+      <DependentUpon>201706271449052_addCreatedAndModifiedByToMonitorLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706271502480_addCreatedAndModifiedByToGroups.cs" />
+    <Compile Include="Migrations\201706271502480_addCreatedAndModifiedByToGroups.Designer.cs">
+      <DependentUpon>201706271502480_addCreatedAndModifiedByToGroups.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706271536016_addCreatedAndModifiedByToUsers.cs" />
+    <Compile Include="Migrations\201706271536016_addCreatedAndModifiedByToUsers.Designer.cs">
+      <DependentUpon>201706271536016_addCreatedAndModifiedByToUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707051900507_addRequiresSampleDepthToParametersAndisCategoricaltoConditions.cs" />
+    <Compile Include="Migrations\201707051900507_addRequiresSampleDepthToParametersAndisCategoricaltoConditions.Designer.cs">
+      <DependentUpon>201707051900507_addRequiresSampleDepthToParametersAndisCategoricaltoConditions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707061419321_makeDepthNullableSampleTable.cs" />
+    <Compile Include="Migrations\201707061419321_makeDepthNullableSampleTable.Designer.cs">
+      <DependentUpon>201707061419321_makeDepthNullableSampleTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707061929307_addConditionCategory.cs" />
+    <Compile Include="Migrations\201707061929307_addConditionCategory.Designer.cs">
+      <DependentUpon>201707061929307_addConditionCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707061936431_addConditionCategory2.cs" />
+    <Compile Include="Migrations\201707061936431_addConditionCategory2.Designer.cs">
+      <DependentUpon>201707061936431_addConditionCategory2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707061949083_addConditionCategory3.cs" />
+    <Compile Include="Migrations\201707061949083_addConditionCategory3.Designer.cs">
+      <DependentUpon>201707061949083_addConditionCategory3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707062045201_addConditionCategory4.cs" />
+    <Compile Include="Migrations\201707062045201_addConditionCategory4.Designer.cs">
+      <DependentUpon>201707062045201_addConditionCategory4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707071831023_conditionIdtoIntConditionCategory.cs" />
+    <Compile Include="Migrations\201707071831023_conditionIdtoIntConditionCategory.Designer.cs">
+      <DependentUpon>201707071831023_conditionIdtoIntConditionCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707072030554_addOrderToConditions.cs" />
+    <Compile Include="Migrations\201707072030554_addOrderToConditions.Designer.cs">
+      <DependentUpon>201707072030554_addOrderToConditions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708082119160_setupBenthics.cs" />
+    <Compile Include="Migrations\201708082119160_setupBenthics.Designer.cs">
+      <DependentUpon>201708082119160_setupBenthics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708091742182_addBottomTypeToBenthicParameter.cs" />
+    <Compile Include="Migrations\201708091742182_addBottomTypeToBenthicParameter.Designer.cs">
+      <DependentUpon>201708091742182_addBottomTypeToBenthicParameter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708111424522_addBethicMethodToGroup.cs" />
+    <Compile Include="Migrations\201708111424522_addBethicMethodToGroup.Designer.cs">
+      <DependentUpon>201708111424522_addBethicMethodToGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708181428490_BenthicConditionsAndCategories.cs" />
+    <Compile Include="Migrations\201708181428490_BenthicConditionsAndCategories.Designer.cs">
+      <DependentUpon>201708181428490_BenthicConditionsAndCategories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708241341391_addCmcMemberUser.cs" />
+    <Compile Include="Migrations\201708241341391_addCmcMemberUser.Designer.cs">
+      <DependentUpon>201708241341391_addCmcMemberUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708281803087_addIsCalibrationParameterToParameters.cs" />
+    <Compile Include="Migrations\201708281803087_addIsCalibrationParameterToParameters.Designer.cs">
+      <DependentUpon>201708281803087_addIsCalibrationParameterToParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709011456460_addRelatedParametersToSupportCalibration.cs" />
+    <Compile Include="Migrations\201709011456460_addRelatedParametersToSupportCalibration.Designer.cs">
+      <DependentUpon>201709011456460_addRelatedParametersToSupportCalibration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709051910281_tidalNontidalToBoolInParameters.cs" />
+    <Compile Include="Migrations\201709051910281_tidalNontidalToBoolInParameters.Designer.cs">
+      <DependentUpon>201709051910281_tidalNontidalToBoolInParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709051948196_renameColumnsRelatedParameters.cs" />
+    <Compile Include="Migrations\201709051948196_renameColumnsRelatedParameters.Designer.cs">
+      <DependentUpon>201709051948196_renameColumnsRelatedParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709111654322_nullableValueInSamples.cs" />
+    <Compile Include="Migrations\201709111654322_nullableValueInSamples.Designer.cs">
+      <DependentUpon>201709111654322_nullableValueInSamples.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709181528542_addIwlGroupToBenthicParameter.cs" />
+    <Compile Include="Migrations\201709181528542_addIwlGroupToBenthicParameter.Designer.cs">
+      <DependentUpon>201709181528542_addIwlGroupToBenthicParameter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709181544141_renameIwlGroupToAllarmBenthicParameter.cs" />
+    <Compile Include="Migrations\201709181544141_renameIwlGroupToAllarmBenthicParameter.Designer.cs">
+      <DependentUpon>201709181544141_renameIwlGroupToAllarmBenthicParameter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709191808482_addIwlGrouptoBenthicParameters.cs" />
+    <Compile Include="Migrations\201709191808482_addIwlGrouptoBenthicParameters.Designer.cs">
+      <DependentUpon>201709191808482_addIwlGrouptoBenthicParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709191847443_tolerantNonInsectsToBenthicParameter.cs" />
+    <Compile Include="Migrations\201709191847443_tolerantNonInsectsToBenthicParameter.Designer.cs">
+      <DependentUpon>201709191847443_tolerantNonInsectsToBenthicParameter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709211354546_bottomTypetoIntBenthicParameter.cs" />
+    <Compile Include="Migrations\201709211354546_bottomTypetoIntBenthicParameter.Designer.cs">
+      <DependentUpon>201709211354546_bottomTypetoIntBenthicParameter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709211532419_differentiateIwlGroupBenthicParameter.cs" />
+    <Compile Include="Migrations\201709211532419_differentiateIwlGroupBenthicParameter.Designer.cs">
+      <DependentUpon>201709211532419_differentiateIwlGroupBenthicParameter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709212011416_addOrdertoBenthicParameters.cs" />
+    <Compile Include="Migrations\201709212011416_addOrdertoBenthicParameters.Designer.cs">
+      <DependentUpon>201709212011416_addOrdertoBenthicParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709221917078_addMethodtoBenthicConditions.cs" />
+    <Compile Include="Migrations\201709221917078_addMethodtoBenthicConditions.Designer.cs">
+      <DependentUpon>201709221917078_addMethodtoBenthicConditions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709221922395_addMethodtoBenthicConditions2.cs" />
+    <Compile Include="Migrations\201709221922395_addMethodtoBenthicConditions2.Designer.cs">
+      <DependentUpon>201709221922395_addMethodtoBenthicConditions2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709261342396_addSamplingMethodToStation.cs" />
+    <Compile Include="Migrations\201709261342396_addSamplingMethodToStation.Designer.cs">
+      <DependentUpon>201709261342396_addSamplingMethodToStation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709261607589_addProblemOrder.cs" />
+    <Compile Include="Migrations\201709261607589_addProblemOrder.Designer.cs">
+      <DependentUpon>201709261607589_addProblemOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709261621051_addProblemApplicationText.cs" />
+    <Compile Include="Migrations\201709261621051_addProblemApplicationText.Designer.cs">
+      <DependentUpon>201709261621051_addProblemApplicationText.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709271557508_addCertificationDateToApplicationUser.cs" />
+    <Compile Include="Migrations\201709271557508_addCertificationDateToApplicationUser.Designer.cs">
+      <DependentUpon>201709271557508_addCertificationDateToApplicationUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709281341479_addRequiresDuplicateToParameter.cs" />
+    <Compile Include="Migrations\201709281341479_addRequiresDuplicateToParameter.Designer.cs">
+      <DependentUpon>201709281341479_addRequiresDuplicateToParameter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711071629511_addIsNumericToBenthicConditions.cs" />
+    <Compile Include="Migrations\201711071629511_addIsNumericToBenthicConditions.Designer.cs">
+      <DependentUpon>201711071629511_addIsNumericToBenthicConditions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711142117548_addCedrCodeToConditionCategory.cs" />
+    <Compile Include="Migrations\201711142117548_addCedrCodeToConditionCategory.Designer.cs">
+      <DependentUpon>201711142117548_addCedrCodeToConditionCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711171501053_addCedrUnitsToParameters.cs" />
+    <Compile Include="Migrations\201711171501053_addCedrUnitsToParameters.Designer.cs">
+      <DependentUpon>201711171501053_addCedrUnitsToParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711171523342_removeCedrUnits.cs" />
+    <Compile Include="Migrations\201711171523342_removeCedrUnits.Designer.cs">
+      <DependentUpon>201711171523342_removeCedrUnits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711292043095_addBethicEventCondition.cs" />
+    <Compile Include="Migrations\201711292043095_addBethicEventCondition.Designer.cs">
+      <DependentUpon>201711292043095_addBethicEventCondition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711292047031_addBethicEventConditions2.cs" />
+    <Compile Include="Migrations\201711292047031_addBethicEventConditions2.Designer.cs">
+      <DependentUpon>201711292047031_addBethicEventConditions2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712041604455_addBenthicMonitorLogs.cs" />
+    <Compile Include="Migrations\201712041604455_addBenthicMonitorLogs.Designer.cs">
+      <DependentUpon>201712041604455_addBenthicMonitorLogs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712041625451_reviseBenthicSampleModel.cs" />
+    <Compile Include="Migrations\201712041625451_reviseBenthicSampleModel.Designer.cs">
+      <DependentUpon>201712041625451_reviseBenthicSampleModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801161624436_makeParameterTierAString.cs" />
+    <Compile Include="Migrations\201801161624436_makeParameterTierAString.Designer.cs">
+      <DependentUpon>201801161624436_makeParameterTierAString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803211508025_updateGroupW2CmcMembers.cs" />
+    <Compile Include="Migrations\201803211508025_updateGroupW2CmcMembers.Designer.cs">
+      <DependentUpon>201803211508025_updateGroupW2CmcMembers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803221503485_addCmcQappBoolToGroup.cs" />
+    <Compile Include="Migrations\201803221503485_addCmcQappBoolToGroup.Designer.cs">
+      <DependentUpon>201803221503485_addCmcQappBoolToGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803231744225_removeInSituOrLabAndSampleTypeFromParameter.cs" />
+    <Compile Include="Migrations\201803231744225_removeInSituOrLabAndSampleTypeFromParameter.Designer.cs">
+      <DependentUpon>201803231744225_removeInSituOrLabAndSampleTypeFromParameter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804031313097_addDescriptionToParameters.cs" />
+    <Compile Include="Migrations\201804031313097_addDescriptionToParameters.Designer.cs">
+      <DependentUpon>201804031313097_addDescriptionToParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804041305354_addCoordinatorCanPublishToGroup.cs" />
+    <Compile Include="Migrations\201804041305354_addCoordinatorCanPublishToGroup.Designer.cs">
+      <DependentUpon>201804041305354_addCoordinatorCanPublishToGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804051459333_addHasBeenActivatedToIdentityModel.cs" />
+    <Compile Include="Migrations\201804051459333_addHasBeenActivatedToIdentityModel.Designer.cs">
+      <DependentUpon>201804051459333_addHasBeenActivatedToIdentityModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804111840105_addMonitorLogRelationshipToEvents.cs" />
+    <Compile Include="Migrations\201804111840105_addMonitorLogRelationshipToEvents.Designer.cs">
+      <DependentUpon>201804111840105_addMonitorLogRelationshipToEvents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804111901150_addEventConditionRelationshipToEvents.cs" />
+    <Compile Include="Migrations\201804111901150_addEventConditionRelationshipToEvents.Designer.cs">
+      <DependentUpon>201804111901150_addEventConditionRelationshipToEvents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804111909344_addMonitorLogRelationshipToEvents2.cs" />
+    <Compile Include="Migrations\201804111909344_addMonitorLogRelationshipToEvents2.Designer.cs">
+      <DependentUpon>201804111909344_addMonitorLogRelationshipToEvents2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804111924362_addForeignKeyToMonitorLog.cs" />
+    <Compile Include="Migrations\201804111924362_addForeignKeyToMonitorLog.Designer.cs">
+      <DependentUpon>201804111924362_addForeignKeyToMonitorLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804111934376_addForeignKeysToEventCondition.cs" />
+    <Compile Include="Migrations\201804111934376_addForeignKeysToEventCondition.Designer.cs">
+      <DependentUpon>201804111934376_addForeignKeysToEventCondition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804111936557_renameCollectionToEventConditionsOnEventTable.cs" />
+    <Compile Include="Migrations\201804111936557_renameCollectionToEventConditionsOnEventTable.Designer.cs">
+      <DependentUpon>201804111936557_renameCollectionToEventConditionsOnEventTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804122048032_addHucAndFipstoStation.cs" />
+    <Compile Include="Migrations\201804122048032_addHucAndFipstoStation.Designer.cs">
+      <DependentUpon>201804122048032_addHucAndFipstoStation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804131457025_addUpperAndLowerNonfatalRangesToParameter.cs" />
+    <Compile Include="Migrations\201804131457025_addUpperAndLowerNonfatalRangesToParameter.Designer.cs">
+      <DependentUpon>201804131457025_addUpperAndLowerNonfatalRangesToParameter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806081652322_addStateToStationModel.cs" />
+    <Compile Include="Migrations\201806081652322_addStateToStationModel.Designer.cs">
+      <DependentUpon>201806081652322_addStateToStationModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806111438261_addHuc8NameToStations.cs" />
+    <Compile Include="Migrations\201806111438261_addHuc8NameToStations.Designer.cs">
+      <DependentUpon>201806111438261_addHuc8NameToStations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806111450097_addHuc6NameToStations.cs" />
+    <Compile Include="Migrations\201806111450097_addHuc6NameToStations.Designer.cs">
+      <DependentUpon>201806111450097_addHuc6NameToStations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807240150142_addRelationshipstoBenthicEventConditions.cs" />
+    <Compile Include="Migrations\201807240150142_addRelationshipstoBenthicEventConditions.Designer.cs">
+      <DependentUpon>201807240150142_addRelationshipstoBenthicEventConditions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809211342458_bottomTypeToString.cs" />
+    <Compile Include="Migrations\201809211342458_bottomTypeToString.Designer.cs">
+      <DependentUpon>201809211342458_bottomTypeToString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904111141264_addCreatedModifiedToLab.cs" />
+    <Compile Include="Migrations\201904111141264_addCreatedModifiedToLab.Designer.cs">
+      <DependentUpon>201904111141264_addCreatedModifiedToLab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904301818428_limitCharLengthLabCode.cs" />
+    <Compile Include="Migrations\201904301818428_limitCharLengthLabCode.Designer.cs">
+      <DependentUpon>201904301818428_limitCharLengthLabCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdminViewModel.cs" />
+    <Compile Include="Models\BenthicCondition.cs" />
+    <Compile Include="Models\Condition.cs" />
+    <Compile Include="Models\BenthicEvent.cs" />
+    <Compile Include="Models\BenthicConditionCategory.cs" />
+    <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\BenthicEventCondition.cs" />
+    <Compile Include="Models\EventCondition.cs" />
+    <Compile Include="Models\Lab.cs" />
+    <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\BenthicMonitorLog.cs" />
+    <Compile Include="Models\MonitorLog.cs" />
+    <Compile Include="Models\ConditionCategory.cs" />
+    <Compile Include="Models\BenthicParameter.cs" />
+    <Compile Include="Models\BenthicSample.cs" />
+    <Compile Include="Models\StationSamplingMethod.cs" />
+    <Compile Include="Models\RelatedParameter.cs" />
+    <Compile Include="Models\StationGroup.cs" />
+    <Compile Include="Models\QaFlag.cs" />
+    <Compile Include="Models\Qualifier.cs" />
+    <Compile Include="Models\Problem.cs" />
+    <Compile Include="Models\ParameterGroup.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Parameter.cs" />
+    <Compile Include="Models\Sample.cs" />
+    <Compile Include="Models\Station.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ang\admin\app.js" />
+    <Content Include="ang\admin\controllers\benthicSamplesAddBulkController.js" />
+    <Content Include="ang\admin\controllers\benthicSamplesEditControllerOld.js" />
+    <Content Include="ang\admin\controllers\benthicSamplesUploadTypeController.js" />
+    <Content Include="ang\admin\controllers\testApiController.js" />
+    <Content Include="ang\admin\controllers\conditionsController.js" />
+    <Content Include="ang\admin\controllers\benthicSamplesEditController.js" />
+    <Content Include="ang\admin\controllers\samplesEditReviewController.js" />
+    <Content Include="ang\admin\controllers\labsController.js" />
+    <Content Include="ang\admin\controllers\benthicSamplesAddController.js" />
+    <Content Include="ang\admin\controllers\downloadToolController.js" />
+    <Content Include="ang\admin\controllers\calibrationParametersController.js" />
+    <Content Include="ang\admin\controllers\samplesUploadTypeController.js" />
+    <Content Include="ang\admin\controllers\samplesEditController.js" />
+    <Content Include="ang\admin\controllers\stationsAddController.js" />
+    <Content Include="ang\admin\controllers\submissionsController.js" />
+    <Content Include="ang\admin\controllers\usersAddBulkController.js" />
+    <Content Include="ang\admin\controllers\stationsAddBulkController.js" />
+    <Content Include="ang\admin\controllers\samplesAddBulkController.js" />
+    <Content Include="ang\admin\controllers\stationsSubmitController.js" />
+    <Content Include="ang\admin\controllers\indexController.js" />
+    <Content Include="ang\admin\controllers\samplesAddController.js" />
+    <Content Include="ang\admin\controllers\stationsController.js" />
+    <Content Include="ang\admin\controllers\parametersController.js" />
+    <Content Include="ang\admin\controllers\groupsController.js" />
+    <Content Include="ang\admin\helpers\userInfo.js" />
+    <Content Include="ang\admin\helpers\providers.js" />
+    <Content Include="ang\admin\helpers\validationMessages.html" />
+    <Content Include="ang\admin\services\benthicEventService.js" />
+    <Content Include="ang\admin\services\benthicConditionCategoriesService.js" />
+    <Content Include="ang\admin\services\conditionCategoriesService.js" />
+    <Content Include="ang\admin\services\benthicConditionService.js" />
+    <Content Include="ang\admin\services\benthicEventConditionService.js" />
+    <Content Include="ang\admin\services\eventConditionService.js" />
+    <Content Include="ang\admin\services\editUserService.js" />
+    <Content Include="ang\admin\services\conditionService.js" />
+    <Content Include="ang\admin\services\eventService.js" />
+    <Content Include="ang\admin\services\labService.js" />
+    <Content Include="ang\admin\services\benthicParameterService.js" />
+    <Content Include="ang\admin\services\benthicMonitorLogService.js" />
+    <Content Include="ang\admin\services\monitorLogService.js" />
+    <Content Include="ang\admin\services\stationSamplingMethodService.js" />
+    <Content Include="ang\admin\services\relatedParameterService.js" />
+    <Content Include="ang\admin\services\qaFlagService.js" />
+    <Content Include="ang\admin\services\benthicSampleService.js" />
+    <Content Include="ang\admin\services\stationGroupService.js" />
+    <Content Include="ang\admin\services\parameterGroupService.js" />
+    <Content Include="ang\admin\services\qualifierService.js" />
+    <Content Include="ang\admin\services\problemService.js" />
+    <Content Include="ang\admin\services\sampleService.js" />
+    <Content Include="ang\admin\services\stationService.js" />
+    <Content Include="ang\admin\services\parameterService.js" />
+    <Content Include="ang\admin\services\groupService.js" />
+    <Content Include="ang\admin\services\userService.js" />
+    <Content Include="ang\admin\views\benthicSamplesAdmin\addConfirmation.html" />
+    <Content Include="ang\admin\views\benthicSamplesAdmin\edit.html" />
+    <Content Include="ang\admin\views\benthicSamplesAdmin\editOld.html" />
+    <Content Include="ang\admin\views\benthicSamplesAdmin\add.html" />
+    <Content Include="ang\admin\views\benthicSamplesAdmin\addBulk.html" />
+    <Content Include="ang\admin\views\benthicSamplesAdmin\uploadType.html" />
+    <Content Include="ang\admin\views\conditionsAdmin\add.html" />
+    <Content Include="ang\admin\views\conditionsAdmin\edit.html" />
+    <Content Include="ang\admin\views\conditionsAdmin\list.html" />
+    <Content Include="ang\admin\views\downloadTool\download.html" />
+    <Content Include="ang\admin\views\calibrationParametersAdmin\add.html" />
+    <Content Include="ang\admin\views\calibrationParametersAdmin\edit.html" />
+    <Content Include="ang\admin\views\calibrationParametersAdmin\list.html" />
+    <Content Include="ang\admin\views\samplesAdmin\editConfirmation.html" />
+    <Content Include="ang\admin\views\samplesAdmin\addConfirmation.html" />
+    <Content Include="ang\admin\views\samplesAdmin\edit.html" />
+    <Content Include="ang\admin\views\samplesAdmin\editDeleteModal.html" />
+    <Content Include="ang\admin\views\samplesAdmin\list.html" />
+    <Content Include="ang\admin\views\groupsAdmin\add.html" />
+    <Content Include="ang\admin\views\groupsAdmin\edit.html" />
+    <Content Include="ang\admin\views\groupsAdmin\selectParameters.html" />
+    <Content Include="ang\admin\views\index.html" />
+    <Content Include="ang\admin\views\labsAdmin\add.html" />
+    <Content Include="ang\admin\views\labsAdmin\edit.html" />
+    <Content Include="ang\admin\views\labsAdmin\list.html" />
+    <Content Include="ang\admin\views\parametersAdmin\add.html" />
+    <Content Include="ang\admin\views\parametersAdmin\edit.html" />
+    <Content Include="ang\admin\views\parametersAdmin\list.html" />
+    <Content Include="ang\admin\views\samplesAdmin\add.html" />
+    <Content Include="ang\admin\views\samplesAdmin\addBulk.html" />
+    <Content Include="ang\admin\views\samplesAdmin\index.html" />
+    <Content Include="ang\admin\views\samplesAdmin\uploadType.html" />
+    <Content Include="ang\admin\views\samplesAdmin\warningsPublished.html" />
+    <Content Include="ang\admin\views\samplesAdmin\warnings.html" />
+    <Content Include="ang\admin\views\stationsAdmin\add.html" />
+    <Content Include="ang\admin\views\stationsAdmin\addBulk.html" />
+    <Content Include="ang\admin\views\stationsAdmin\edit.html" />
+    <Content Include="ang\admin\views\stationsAdmin\list.html" />
+    <Content Include="ang\admin\views\stationsSubmit\add.html" />
+    <Content Include="ang\admin\views\submissions\list.html" />
+    <Content Include="ang\admin\views\testApi\test.html" />
+    <Content Include="ang\admin\views\usersAdmin\addBulk.html" />
+    <Content Include="ang\admin\views\usersAdmin\edit.html" />
+    <Content Include="ang\admin\views\usersAdmin\list.html" />
+    <Content Include="ang\public\app.js" />
+    <Content Include="ang\public\services\benthicParameterService.js" />
+    <Content Include="ang\public\controllers\queryController.js" />
+    <Content Include="ang\public\controllers\homeController.js" />
+    <Content Include="ang\public\controllers\indexController.js" />
+    <Content Include="ang\public\services\benthicSampleService.js" />
+    <Content Include="ang\public\services\groupService.js" />
+    <Content Include="ang\public\services\parameterGroupService.js" />
+    <Content Include="ang\public\services\parameterService.js" />
+    <Content Include="ang\public\services\relatedParameterService.js" />
+    <Content Include="ang\public\services\sampleService.js" />
+    <Content Include="ang\public\services\stationGroupService.js" />
+    <Content Include="ang\public\services\stationService.js" />
+    <Content Include="ang\public\services\userService.js" />
+    <Content Include="ang\public\views\query.html" />
+    <Content Include="ang\public\views\home.html" />
+    <Content Include="ang\public\views\index.html" />
+    <Content Include="ang\users\app.js" />
+    <Content Include="ang\users\controllers\indexController.js" />
+    <Content Include="ang\users\views\index.html" />
+    <Content Include="Content\allStyles.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\customCss\cmcBootstrapTheme.css" />
+    <Content Include="Content\fonts\css\font-awesome.css" />
+    <Content Include="Content\fonts\css\font-awesome.min.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\HELP-US-OUT.txt" />
+    <Content Include="Content\fonts\icomoon.svg" />
+    <Content Include="Content\images\layers-2x.png" />
+    <Content Include="Content\images\layers.png" />
+    <Content Include="Content\images\marker-icon-2x.png" />
+    <Content Include="Content\images\marker-icon.png" />
+    <Content Include="Content\images\marker-shadow.png" />
+    <Content Include="Content\ui-grid.min.js" />
+    <Content Include="Content\ui-grid.svg" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\site\Site.css" />
+    <Content Include="gulpfile.js" />
+    <Content Include="Images\Logo\allarm.png" />
+    <Content Include="Images\Logo\alliance.png" />
+    <Content Include="Images\Logo\CMC_logo_highres.png" />
+    <Content Include="Images\Logo\iwl.png" />
+    <Content Include="Images\Logo\umces.png" />
+    <Content Include="Images\mapIcons\b1.png" />
+    <Content Include="Images\mapIcons\b1C.png" />
+    <Content Include="Images\mapIcons\b2.png" />
+    <Content Include="Images\mapIcons\b2C.png" />
+    <Content Include="Images\mapIcons\b3.png" />
+    <Content Include="Images\mapIcons\b3C.png" />
+    <Content Include="Images\mapIcons\b4.png" />
+    <Content Include="Images\mapIcons\b4C.png" />
+    <Content Include="Images\mapIcons\b5.png" />
+    <Content Include="Images\mapIcons\b5C.png" />
+    <Content Include="Images\mapIcons\g1.png" />
+    <Content Include="Images\mapIcons\g1h.png" />
+    <Content Include="Images\mapIcons\g2.png" />
+    <Content Include="Images\mapIcons\g2h.png" />
+    <Content Include="Images\mapIcons\g3.png" />
+    <Content Include="Images\mapIcons\g3h.png" />
+    <Content Include="Images\mapIcons\g4.png" />
+    <Content Include="Images\mapIcons\g4.svg" />
+    <Content Include="Images\mapIcons\g4h.png" />
+    <Content Include="Images\mapIcons\o1.png" />
+    <Content Include="Images\mapIcons\o1h.png" />
+    <Content Include="Images\mapIcons\o2.png" />
+    <Content Include="Images\mapIcons\o2h.png" />
+    <Content Include="Images\mapIcons\o3.png" />
+    <Content Include="Images\mapIcons\o3h.png" />
+    <Content Include="Images\mapIcons\o4.png" />
+    <Content Include="Images\mapIcons\o4h.png" />
+    <Content Include="Images\mapIcons\pink-circle-th.png" />
+    <Content Include="Images\Profile\noImg.png" />
+    <Content Include="Images\Profile\noImg2.png" />
+    <Content Include="Scripts\adminIndex\getUserInfo.js" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include=".bowerrc" />
+    <Content Include="bower.json" />
+    <Content Include="package.json" />
+    <Content Include="Scripts\ai.1.0.9-build01279.js" />
+    <Content Include="Scripts\ai.1.0.9-build01279.min.js" />
+    <Content Include="Scripts\allAngular.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Documents\Templates\cmcBulkSamplesTemplate.csv" />
+    <Content Include="Documents\Templates\cmcBulkStationsTemplate.csv" />
+    <Content Include="Documents\Templates\cmcBulkUsersTemplate.csv" />
+    <Content Include="Documents\Templates\cmcBulkBenthicSamplesTemplate.csv" />
+    <Content Include="Documents\submissions\2016.zip" />
+    <Content Include="Scripts\d3-to-image-ngDirective.js.map" />
+    <Content Include="Documents\submissionsPilot\2016.zip" />
+    <Content Include="Documents\UserGuide.pdf" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\allJsLibraries.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrapExtension\ui-bootstrap-custom-tpls-0.12.0.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizer-min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\ng-csv.js" />
+    <Content Include="Scripts\reportBug.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\saveSvgAsPng.js" />
+    <Content Include="Scripts\toastrOptions\toastrOptions.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\ui-leafletCMC.js" />
+    <Content Include="Scripts\UserAdmin\editUser.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="ang\admin\views\groupsAdmin\list.html" />
+    <None Include="README.md" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\EditProfile.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Account\DisplayEmail.cshtml" />
+    <Content Include="Views\UsersAdmin\Index.cshtml" />
+    <Content Include="Views\UsersAdmin\Edit.cshtml" />
+    <Content Include="Views\UsersAdmin\Create.cshtml" />
+    <Content Include="Views\UsersAdmin\Delete.cshtml" />
+    <Content Include="Views\UsersAdmin\Details.cshtml" />
+    <Content Include="Views\Admin\PermissionError.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Admin\userProfile.cshtml" />
+    <Content Include="Views\Admin\Documents.cshtml" />
+    <Content Include="Views\GroupsAdmin\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\fonts\customIcons\" />
+    <Folder Include="Scripts\leafletExtension\leaflet.zoomhome-master\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-select.css.map" />
+    <Content Include="Content\fonts\bower.json" />
+    <Content Include="Content\fonts\css\font-awesome.css.map" />
+    <Content Include="Content\fonts\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\less\animated.less" />
+    <Content Include="Content\fonts\less\bordered-pulled.less" />
+    <Content Include="Content\fonts\less\core.less" />
+    <Content Include="Content\fonts\less\fixed-width.less" />
+    <Content Include="Content\fonts\less\font-awesome.less" />
+    <Content Include="Content\fonts\less\icons.less" />
+    <Content Include="Content\fonts\less\larger.less" />
+    <Content Include="Content\fonts\less\list.less" />
+    <Content Include="Content\fonts\less\mixins.less" />
+    <Content Include="Content\fonts\less\path.less" />
+    <Content Include="Content\fonts\less\rotated-flipped.less" />
+    <Content Include="Content\fonts\less\screen-reader.less" />
+    <Content Include="Content\fonts\less\stacked.less" />
+    <Content Include="Content\fonts\less\variables.less" />
+    <Content Include="Content\fonts\scss\font-awesome.scss" />
+    <Content Include="Content\fonts\scss\_animated.scss" />
+    <Content Include="Content\fonts\scss\_bordered-pulled.scss" />
+    <Content Include="Content\fonts\scss\_core.scss" />
+    <Content Include="Content\fonts\scss\_fixed-width.scss" />
+    <Content Include="Content\fonts\scss\_icons.scss" />
+    <Content Include="Content\fonts\scss\_larger.scss" />
+    <Content Include="Content\fonts\scss\_list.scss" />
+    <Content Include="Content\fonts\scss\_mixins.scss" />
+    <Content Include="Content\fonts\scss\_path.scss" />
+    <Content Include="Content\fonts\scss\_rotated-flipped.scss" />
+    <Content Include="Content\fonts\scss\_screen-reader.scss" />
+    <Content Include="Content\fonts\scss\_stacked.scss" />
+    <Content Include="Content\fonts\scss\_variables.scss" />
+    <Content Include="Content\fonts\icomoon.eot" />
+    <Content Include="Content\fonts\icomoon.ttf" />
+    <Content Include="Content\fonts\icomoon.woff" />
+    <Content Include="Content\ui-grid.ttf" />
+    <Content Include="Content\ui-grid.woff" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+    <None Include="Properties\PublishProfiles\cmcVims.pubxml" />
+    <Content Include="Views\UsersAdmin\Retire.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Scripts\toastr.js.map" />
+    <Content Include="Views\UsersAdmin\EditSuccess.cshtml" />
+    <Content Include="Views\UsersAdmin\Register.cshtml" />
+    <Content Include="Views\Account\CreatePasswordConfirmation.cshtml" />
+    <Content Include="spatialData\chesbay.json" />
+    <Content Include="Views\Account\EmailNotConfirmed.cshtml" />
+    <Content Include="spatialData\watershed.json" />
+    <None Include="spatialData\huc8.json" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201611291849311_Initial.resx">
+      <DependentUpon>201611291849311_Initial.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701262037042_addGroupIdToStation.resx">
+      <DependentUpon>201701262037042_addGroupIdToStation.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702162144306_addProblemCodes.resx">
+      <DependentUpon>201702162144306_addProblemCodes.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702171512149_updateSampleWProblems.resx">
+      <DependentUpon>201702171512149_updateSampleWProblems.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702171611369_addQualifier.resx">
+      <DependentUpon>201702171611369_addQualifier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703311658331_updatedecimal.resx">
+      <DependentUpon>201703311658331_updatedecimal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704032118319_addQaFlag.resx">
+      <DependentUpon>201704032118319_addQaFlag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704032127479_addNullableQualifierAndProblemIds.resx">
+      <DependentUpon>201704032127479_addNullableQualifierAndProblemIds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704041418196_defineForeignKeysSample.resx">
+      <DependentUpon>201704041418196_defineForeignKeysSample.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704041930169_idsnullable.resx">
+      <DependentUpon>201704041930169_idsnullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704042005470_removeidsnullableQualifierQaFlagProblem.resx">
+      <DependentUpon>201704042005470_removeidsnullableQualifierQaFlagProblem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704181936359_expandStationAndAddStationGroupRelationship.resx">
+      <DependentUpon>201704181936359_expandStationAndAddStationGroupRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705081827052_addLab.resx">
+      <DependentUpon>201705081827052_addLab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705121929280_updateEventsAndAddConditionTable.resx">
+      <DependentUpon>201705121929280_updateEventsAndAddConditionTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705121954294_updateEventsUserIdtoString.resx">
+      <DependentUpon>201705121954294_updateEventsUserIdtoString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705161819272_addCodeToParameterGroupStationTables.resx">
+      <DependentUpon>201705161819272_addCodeToParameterGroupStationTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705161827036_fixLabInParameterGroup.resx">
+      <DependentUpon>201705161827036_fixLabInParameterGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705161831126_renameLabInParameterGroup.resx">
+      <DependentUpon>201705161831126_renameLabInParameterGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705162107540_createMonitorLogAndEventConditionTables.resx">
+      <DependentUpon>201705162107540_createMonitorLogAndEventConditionTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705162114404_AddUserCode.resx">
+      <DependentUpon>201705162114404_AddUserCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705171947336_makeTierIntParameter.resx">
+      <DependentUpon>201705171947336_makeTierIntParameter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705171959064_makeLabIdnullableAndAddDetectionLimitToParameterGroup.resx">
+      <DependentUpon>201705171959064_makeLabIdnullableAndAddDetectionLimitToParameterGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705181845360_makeMethodIntInParameters.resx">
+      <DependentUpon>201705181845360_makeMethodIntInParameters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705181856020_makeDetectionLimitDecimalInParameterGroup.resx">
+      <DependentUpon>201705181856020_makeDetectionLimitDecimalInParameterGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705191224365_createdby-and-modifiedby.resx">
+      <DependentUpon>201705191224365_createdby-and-modifiedby.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705221607115_addDescriptionToLab.resx">
+      <DependentUpon>201705221607115_addDescriptionToLab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706011811360_addSampleTypeToParameters.resx">
+      <DependentUpon>201706011811360_addSampleTypeToParameters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706091340374_add-key-to-event-add-fields-to-sample.resx">
+      <DependentUpon>201706091340374_add-key-to-event-add-fields-to-sample.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706120102106_makeCodesUnique.resx">
+      <DependentUpon>201706120102106_makeCodesUnique.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706120108090_addStatusToCondictionGroupLabParameterStation.resx">
+      <DependentUpon>201706120108090_addStatusToCondictionGroupLabParameterStation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706121542399_formatMonitorLogHoursToDecimal.resx">
+      <DependentUpon>201706121542399_formatMonitorLogHoursToDecimal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706271436150_addCreatedAndModifiedByToStation.resx">
+      <DependentUpon>201706271436150_addCreatedAndModifiedByToStation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706271438514_addCreatedAndModifiedByToStationGroup.resx">
+      <DependentUpon>201706271438514_addCreatedAndModifiedByToStationGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706271449052_addCreatedAndModifiedByToMonitorLog.resx">
+      <DependentUpon>201706271449052_addCreatedAndModifiedByToMonitorLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706271502480_addCreatedAndModifiedByToGroups.resx">
+      <DependentUpon>201706271502480_addCreatedAndModifiedByToGroups.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706271536016_addCreatedAndModifiedByToUsers.resx">
+      <DependentUpon>201706271536016_addCreatedAndModifiedByToUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707051900507_addRequiresSampleDepthToParametersAndisCategoricaltoConditions.resx">
+      <DependentUpon>201707051900507_addRequiresSampleDepthToParametersAndisCategoricaltoConditions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707061419321_makeDepthNullableSampleTable.resx">
+      <DependentUpon>201707061419321_makeDepthNullableSampleTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707061929307_addConditionCategory.resx">
+      <DependentUpon>201707061929307_addConditionCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707061936431_addConditionCategory2.resx">
+      <DependentUpon>201707061936431_addConditionCategory2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707061949083_addConditionCategory3.resx">
+      <DependentUpon>201707061949083_addConditionCategory3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707062045201_addConditionCategory4.resx">
+      <DependentUpon>201707062045201_addConditionCategory4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707071831023_conditionIdtoIntConditionCategory.resx">
+      <DependentUpon>201707071831023_conditionIdtoIntConditionCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707072030554_addOrderToConditions.resx">
+      <DependentUpon>201707072030554_addOrderToConditions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708082119160_setupBenthics.resx">
+      <DependentUpon>201708082119160_setupBenthics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708091742182_addBottomTypeToBenthicParameter.resx">
+      <DependentUpon>201708091742182_addBottomTypeToBenthicParameter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708111424522_addBethicMethodToGroup.resx">
+      <DependentUpon>201708111424522_addBethicMethodToGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708181428490_BenthicConditionsAndCategories.resx">
+      <DependentUpon>201708181428490_BenthicConditionsAndCategories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708241341391_addCmcMemberUser.resx">
+      <DependentUpon>201708241341391_addCmcMemberUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708281803087_addIsCalibrationParameterToParameters.resx">
+      <DependentUpon>201708281803087_addIsCalibrationParameterToParameters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709011456460_addRelatedParametersToSupportCalibration.resx">
+      <DependentUpon>201709011456460_addRelatedParametersToSupportCalibration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709051910281_tidalNontidalToBoolInParameters.resx">
+      <DependentUpon>201709051910281_tidalNontidalToBoolInParameters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709051948196_renameColumnsRelatedParameters.resx">
+      <DependentUpon>201709051948196_renameColumnsRelatedParameters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709111654322_nullableValueInSamples.resx">
+      <DependentUpon>201709111654322_nullableValueInSamples.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709181528542_addIwlGroupToBenthicParameter.resx">
+      <DependentUpon>201709181528542_addIwlGroupToBenthicParameter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709181544141_renameIwlGroupToAllarmBenthicParameter.resx">
+      <DependentUpon>201709181544141_renameIwlGroupToAllarmBenthicParameter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709191808482_addIwlGrouptoBenthicParameters.resx">
+      <DependentUpon>201709191808482_addIwlGrouptoBenthicParameters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709191847443_tolerantNonInsectsToBenthicParameter.resx">
+      <DependentUpon>201709191847443_tolerantNonInsectsToBenthicParameter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709211354546_bottomTypetoIntBenthicParameter.resx">
+      <DependentUpon>201709211354546_bottomTypetoIntBenthicParameter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709211532419_differentiateIwlGroupBenthicParameter.resx">
+      <DependentUpon>201709211532419_differentiateIwlGroupBenthicParameter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709212011416_addOrdertoBenthicParameters.resx">
+      <DependentUpon>201709212011416_addOrdertoBenthicParameters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709221917078_addMethodtoBenthicConditions.resx">
+      <DependentUpon>201709221917078_addMethodtoBenthicConditions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709221922395_addMethodtoBenthicConditions2.resx">
+      <DependentUpon>201709221922395_addMethodtoBenthicConditions2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709261342396_addSamplingMethodToStation.resx">
+      <DependentUpon>201709261342396_addSamplingMethodToStation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709261607589_addProblemOrder.resx">
+      <DependentUpon>201709261607589_addProblemOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709261621051_addProblemApplicationText.resx">
+      <DependentUpon>201709261621051_addProblemApplicationText.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709271557508_addCertificationDateToApplicationUser.resx">
+      <DependentUpon>201709271557508_addCertificationDateToApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709281341479_addRequiresDuplicateToParameter.resx">
+      <DependentUpon>201709281341479_addRequiresDuplicateToParameter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711071629511_addIsNumericToBenthicConditions.resx">
+      <DependentUpon>201711071629511_addIsNumericToBenthicConditions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711142117548_addCedrCodeToConditionCategory.resx">
+      <DependentUpon>201711142117548_addCedrCodeToConditionCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711171501053_addCedrUnitsToParameters.resx">
+      <DependentUpon>201711171501053_addCedrUnitsToParameters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711171523342_removeCedrUnits.resx">
+      <DependentUpon>201711171523342_removeCedrUnits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711292043095_addBethicEventCondition.resx">
+      <DependentUpon>201711292043095_addBethicEventCondition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711292047031_addBethicEventConditions2.resx">
+      <DependentUpon>201711292047031_addBethicEventConditions2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712041604455_addBenthicMonitorLogs.resx">
+      <DependentUpon>201712041604455_addBenthicMonitorLogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712041625451_reviseBenthicSampleModel.resx">
+      <DependentUpon>201712041625451_reviseBenthicSampleModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801161624436_makeParameterTierAString.resx">
+      <DependentUpon>201801161624436_makeParameterTierAString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803211508025_updateGroupW2CmcMembers.resx">
+      <DependentUpon>201803211508025_updateGroupW2CmcMembers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803221503485_addCmcQappBoolToGroup.resx">
+      <DependentUpon>201803221503485_addCmcQappBoolToGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803231744225_removeInSituOrLabAndSampleTypeFromParameter.resx">
+      <DependentUpon>201803231744225_removeInSituOrLabAndSampleTypeFromParameter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804031313097_addDescriptionToParameters.resx">
+      <DependentUpon>201804031313097_addDescriptionToParameters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804041305354_addCoordinatorCanPublishToGroup.resx">
+      <DependentUpon>201804041305354_addCoordinatorCanPublishToGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804051459333_addHasBeenActivatedToIdentityModel.resx">
+      <DependentUpon>201804051459333_addHasBeenActivatedToIdentityModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804111840105_addMonitorLogRelationshipToEvents.resx">
+      <DependentUpon>201804111840105_addMonitorLogRelationshipToEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804111901150_addEventConditionRelationshipToEvents.resx">
+      <DependentUpon>201804111901150_addEventConditionRelationshipToEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804111909344_addMonitorLogRelationshipToEvents2.resx">
+      <DependentUpon>201804111909344_addMonitorLogRelationshipToEvents2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804111924362_addForeignKeyToMonitorLog.resx">
+      <DependentUpon>201804111924362_addForeignKeyToMonitorLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804111934376_addForeignKeysToEventCondition.resx">
+      <DependentUpon>201804111934376_addForeignKeysToEventCondition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804111936557_renameCollectionToEventConditionsOnEventTable.resx">
+      <DependentUpon>201804111936557_renameCollectionToEventConditionsOnEventTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804122048032_addHucAndFipstoStation.resx">
+      <DependentUpon>201804122048032_addHucAndFipstoStation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804131457025_addUpperAndLowerNonfatalRangesToParameter.resx">
+      <DependentUpon>201804131457025_addUpperAndLowerNonfatalRangesToParameter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806081652322_addStateToStationModel.resx">
+      <DependentUpon>201806081652322_addStateToStationModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806111438261_addHuc8NameToStations.resx">
+      <DependentUpon>201806111438261_addHuc8NameToStations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806111450097_addHuc6NameToStations.resx">
+      <DependentUpon>201806111450097_addHuc6NameToStations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807240150142_addRelationshipstoBenthicEventConditions.resx">
+      <DependentUpon>201807240150142_addRelationshipstoBenthicEventConditions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809211342458_bottomTypeToString.resx">
+      <DependentUpon>201809211342458_bottomTypeToString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904111141264_addCreatedModifiedToLab.resx">
+      <DependentUpon>201904111141264_addCreatedModifiedToLab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904301818428_limitCharLengthLabCode.resx">
+      <DependentUpon>201904301818428_limitCharLengthLabCode.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>57237</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44337/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <UserProperties Content_4bootstrap_1css_1map__JSONSchema="" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.2.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.2.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

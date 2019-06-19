@@ -1,0 +1,55 @@
+﻿@model cmc2.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<h3>Are you sure you want to register this user?</h3>
+
+<div>
+    
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="verticalSpace20"></div>
+        <div class="form-group">
+            
+            <label>User</label>
+            <div>
+               @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName) 
+            </div>
+        </div>
+
+
+
+        if (Model.Status != true)
+        {
+            <label>Please enter an Email for this user. An email will be sent to begin their registration process and allow the user to reset the password for this account. After resetting the password, the user will be able to login.</label>
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="verticalSpace30"></div>
+            <label>Role</label>
+            <div class="form-group">
+                @foreach (var item in ViewBag.RolesList)
+                {
+                    <div class="row">
+                        <div class="radio">
+                            <label><input type="radio" name="SelectedRole" value="@item.Value" checked="@item.Selected" class="checkbox-inline">@item.Value</label>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        <div class="verticalSpace30"></div>
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Yes" class="btn btn-success" />
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        </div>
+    }
+</div>
+

@@ -1,0 +1,344 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="clearFormValidation(updateGroupForm)" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title">Edit Group</h4>
+</div>
+
+<div class="modal-body">
+    <!--<div ng-include="'/ang/admin/views/groupsAdmin/edit.html'"></div>-->
+    <form name="updateGroupForm">
+        <div class="form-group" ng-class="{ 'has-error': updateGroupForm.Name.$touched && updateGroupForm.Name.$invalid }">
+            <label>Group Name</label>
+            <input name="Name" type="text" class="form-control" placeholder="Enter Group Name"
+                   ng-model="currentGroup.Name"
+                   ng-minlength="2"
+                   ng-maxlength="100"                  
+                   required>
+            <div class="help-block" ng-messages="updateGroupForm.Name.$error" ng-show="updateGroupForm.Name.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': updateGroupForm.Code.$touched && updateGroupForm.Code.$invalid }">
+            <label>Group Code</label>
+            <input name="Code" type="text" class="form-control" placeholder="Enter Group Code"
+                   ng-model="currentGroup.Code"
+                   ng-minlength="2"
+                   ng-maxlength="100"
+                   required disabled>
+            <div class="help-block" ng-messages="updateGroupForm.Code.$error" ng-show="updateGroupForm.Code.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': updateGroupForm.ContactName.$touched && updateGroupForm.ContactName.$invalid }">
+            <label>Contact Name</label>
+            <input name="ContactName" type="text" class="form-control" placeholder="Enter Contact Name"
+                   ng-model="currentGroup.ContactName"
+                   ng-minlength="2"
+                   ng-maxlength="100">
+            <div class="help-block" ng-messages="updateGroupForm.ContactName.$error" ng-show="updateGroupForm.ContactName.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': updateGroupForm.ContactEmail.$touched && updateGroupForm.ContactEmail.$invalid }">
+            <label>Contact Email</label>
+            <input name="ContactEmail" type="email" class="form-control" placeholder="Enter Contact Email"
+                   ng-model="currentGroup.ContactEmail">
+            <div class="help-block" ng-messages="updateGroupForm.ContactEmail.$error" ng-show="updateGroupForm.ContactEmail.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': updateGroupForm.ContactCellPhone.$touched && updateGroupForm.ContactCellPhone.$invalid }">
+            <label>Contact Cell Phone</label>
+            <input name="ContactCellPhone" type="text" class="form-control" placeholder="Enter Contact Cell Phone"
+                   ng-model="currentGroup.ContactCellPhone"
+                   ng-pattern="/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/" />
+            <div class="help-block" ng-messages="updateGroupForm.ContactCellPhone.$error" ng-show="updateGroupForm.ContactCellPhone.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': updateGroupForm.ContactOfficePhone.$touched && updateGroupForm.ContactOfficePhone.$invalid }">
+            <label>Contact Office Phone</label>
+            <input name="ContactOfficePhone" type="text" class="form-control" placeholder="Enter Contact Office Phone"
+                   ng-model="currentGroup.ContactOfficePhone"
+                   ng-pattern="/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/" />
+            <div class="help-block" ng-messages="updateGroupForm.ContactOfficePhone.$error" ng-show="updateGroupForm.ContactOfficePhone.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': updateGroupForm.Description.$touched && updateGroupForm.Description.$invalid }">
+            <label>Description</label>
+            <textarea name="Description" type="text" rows="3" class="form-control" placeholder="Enter Group Description"
+                      ng-model="currentGroup.Description"
+                      ng-minlength="1"
+                      ng-maxlength="1000"></textarea>
+            <div class="help-block" ng-messages="updateGroupForm.Description.$error" ng-show="updateGroupForm.Description.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': updateGroupForm.Url.$touched && updateGroupForm.Url.$invalid }">
+            <label>Group Url</label>
+            <input name="Url" type="text" class="form-control" placeholder="Enter Url for Group Website"
+                   ng-model="currentGroup.Url"
+                   ng-maxlength="1000"
+                   ng-pattern="/^((https?|ftp)://)?([a-z]+[.])?[a-z0-9-]+([.][a-z]{1,4}){1,2}(/.*[?].*)?$/">
+            <div class="help-block" ng-messages="updateGroupForm.Url.$error" ng-show="updateGroupForm.Url.$touched">
+                <p ng-message="pattern">Must be a valid url (ex. www.vecos.org, http://www.vecos.org )</p>
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': updateGroupForm.AddressFirst.$touched && updateGroupForm.AddressFirst.$invalid }">
+            <label>Address - First Line</label>
+            <input name="AddressFirst" type="text" class="form-control" placeholder="Enter Address - First Line"
+                   ng-model="currentGroup.AddressFirst"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="updateGroupForm.AddressFirst.$error" ng-show="updateGroupForm.AddressFirst.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': updateGroupForm.AddressSecond.$touched && updateGroupForm.AddressSecond.$invalid }">
+            <label>Address - Second Line</label>
+            <input name="AddressSecond" type="text" class="form-control" placeholder="Enter Address - Second Line"
+                   ng-model="currentGroup.AddressSecond"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="updateGroupForm.AddressSecond.$error" ng-show="updateGroupForm.AddressSecond.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': updateGroupForm.City.$touched && updateGroupForm.City.$invalid }">
+            <label>City</label>
+            <input name="City" type="text" class="form-control" placeholder="Enter City"
+                   ng-model="currentGroup.City"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="updateGroupForm.City.$error" ng-show="updateGroupForm.City.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>State</label>
+            <div>
+                <selectpicker data-array="usStatesList" data-model="currentGroup.State"></selectpicker>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': updateGroupForm.Zip.$touched && updateGroupForm.Zip.$invalid }">
+            <label>Zip Code</label>
+            <input name="Zip" type="text" class="form-control" placeholder="Enter Zip Code"
+                   ng-model="currentGroup.Zip"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="updateGroupForm.Zip.$error" ng-show="updateGroupForm.Zip.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="!isMonitorOrCoordinator">
+            <label>Allow Coordinator to delete and publish?</label>
+            <div>
+                <selectpicker data-array="binaryList" data-model="currentGroup.coordinatorCanPublish"></selectpicker>
+            </div>
+        </div>
+        <div class="form-group" ng-if="!isMonitorOrCoordinator">
+            <label>Uses CMC QAPP/Method Manual?</label>
+            <div>
+                <selectpicker data-array="binaryList" data-model="currentGroup.cmcQapp"></selectpicker>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>BenthicMethod</label>
+            <div>
+                <selectpicker data-array="benthicMethodsList" data-model="currentGroup.BenthicMethod"></selectpicker>
+            </div>
+        </div>
+        <div class="form-group" ng-if="!isMonitorOrCoordinator">
+            <label>Managing CMC Administrator</label>
+            <div>
+                <selectpickermulti3 data-array="cmcMemberList" data-model="currentGroup.cmcMembers"></selectpickermulti3>
+            </div>
+        </div>    
+        <div class="row">
+            <div class="col-xs-12 verticalSpace20"></div>
+            <div class="row col-md-12">
+                <label class="col-md-3">Parameters</label>
+                <div class="col-md-offset-1 col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-addon">Filter</span>
+                        <input id="search" class="filterTable form-control" ng-model="searchParameters" type="text" placeholder="Search Parameters...">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 verticalSpace20"></div>
+            <div class="row col-md-12">
+                <table class="table table-responsive col-md-12" style="min-width:500px">
+                    <thead>
+                        <tr>
+                            <th ng-click="sortParameter('Name')">
+                                Name
+                                <span class="glyphicon sort-icon" ng-show="parameterSortKeyName=='Name'"
+                                      ng-class="{'glyphicon-chevron-up':!parameterReverse,'glyphicon-chevron-down':parameterReverse}"></span>
+                            </th>
+                            <th ng-click="sortParameter('Code')">
+                                Code
+                                <span class="glyphicon sort-icon" ng-show="parameterSortKeyName=='Code'"
+                                      ng-class="{'glyphicon-chevron-up':!parameterReverse,'glyphicon-chevron-down':parameterReverse}"></span>
+                            </th>
+                            <th ng-click="sortParameter('Units')">
+                                Units
+                                <span class="glyphicon sort-icon" ng-show="parameterSortKeyName=='Equipment'"
+                                      ng-class="{'glyphicon-chevron-up':!parameterReverse,'glyphicon-chevron-down':parameterReverse}"></span>
+                            </th>
+                            <th ng-click="sortParameter('Equipment')">
+                                Equipment
+                                <span class="glyphicon sort-icon" ng-show="parameterSortKeyName=='Equipment'"
+                                      ng-class="{'glyphicon-chevron-up':!parameterReverse,'glyphicon-chevron-down':parameterReverse}"></span>
+                            </th>
+                            <th ng-click="sortParameter('Tier')">
+                                Tier
+                                <span class="glyphicon sort-icon" ng-show="parameterSortKeyName=='Tier'"
+                                      ng-class="{'glyphicon-chevron-up':!parameterReverse,'glyphicon-chevron-down':parameterReverse}"></span>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr pagination-id="paginateParameters" dir-paginate="prm in parameters | orderBy:parameterSortKey:!parameterReverse |
+                    filter:searchParameters | itemsPerPage:5">
+                            <td>{{prm.Name}}</td>
+                            <td>{{prm.Code}}</td>
+                            <td>{{prm.Units}}</td>
+                            <td>{{prm.Equipment}}</td>
+                            <td>{{prm.Tier}}</td>
+                            <td>
+                                <button type="button" class="btn" ng-class="{'btn-success' : parameterSelected(prm), 'btn-danger' : !parameterSelected(prm)}"
+                                        ng-click="toggleParameter(prm)">
+                                    <span class="glyphicon" ng-class="{'glyphicon-check' : parameterSelected(prm), 'glyphicon-plus' : !parameterSelected(prm)}"
+                                          aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+                <dir-pagination-controls pagination-id="paginateParameters" max-size="5"
+                                         direction-links="true"
+                                         boundary-links="true">
+                </dir-pagination-controls>
+            </div>
+            <div class="col-xs-12 verticalSpace20"></div>
+            <div class="row col-md-12">
+                <label>Lab Information</label>
+                <table class="table table-responsive col-md-12" style="min-width:500px">
+                    <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Code
+                            </th>
+                            <th>
+                                Lab
+                            </th>
+                            <th>
+                                Det. Limit
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="prmGrp in selectedParameters" ng-show="prmGrp.AnalyticalMethod =='Lab'&&prmGrp.isCalibrationParameter==false">
+                            <!-- dir-paginate="prmGrp in selectedParameters | orderBy:selectedParameter SortKey:selectedParameterReverse |
+                        itemsPerPage:5">-->
+                            <td>{{prmGrp.Name}}</td>
+                            <td>{{prmGrp.Code}}</td>
+                            <td>
+                                <selectpickersmall data-array="labList" data-model="prmGrp.LabId"></selectpickersmall>
+
+                            </td>
+                            <td>
+                                <div class="form-group" ng-class="{ 'has-error': updateGroupForm['DetLimit' + $index].$touched && updateGroupForm['DetLimit' + $index].$invalid }">
+                                    <input name="DetLimit{{$index}}" type="text" class="form-control input-sm" placeholder="Enter Detection Limit"
+                                           ng-model="prmGrp.DetectionLimit"
+                                           ng-pattern="/^-?[0-9]\d*(\.\d+)?$/" />
+                                    <div class="help-block" ng-messages="updateGroupForm['DetLimit' + $index].$error" ng-show="updateGroupForm['DetLimit' + $index].$touched">
+                                        <p ng-message="pattern">Must be a valid decimal (ex. 1.0, 0.02, etc.  )</p>
+                                        <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                    </div>
+                                    <!--<div class="formElementInfo">ex. 0.02; please enter decimal value</div>-->
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row col-md-12 verticalSpace20"></div>
+            <div>
+                <label>Calibration Parameters</label>
+            </div>
+            <div class="row col-md-12">
+                <table class="table table-responsive col-md-12" style="min-width:500px">
+                    <thead>
+                        <tr>
+                            <th ng-click="sortParameter('CalName')">
+                                Name
+                                <span class="glyphicon sort-icon" ng-show="parameterSortKeyName=='CalName'"
+                                      ng-class="{'glyphicon-chevron-up':!parameterReverse,'glyphicon-chevron-down':parameterReverse}"></span>
+                            </th>
+                            <th ng-click="sortParameter('CalCode')">
+                                Cal Param Code
+                                <span class="glyphicon sort-icon" ng-show="parameterSortKeyName=='CalCode'"
+                                      ng-class="{'glyphicon-chevron-up':!parameterReverse,'glyphicon-chevron-down':parameterReverse}"></span>
+                            </th>
+                            <th ng-click="sortParameter('CalWqParamId')">
+                                WQ Param Code
+                                <span class="glyphicon sort-icon" ng-show="parameterSortKeyName=='CalWqParamId'"
+                                      ng-class="{'glyphicon-chevron-up':!parameterReverse,'glyphicon-chevron-down':parameterReverse}"></span>
+                            </th>
+
+                            <th ng-click="sortParameter('CalUnits')">
+                                Units
+                                <span class="glyphicon sort-icon" ng-show="parameterSortKeyName=='CalUnits'"
+                                      ng-class="{'glyphicon-chevron-up':!parameterReverse,'glyphicon-chevron-down':parameterReverse}"></span>
+                            </th>
+                            <th ng-click="sortParameter('CalTier')">
+                                Tier
+                                <span class="glyphicon sort-icon" ng-show="parameterSortKeyName=='CalTier'"
+                                      ng-class="{'glyphicon-chevron-up':!parameterReverse,'glyphicon-chevron-down':parameterReverse}"></span>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr pagination-id="paginateCalParameters" dir-paginate="calPrm in calParameters | orderBy:calParameterSortKey:calParameterReverse |
+                    filter:searchCalParameters | itemsPerPage:5">
+                            <td>{{calPrm.Name}}</td>
+                            <td>{{calPrm.Code}}</td>
+                            <td>{{calPrm.WqParamId}}</td>
+                            <td>{{calPrm.Units}}</td>
+                            <td>{{calPrm.Tier}}</td>
+                            <td>
+                                <button type="button" class="btn" ng-class="{'btn-success' : parameterSelected(calPrm), 'btn-danger' : !parameterSelected(calPrm)}"
+                                        ng-click="toggleParameter(calPrm)">
+                                    <span class="glyphicon" ng-class="{'glyphicon-check' : parameterSelected(calPrm), 'glyphicon-plus' : !parameterSelected(calPrm)}"
+                                          aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <dir-pagination-controls pagination-id="paginateCalParameters" max-size="5"
+                                         direction-links="true"
+                                         boundary-links="true">
+                </dir-pagination-controls>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-success" ng-click="updateGroup(updateGroupForm)">
+        <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Save
+    </button>
+
+    <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="clearFormValidation(updateGroupForm)">
+        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Cancel
+    </button>
+</div>

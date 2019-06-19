@@ -1,0 +1,89 @@
+﻿<div  ng-init="initialize()">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-responsive" >
+                <caption>
+                    <span class="col-md-3">Users</span>                    
+                    <div class="col-md-offset-3 col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon">Filter</span>
+                            <input id="search" class="filterTable form-control"  ng-model="search" type="text" placeholder="Search Users...">
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <a href="../Admin/#/usersAdmin/addBulk" role="button" class="btn btn-success">
+                            <span class="fa fa-upload" aria-hidden="true"></span> Upload Bulk Users
+                        </a>
+                    </div>
+                    
+                </caption>
+                <thead>
+                    <tr>
+                        <th ng-click="sort('FirstName')">
+                            First Name 
+                            <span class="glyphicon sort-icon" ng-show="sortKeyName=='FirstName'" 
+                                  ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                        </th>
+                        <th ng-click="sort('LastName')">
+                            Last Name
+                            <span class="glyphicon sort-icon" ng-show="sortKeyName=='LastName'"
+                                  ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                        </th>
+                        <th ng-click="sort('State')">
+                            State
+                            <span class="glyphicon sort-icon" ng-show="sortKeyName=='State'"
+                                  ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                        </th>
+                        <th ng-click="sort('Group.Name')">
+                            Group Name
+                            <span class="glyphicon sort-icon" ng-show="sortKeyName=='Group.Name'"
+                                  ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr pagination-id="paginateUsers" dir-paginate="usr in users | orderBy:sortKey:reverse | filter:search | itemsPerPage:5">
+                        <td>{{usr.FirstName}}</td>
+                        <td>{{usr.LastName}}</td>
+                        <td>{{usr.State}}</td>
+                        <td>{{usr.GroupName}}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-backdrop="static" data-keyboard="false" 
+                                    ng-click="setUser(usr)" ng-hide="isMonitorOrCoordinator  && usr.GroupName != userGroupName" data-toggle="modal" data-target="#editUserModal">
+                                <span class="glyphicon glyphicon-th-list" aria-hidden="true" ></span> View Details / Edit
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" ng-click="retireUser(usr)" data-dismiss="modal">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls pagination-id="paginateUsers" max-size="5"
+                                     direction-links="true"
+                                     boundary-links="true">
+            </dir-pagination-controls>
+        </div>
+        <div class="modal " id="addUserModal" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div ui-view="add"></div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        
+        <div class="modal " id="editUserModal" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div ng-include="'/UsersAdmin/Edit/27be17fa-dc46-422b-99f6-6dd9a9e35f0d'"></div>
+                </div>
+            </div>
+        </div><!-- /.modal -->
+
+    </div>
+    
+</div>

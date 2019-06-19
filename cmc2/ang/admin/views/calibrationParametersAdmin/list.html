@@ -1,0 +1,86 @@
+﻿<div ng-init="initialize()" ng-show="parametersLoaded">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-responsive" >
+                <caption>
+                    <span class="col-md-3">Parameters</span>                    
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon">Filter</span>
+                            <input id="search" class="filterTable form-control"  ng-model="search" type="text" placeholder="Search Parmeters...">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <a class="btn btn-success" data-toggle="modal" data-backdrop="static" data-keyboard="false" 
+                           data-target="#addParameterModal">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Parameter
+                        </a>                       
+                    </div>   
+                    <div class="col-md-3">
+                        <a class="btn btn-success" ng-csv="parameters" csv-header="headers" filename="cmcParameters.csv">
+                            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Download Parameters
+                        </a>                        
+                    </div>    
+                </caption>
+                <thead>
+                    <tr>
+                        <th ng-click="sort('Name');">Name 
+                            <span class="glyphicon sort-icon" ng-show="sortKeyName=='Name'" 
+                                  ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                        </th>
+                        <th ng-click="sort('Equipment')">
+                            Equipment
+                            <span class="glyphicon sort-icon" ng-show="sortKeyName=='Equipment'"
+                                  ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                        </th>
+                        <th ng-click="sort('Code')">
+                            Code
+                            <span class="glyphicon sort-icon" ng-show="sortKeyName=='Code'"
+                                  ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr pagination-id="paginateParameters" dir-paginate="prm in parameters | orderBy:sortKey:reverse | filter:search | itemsPerPage:10">
+                        <td>{{prm.Name}}</td>
+                        <td>{{prm.Equipment}}</td>
+                        <td>{{prm.Code}}</td>
+                        <td>
+                            <button type="button" class="btn btn-success pull-right" data-backdrop="static" data-keyboard="false" 
+                                    ng-click="setParameter(prm)" data-toggle="modal" data-target="#editParameterModal">
+                                <span class="glyphicon glyphicon-th-list" aria-hidden="true" ></span> View Details / Edit
+                            </button>
+                        </td>
+                        <!--<td>
+                            <button type="button" class="btn btn-danger" ng-click="deleteParameter(prm)" data-dismiss="modal">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
+                            </button>
+                        </td>-->
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls pagination-id="paginateParameters" max-size="5"
+                                     direction-links="true"
+                                     boundary-links="true">
+            </dir-pagination-controls>
+        </div>
+        <div class="modal " id="addParameterModal" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div ui-view="add"></div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        
+        <div class="modal " id="editParameterModal" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div ui-view="edit"></div>
+                </div>
+            </div>
+        </div><!-- /.modal -->
+    </div>
+    
+</div>

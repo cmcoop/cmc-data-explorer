@@ -1,0 +1,149 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="clearFormValidation(editStationForm)" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title">Edit Station</h4>
+</div>
+<div class="modal-body" novalidate>
+    <div class="row bright">
+        <div class="col-md-12">
+            Note: All Latitude and Longitude submissions must be geographic coordinates (decimal degrees) on the
+            North America Datum of 1983 (NAD83).
+        </div>
+    </div>
+    <div class="verticalSpace10"></div>
+    <form name="editStationForm">
+        <div class="form-group" ng-class="{ 'has-error': editStationForm.Name.$touched && editStationForm.Name.$invalid }">
+            <label>Station Name</label>
+            <input name="Name" type="text" class="form-control" placeholder="Enter Station Name"
+                   ng-model="currentStation.Name"
+                   ng-minlength="2"
+                   ng-maxlength="1000"
+                   required>
+            <div class="help-block" ng-messages="editStationForm.Name.$error" ng-show="editStationForm.Name.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': editStationForm.Code.$touched && editStationForm.Code.$invalid }">
+            <label>Code</label>
+            <input name="Code" type="text" class="form-control" placeholder="Enter Station Code"
+                   ng-model="currentStation.Code"
+                   ng-minlength="2"
+                   ng-maxlength="1000"
+                   required>
+            <div class="help-block" ng-messages="editStationForm.Code.$error" ng-show="editStationForm.Code.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': editStationForm.NameLong.$touched && editStationForm.NameLong.$invalid }">
+            <label>Station Long Name</label>
+            <input name="NameLong" type="text" class="form-control" placeholder="Enter Station Long Name"
+                   ng-model="currentStation.NameLong"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="editStationForm.NameLong.$error" ng-show="editStationForm.NameLong.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': editStationForm.Description.$touched && editStationForm.Description.$invalid }">
+            <label>Station Description</label>
+            <input name="NameLong" type="text" class="form-control" placeholder="Enter Station Description"
+                   ng-model="currentStation.Description"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="editStationForm.Description.$error" ng-show="editStationForm.Description.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Sampling Method</label>
+            <div>
+                <selectpicker data-array="samplingMethodsList" data-model="currentStation.StationSamplingMethodId"></selectpicker>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': editStationForm.Lat.$touched && editStationForm.Lat.$invalid }">
+            <label>Latitude</label>
+            <input name="Lat" type="text" class="form-control" placeholder="Enter Latitude"
+                   ng-model="currentStation.Lat"
+                   required
+                   ng-pattern="/^-?[0-9]{1,2}\.\d{4,10}?$/" min="-90" max="90"/>
+            <div class="help-block" ng-messages="editStationForm.Lat.$error" ng-show="editStationForm.Lat.$touched">
+                <p ng-message="pattern"> Must be a valid latitude in decimal degrees (number with minumum of 4 decimal places, ex. -76.0646).</p>
+                <div ng-message="min">The value is less than the minimum latitude value in decimal degrees (-90.0000).</div>
+                <div ng-message="max">The value is greater than the maximum latitude value in decimal degrees (90.0000).</div>
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': editStationForm.Long.$touched && editStationForm.Long.$invalid }">
+            <label>Longitude</label>
+            <input name="Long" type="number" class="form-control" placeholder="Enter Longitude"
+                   ng-model="currentStation.Long"
+                   required
+                   ng-pattern="/^-?[0-9]{1,3}\.\d{4,10}?$/" min="-180" max="180"/>
+            <div class="help-block" ng-messages="editStationForm.Long.$error" ng-show="editStationForm.Long.$touched">
+                <p ng-message="pattern"> Must be a valid longitude in decimal degrees (number with minumum of 4 decimal places, ex. -76.0646).</p>
+                <div ng-message="min">The value is less than the minimum longitude value in decimal degrees (-180.0000).</div>
+                <div ng-message="max">The value is greater than the maximum longitude value in decimal degrees (180.0000).</div>
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': editStationForm.Huc12.$touched && editStationForm.Huc12.$invalid }">
+            <label>HUC 12</label>
+            <input name="Huc12" type="text" class="form-control" placeholder="Enter Station HUC 12"
+                   ng-model="currentStation.Huc12"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="editStationForm.Huc12.$error" ng-show="editStationForm.Huc12.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': editStationForm.Waterbody.$touched && editStationForm.Waterbody.$invalid }">
+            <label>Waterbody</label>
+            <input name="Waterbody" type="text" class="form-control" placeholder="Enter Station Waterbody"
+                   ng-model="currentStation.WaterBody"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="editStationForm.Waterbody.$error" ng-show="editStationForm.Waterbody.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': editStationForm.Fips.$touched && editStationForm.Fips.$invalid }">
+            <label>FIPS Code</label>
+            <input name="Fips" type="text" class="form-control" placeholder="Enter Station FIPS Code"
+                   ng-model="currentStation.Fips"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="editStationForm.Fips.$error" ng-show="editStationForm.Fips.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" >
+            <label>Tidal</label>
+            <div>
+                <selectpicker data-array="tidalList" data-model="currentStation.Tidal"></selectpicker>
+            </div>
+        </div>
+        <div class="form-group" ng-hide="isMonitorOrCoordinator">
+            <label>Group</label>
+            <div>
+                <selectpickermulti data-array="groupsList" data-model="$parent.currentGroups"></selectpickermulti>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': editStationForm.Comments.$touched && editStationForm.Comments.$invalid }">
+            <label>Comments</label>
+            <textarea name="Comments" rows="5" class="form-control" placeholder="Enter Comments"
+                      ng-model="currentStation.Comments"
+                      ng-minlength="1"
+                      ng-maxlength="1000"></textarea>
+            <div class="help-block" ng-messages="editStationForm.Comments.$error" ng-show="editStationForm.Comments.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-success" ng-click="updateStation(editStationForm)">
+        <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Save
+    </button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="clearFormValidation(editStationForm)">
+        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Cancel
+    </button>
+</div>

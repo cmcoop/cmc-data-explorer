@@ -1,0 +1,48 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="clearFormValidation(editConditionForm)" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title">Edit Condition</h4>
+</div>
+<div class="modal-body" novalidate>
+    <form name="editConditionForm">
+        <div class="form-group" ng-class="{ 'has-error': editConditionForm.Name.$touched && editConditionForm.Name.$invalid }">
+            <label>Condition Name</label>
+            <input name="Name" type="text" class="form-control" placeholder="Enter Condition Name"
+                   ng-model="currentCondition.Name"
+                   ng-minlength="2"
+                   ng-maxlength="1000"
+                   required>
+            <div class="help-block" ng-messages="editConditionForm.Name.$error" ng-show="editConditionForm.Name.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': editConditionForm.Code.$touched && editConditionForm.Code.$invalid }">
+            <lable>Condition Code</lable>
+            <input name="Code" type="text" class="form-control" placeholder="Enter Condition Code"
+                   ng-model="currentCondition.Code"
+                   ng-minlength="1"
+                   ng-maxlength="1000"
+                   required>
+            <div class="help-block" ng-messages="editConditionForm.Code.$error" ng-show="editConditionForm.Code.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': editConditionForm.Description.$touched && editConditionForm.Description.$invalid }">
+            <label>Condition Description</label>
+            <input name="Description" type="text" class="form-control" placeholder="Enter Condition Description"
+                   ng-model="currentCondition.Description"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="editConditionForm.Description.$error" ng-show="editConditionForm.Description.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-success" ng-click="updateCondition(editConditionForm)">
+        <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Save
+    </button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">
+        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Cancel
+    </button>
+</div>

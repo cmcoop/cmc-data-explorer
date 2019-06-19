@@ -1,0 +1,257 @@
+﻿<div ng-init="initialize()" ng-cloak>
+    <div class="row">
+        <div class="col-md-12" ng-show='isMonitorOrCoordinator'>
+            <h4 class="bright">
+                Hi {{userName}}, Welcome to the Data View & Download page.
+            </h4>
+            <p class="success" ng-show="isMonitor">
+                Here, you can edit and review benthic data that you have uploaded.
+            </p>
+            <p class="success" ng-hide="isMonitor">
+                Here, you can edit and review benthic data for the {{userGroup}}. Complete any or all of these filters and then click the 'Get Filtered Events' button
+                to return a list of sampling events from the database.
+            </p>
+        </div>
+        <div class="col-md-12"  ng-show='!isMonitorOrCoordinator'>
+            <h4 class="bright">
+                Hi {{userName}}, Welcome to the Benthic Edit and Review page.
+            </h4>
+            <p class="success">
+                Here you can edit and review all benthic data that has been
+                uploaded to the Data Explorer. Complete any or all of these filters and then click the 'Get Filtered Events' button 
+                to return a list of sampling events from the database.</p>                
+        </div>
+    </div>  
+    <div class='row' ng-show="initializing">
+        <div class="col-md-7">
+            <h3><span class="fa fa-spinner fa-spin"> </span>  Loading...</h3>
+        </div>
+    </div>
+    <div ng-show="!initializing">
+        <div ng-hide="isMonitor">
+            <div class="row" >
+                <div class="col-md-3" ng-hide="isMonitorOrCoordinator">
+                    <label>Group</label>
+                    <selectpicker data-array="groupsList" data-model="slctGroupId"></selectpicker>
+                    <div class="danger" ng-hide="hideNoStationForGroup">{{noStations}}</div>
+                    <div class="formElementInfo hide">Use the dropdown list to choose the group for which you will be editing data.</div>
+                </div>
+                <div class="col-md-3">
+                    <label>Sampling Site</label>
+                    <selectpicker name="Station" data-array="stationsList" data-model="stationId"></selectpicker>
+                    <p class="has-error" ng-hide="hideNoStationForGroup">There are no stations for this group.</p>
+                    <div class="danger" ng-hide="hideNoEventsForStation">There are no sampling events for this station.</div>
+                </div>
+
+                <div class="col-md-3">
+                    <label>Start Date</label>
+                    <input name="StartDate" class="form-control" placeholder="Enter Start Date"
+                           format="YYYY-MM-DD"
+                           ng-model="startDate"
+                           ng-model-options="{ updateOn: 'blur' }"
+                           max-date="maxDateMoment"
+                           min-date="minDateMoment"
+                           moment-picker="startDate">
+                </div>
+                <div class="col-md-3">
+                    <label>End Date</label>
+                    <input name="EndDate" class="form-control" placeholder="Enter End Date"
+                           format="YYYY-MM-DD"
+                           ng-model="endDate"
+                           ng-model-options="{ updateOn: 'blur' }"
+                           max-date="maxDateMoment"
+                           min-date="minDateMoment"
+                           moment-picker="endDate">
+                </div>
+            </div>
+            <div class="verticalSpace10"> </div>
+            <div class="row">
+                <div class="col-md-3" ng-class="isMonitorOrCoordinator? 'col-md-offset-6':'col-md-offset-9'">
+                    <button type="button" class="btn btn-success btn-block" ng-class="{'disabled':gettingFilteredEvents}" ng-click="getFilteredEvents()">
+                        <span class="fa  " ng-class="{'disabled fa-spinner fa-spin':gettingFilteredEvents, 'fa-check':!gettingFilteredEvents}" aria-hidden="true"></span> Get Filtered Events
+                    </button>
+                </div>
+            </div>
+            <div class="verticalSpace20"></div>
+        </div>
+        
+        <div>
+            <div class="row" ng-if="showEventGrid">
+                <div class="col-md-12">
+                    <p class="success">Select a row and then use the buttons to the right of the grid to edit, publish or delete sampling events. 
+                    You may delete or publish multiple sampling events at a time, but you can only edit data for a single event at a time. To edit counts, please
+                    select a single row by click the appropriate check mark on the left side of the grid and then pressing the 'Edit Selected Event' button that then appears to the right of the grid. 
+                    Please note the menu button at the top right of the grid with additional grid controls, including download options.</p>
+                </div>
+                <div class="col-md-10">
+                    <div ui-grid="eventGridOptions" ui-grid-resize-columns ui-grid-exporter ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-selection
+                         class="ui-grid-tall" ng-if="eventGridOptions"></div>
+                </div>
+                <div class="col-md-2">
+                    <div ng-if="!isMonitorOrCoordinator || (isCoordinator && coordinatorHasEnhancedPriveledges)">
+                        <label>Bulk Action</label>
+                        <button type="button" class="btn btn-danger btn-block" ng-click="deleteDialogue()">
+                            <span class="fa fa-remove" aria-hidden="true"></span>
+                            Delete Selected
+                        </button>
+                        <div class="verticalSpace10"></div>
+                        <button type="button" class="btn btn-success btn-block" ng-click="publishDialogue(true)">
+                            <span class="fa fa-edit" aria-hidden="true"></span>
+                            Publish Selected
+                        </button>
+                        <button type="button" class="btn btn-success btn-block" ng-click="publishDialogue(false)">
+                            <span class="fa fa-edit" aria-hidden="true"></span>
+                            Un-Publish Selected
+                        </button>
+                    </div>
+                    <div class="verticalSpace20"></div>
+                    <div ng-show="showEditEventBtn">
+                        <label>Edit</label>
+                        <button type="button" class="btn btn-success btn-block" ng-click="getSelectedEvent(row);">
+                            <span class="fa fa-edit" aria-hidden="true"></span>
+                            Edit Selected Event
+                        </button>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+        <div class="verticalSpace20"> </div>
+        <div>
+            <h3 ng-show="gettingFilteredSamples"><span class="fa fa-spinner fa-spin"></span>  Loading Selected Sampling Event...</h3>
+            <h3 ng-show="showNoSamplesMsg" class="bright"> There are no samples for the selected event</h3>
+            <div class="row" ng-if="showGrid">
+                <div class="col-md-12">
+                    <p class="success">
+                        Select a row and then use the buttons to the right of the grid to publish or delete samples.
+                        You may delete or publish multiple samples at a time.
+                    </p>
+                </div>
+                <div class="col-md-10">
+                    <div ui-grid="gridOptions" ui-grid-resize-columns ui-grid-exporter ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-selection
+                            class="ui-grid-tall" ng-if="gridOptions"></div>
+                </div>
+                <div class="col-md-2">
+                    <div ng-if="!isMonitorOrCoordinator || (isCoordinator && coordinatorHasEnhancedPriveledges)">
+                        <label>Bulk Action</label>
+                        <button type="button" class="btn btn-danger" ng-click="deleteSamplesDialogue()">
+                            <span class="fa fa-remove" aria-hidden="true"></span>
+                            Delete Selected
+                        </button>
+                        <div class="verticalSpace10"></div>
+                        <button type="button" class="btn btn-success" ng-click="publishSamplesDialogue(true)">
+                            <span class="fa fa-edit" aria-hidden="true"></span>
+                            Publish Selected
+                        </button>
+                        <div class="verticalSpace10"></div>
+                        <button type="button" class="btn btn-success" ng-click="publishSamplesDialogue(false)">
+                            <span class="fa fa-edit" aria-hidden="true"></span>
+                            Un-Publish Selected
+                        </button>
+                        <div class="verticalSpace20"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="verticalSpace20"> </div>
+        <div>
+            <div class="row" ng-if="showGrid">
+                <div class="col-md-12">
+                    <p class="success">
+                        You may edit volunteer hours below by double clicking on the cell.
+                    </p>
+                </div>
+                <div class="col-md-10">
+                    <h3 ng-show="noMonitorData" class="bright"> There are no volunteer monitoring hours logged for the selected event</h3>
+                    <div ui-grid="monitorGridOptions" ui-grid-resize-columns ui-grid-exporter ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-selection
+                         class="ui-grid-tall" ng-if="gridOptions&&!noMonitorData"></div>
+                </div>               
+            </div>
+        </div>
+    </div>
+    <div class="modal " id="deleteModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Delete?</h3>
+                </div>
+                <div class="modal-body">
+                    <span ng-if="nEventsToDelete == 1">Are you sure you want to delete this sampling event and all associated samples?</span>
+                    <span ng-if="nEventsToDelete > 1">Are you sure you want to delete {{nEventsToDelete}} sampling events and all associated samples?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="deleteSelected();toggleDeleteBtn = !toggleDeleteBtn;">
+                        <span ng-class="toggleDeleteBtn ? 'fa fa-spinner fa-spin ' : 'glyphicon glyphicon-check'" aria-hidden="true"></span> Yes
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> No
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+    <div class="modal " id="publishModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Publish?</h3>
+                </div>
+                <div class="modal-body">
+                    <span ng-if="nEventsToPublish == 1">Are you sure you want to <span ng-if="!publishStatus">un-</span>publish this sampling event and all associated samples?</span>
+                    <span ng-if="nEventsToPublish > 1">Are you sure you want to <span ng-if="!publishStatus">un-</span>publish {{nEventsToPublish}} sampling events and all associated samples?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="publishSelected();togglePublishBtn = !togglePublishBtn;">
+                        <span class="" ng-class="togglePublishBtn ? 'fa fa-spinner fa-spin ' : 'glyphicon glyphicon-check'" aria-hidden="true"></span> Yes
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> No
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+        <div class="modal " id="deleteSamplesModal" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Delete?</h3>
+                    </div>
+                    <div class="modal-body">
+                        <span ng-if="nSamplesToDelete == 1">Are you sure you want to delete this sample?</span>
+                        <span ng-if="nSamplesToDelete > 1">Are you sure you want to delete these {{nSamplesToDelete}} samples?</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" ng-click="deleteSelectedSamples();toggleDeleteSamplesBtn = !togglePublishDeleteSamplesBtn;">
+                            <span ng-class="toggleDeleteSamplesBtn ? 'fa fa-spinner fa-spin ' : 'glyphicon glyphicon-check'" aria-hidden="true"></span> Yes
+                        </button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> No
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal -->
+        <div class="modal " id="publishSamplesModal" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Publish?</h3>
+                    </div>
+                    <div class="modal-body">
+                        <span ng-if="nSamplesToPublish == 1">Are you sure you want to <span ng-if="!publishSamplesStatus">un-</span>publish this sample?</span>
+                        <span ng-if="nSamplesToPublish > 1">Are you sure you want to <span ng-if="!publishSamplesStatus">un-</span>publish {{nSamplesToPublish}} samples?</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" ng-click="publishSelectedSamples();togglePublishSamplesBtn = !togglePublishSamplesBtn;">
+                            <span class="" ng-class="togglePublishSamplesBtn ? 'fa fa-spinner fa-spin ' : 'glyphicon glyphicon-check'" aria-hidden="true"></span> Yes
+                        </button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> No
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal -->
+</div>

@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin;
+@using System.Web;
+@using System.Web.Mvc;
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        
+        <li><a><i class="fa fa-bug bright bugReporter" title="Report Bug" data-toggle="tooltip" data-placement="bottom" 
+    onmouseenter="$(this).tooltip('show')"></i></a></li>
+        <li id="menuUser"><!--class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")"--> 
+            <a href=@Url.Action("EditProfile", "Manage") id="menuUserLink">
+                <img src="@Url.Action("GetProfileImage", "Admin" )" id="menuUserProfImg" class="center-block" /> 
+            </a>
+
+           
+            <div id="menuUserEmail">
+                
+                @Html.ActionLink(HttpContext.Current.GetOwinContext().
+                    GetUserManager<ApplicationUserManager>().
+                    FindById(HttpContext.Current.User.Identity.GetUserId()).Email, "EditProfile", "Manage", 
+                    routeValues: null, htmlAttributes: new { title = "Manage" })
+            </div>
+
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><i class="fa fa-bug bright bugReporter"></i></a></li>        
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Register" ? "active" : "")">@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Login" ? "active" : "")">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

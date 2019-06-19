@@ -1,0 +1,35 @@
+﻿<div ng-init="initialize()" ng-cloak>  
+    <div class="row">
+        <div class="col-md-12" ng-show='isMonitorOrCoordinator'>
+            <h4 class="bright">
+                Hi {{userName}}, welcome to the Data View & Download page.
+            </h4>
+            <p class="success">
+                Here, you can view and download data for {{userGroup}}.
+                The table below displays all the data for your group.                 
+            </p>
+        </div>
+        <div class="col-md-12"  ng-show='!isMonitorOrCoordinator'>
+            <h4 class="bright">
+                Hi {{userName}}, welcome to the Data View & Download page.
+            </h4>
+            <p class="success">
+                Here you can View and Download all data that has been
+                uploaded to the Data Explorer. The table below displays sampling events for the selected group.                
+            </p>                
+        </div>
+    </div>  
+    <div class="row">
+        <div class="col-md-3" ng-hide="isMonitorOrCoordinator">
+            <selectpicker data-array="groupsList" data-model="slctGroupId"></selectpicker>
+            <div class="danger" ng-hide="hideNoStationForGroup">{{noStations}}</div>
+            <div class="formElementInfo">Use the dropdown list to choose the group for which you will be editing data.</div> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="verticalSpace20"></div>
+        <div class="col-md-12">
+            <div ui-grid="gridOptions" ui-grid-exporter ui-grid-edit ui-grid-row-edit ui-grid-cellNav class="ui-grid-tall" ng-if="gridOptions"></div>
+        </div>       
+    </div>  
+</div>

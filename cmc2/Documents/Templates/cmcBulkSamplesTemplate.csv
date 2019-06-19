@@ -1,0 +1,47 @@
+Source,Station,Date,Time,SampleDepth,SampleId,ParameterType,ParameterName,Value,Qualifier,Problem,Comments
+ACB,ACB.35,2/5/2016,1:00:00 PM,,,Condition,R,33.274,,,Very high - snow melt and rain in previous week
+ACB,ACB.35,2/5/2016,1:00:00 PM,,,Condition,SF,High,,,Very high - snow melt and rain in previous week
+ACB,ACB.35,2/5/2016,1:00:00 PM,,,Condition,WC,Normal,,,Very high - snow melt and rain in previous week
+ACB,ACB.35,2/5/2016,1:00:00 PM,,,Condition,WCD,Dark brown,,,Very high - snow melt and rain in previous week
+ACB,ACB.35,2/5/2016,1:00:00 PM,,,Monitor,ACB.Joe.Smith,2,,,Very high - snow melt and rain in previous week
+ACB,ACB.35,2/5/2016,1:00:00 PM,0.25,1,WaterQuality,AT.2,8.9,,,Very high - snow melt and rain in previous week
+ACB,ACB.35,2/5/2016,1:00:00 PM,0.25,1,WaterQuality,DO.1,9.7,,,Very high - snow melt and rain in previous week
+ACB,ACB.35,2/5/2016,1:00:00 PM,0.25,2,WaterQuality,DO.1,9.4,,,Very high - snow melt and rain in previous week
+ACB,ACB.35,2/5/2016,1:00:00 PM,0.25,1,WaterQuality,PH.1,6.87,,,Very high - snow melt and rain in previous week
+ACB,ACB.35,2/5/2016,1:00:00 PM,0.25,1,WaterQuality,TD.1,0.5,,,Very high - snow melt and rain in previous week
+ACB,ACB.35,2/5/2016,1:00:00 PM,0.25,1,WaterQuality,TU.1,30.6,,,Very high - snow melt and rain in previous week
+ACB,ACB.35,2/5/2016,1:00:00 PM,0.25,1,WaterQuality,WC.1,47,,,Very high - snow melt and rain in previous week
+ACB,ACB.35,2/5/2016,1:00:00 PM,0.25,1,WaterQuality,WT.2,7.4,,,Very high - snow melt and rain in previous week
+ACB,ACB.35,3/17/2016,6:20:00 PM,,,Condition,R,10.922,,,
+ACB,ACB.35,3/17/2016,6:20:00 PM,,,Condition,SF,Normal,,,
+ACB,ACB.35,3/17/2016,6:20:00 PM,,,Condition,WC,Normal,,,
+ACB,ACB.35,3/17/2016,6:20:00 PM,,,Condition,WCD,Brown,,,
+ACB,ACB.35,3/17/2016,6:20:00 PM,,,Monitor,ACB.Joe.Smith,1.5,,,
+ACB,ACB.35,3/17/2016,6:20:00 PM,0.25,1,WaterQuality,AT.2,21,,,
+ACB,ACB.35,3/17/2016,6:20:00 PM,0.25,1,WaterQuality,DO.1,8.7,,,
+ACB,ACB.35,3/17/2016,6:20:00 PM,0.25,2,WaterQuality,DO.1,8.2,,,
+ACB,ACB.35,3/17/2016,6:20:00 PM,0.25,1,WaterQuality,PH.1,7.3,,,
+ACB,ACB.35,3/17/2016,6:20:00 PM,0.25,1,WaterQuality,TU.1,120,,,
+ACB,ACB.35,3/17/2016,6:20:00 PM,0.25,1,WaterQuality,WC.1,120,,,
+ACB,ACB.35,3/17/2016,6:20:00 PM,0.25,2,WaterQuality,WC.1,0.2,,,
+ACB,ACB.35,3/17/2016,6:20:00 PM,0.25,1,WaterQuality,WT.2,17,,,
+ACB,ACB.FOR2,2/9/2016,12:39:00 PM,,,Condition,SF,Normal,,,"cloudy, cold day"
+ACB,ACB.FOR2,2/9/2016,12:39:00 PM,,,Condition,WC,Normal,,,"cloudy, cold day"
+ACB,ACB.FOR2,2/9/2016,12:39:00 PM,,,Condition,WCD,Light brown/turbid,,,"cloudy, cold day"
+ACB,ACB.FOR2,2/9/2016,12:39:00 PM,,,Monitor,ACB.Joe.Smith,2,,,"cloudy, cold day"
+ACB,ACB.FOR2,2/9/2016,12:39:00 PM,0.25,1,WaterQuality,AT.2,5.5,,,"cloudy, cold day"
+ACB,ACB.FOR2,2/9/2016,12:39:00 PM,0.25,1,WaterQuality,DO.1,12.2,,,"cloudy, cold day"
+ACB,ACB.FOR2,2/9/2016,12:39:00 PM,0.25,2,WaterQuality,DO.1,11.9,,,"cloudy, cold day"
+ACB,ACB.FOR2,2/9/2016,12:39:00 PM,0.25,1,WaterQuality,PH.1,7.14,,,"cloudy, cold day"
+ACB,ACB.FOR2,2/9/2016,12:39:00 PM,0.25,1,WaterQuality,TU.1,46.2,,,"cloudy, cold day"
+ACB,ACB.FOR2,2/9/2016,12:39:00 PM,0.25,1,WaterQuality,WC.1,30,,,"cloudy, cold day"
+ACB,ACB.FOR2,2/9/2016,12:39:00 PM,0.25,1,WaterQuality,WT.2,5,,,"cloudy, cold day"
+ACB,ACB.FOR2,5/3/2016,11:29:00 AM,,,Condition,R,28,,,
+ACB,ACB.FOR2,5/3/2016,11:29:00 AM,,,Condition,SF,Normal,,,
+ACB,ACB.FOR2,5/3/2016,11:29:00 AM,,,Condition,WC,Normal,,,
+ACB,ACB.FOR2,5/3/2016,11:29:00 AM,,,Condition,WCD,Light brown,,,
+ACB,ACB.FOR2,5/3/2016,11:29:00 AM,,,Monitor,ACB.Keith.Homza,3,,,
+ACB,ACB.FOR2,5/3/2016,11:29:00 AM,0.25,1,WaterQuality,AT.2,19,,,
+ACB,ACB.FOR2,5/3/2016,11:29:00 AM,0.25,1,WaterQuality,PH.1,7.5,,,
+ACB,ACB.FOR2,5/3/2016,11:29:00 AM,0.25,1,WaterQuality,TU.1,36,,,
+ACB,ACB.FOR2,5/3/2016,11:29:00 AM,0.25,1,WaterQuality,WT.2,19,,,

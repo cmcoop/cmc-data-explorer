@@ -1,0 +1,47 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="clearFormValidation(editLabForm)" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title">Edit Lab</h4>
+</div>
+<div class="modal-body" novalidate>
+    <form name="editLabForm">
+        <div class="form-group" ng-class="{ 'has-error': editLabForm.Name.$touched && editLabForm.Name.$invalid }">
+            <label>Lab Name</label>
+            <input name="Name" type="text" class="form-control" placeholder="Enter Lab Name"
+                   ng-model="currentLab.Name"
+                   ng-minlength="2"
+                   ng-maxlength="1000"
+                   required>
+            <div class="help-block" ng-messages="editLabForm.Name.$error" ng-show="editLabForm.Name.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': editLabForm.Code.$touched && editLabForm.Code.$invalid }">
+            <label>Lab Code</label>
+            <input name="Code" type="text" class="form-control" placeholder="Enter Lab Code"
+                   ng-model="currentLab.Code"
+                   ng-minlength="2"
+                   ng-maxlength="10">
+            <div class="help-block" ng-messages="editLabForm.Code.$error" ng-show="editLabForm.Code.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': editLabForm.Description.$touched && editLabForm.Description.$invalid }">
+            <label>Lab Description</label>
+            <input name="Description" type="text" class="form-control" placeholder="Enter Lab Description"
+                   ng-model="currentLab.Description"
+                   ng-minlength="2"
+                   ng-maxlength="1000">
+            <div class="help-block" ng-messages="editLabForm.Description.$error" ng-show="editLabForm.Description.$touched">
+                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-success" ng-click="updateLab(editLabForm)">
+        <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Save
+    </button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">
+        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Cancel
+    </button>
+</div>

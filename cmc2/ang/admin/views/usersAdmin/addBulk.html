@@ -1,0 +1,41 @@
+﻿<div ng-controller="usersAddBulkController as ctrl" ng-init="initialize()">
+    <div class="row">
+        <div class="col-md-12">
+            <form name="addBulkUserForm">
+                <div class="form-validation-group" ng-show="ctrl.errors">
+                    <ul>
+                        <li ng-repeat="error in ctrl.errors">{{error.value}}</li>
+                    </ul>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': !addBulkUserForm.$pristine }">
+                    <label>File</label>
+                    <input type="file" ngf-select ng-model="ctrl.file" name="file" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+                    <span class="help-block" ng-show="addBulkUserForm.file.$error.required && !addBulkUserForm.$pristine">Must Select a File</span>
+                    <div class="help-block" ng-messages="addBulkUserForm.file.$error.required" ng-show="addBulkUserForm.file.$touched">
+                        <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-success" ng-click="ctrl.uploadBulk()" ng-disabled="ctrl.file == null || ctrl.uploading">
+                    <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Save
+                </button>
+
+                <div class="verticalSpace20"></div>
+                <div class="row">
+                    <div class="bright col-md-12">Note: Bulk uploaded users are assigned a generic email on upload.</div>
+                </div>
+                <div class="verticalSpace20"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="bright">Users bulk upload file format: </p>
+                        <a href="../Documents/Templates/cmcBulkUsersTemplate.csv" role="button" class="btn btn-success">
+                            <span class="fa fa-download" aria-hidden="true"></span> Bulk Users Template
+                        </a>
+                    </div>
+                </div>
+            </form>
+
+            
+        </div>
+    </div>
+</div>

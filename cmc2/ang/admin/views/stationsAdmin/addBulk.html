@@ -1,0 +1,46 @@
+﻿<div ng-controller="stationsAddBulkController as ctrl" ng-init="initialize()">
+    <div class="row">
+        <div class="col-md-12 bright">
+            <p>
+                Note: All Latitude and Longitude submissions must be geographic coordinates (decimal degrees) on the
+                North America Datum of 1983 (NAD83).
+            </p>
+        </div>
+        <div class="verticalSpace10"></div>
+        <div class="col-md-12">
+            <form name="addBulkStationForm">
+                
+                <div class="form-validation-group" ng-show="ctrl.errors">
+                    <ul>
+                        <li ng-repeat="error in ctrl.errors">{{error.value}}</li>
+                    </ul>
+                </div>
+                
+                <div class="form-group" ng-class="{ 'has-error': !addBulkStationForm.$pristine }">
+                    <label>File</label>
+                    <input type="file" ngf-select ng-model="ctrl.file" name="file" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+                    <span class="help-block" ng-show="addBulkStationForm.file.$error.required && !addBulkStationForm.$pristine">Must Select a File</span>
+                    <div class="help-block" ng-messages="addBulkStationForm.file.$error.required" ng-show="addBulkStationForm.file.$touched">
+                        <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-success" ng-click="ctrl.uploadBulk()" ng-show="!ctrl.uploading" ng-disabled="ctrl.file == null || ctrl.uploading">
+                    <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Save
+                </button>
+                <button type="button" class="btn btn-success" ng-show="ctrl.uploading" ng-disabled="ctrl.uploading">
+                    <span class="fa fa-spinner fa-spin" aria-hidden="true"></span> Uploading
+                </button>
+                <div class="verticalSpace20"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="bright">Stations bulk upload file format: </p>
+                        <a href="../Documents/Templates/cmcBulkStationsTemplate.csv" role="button" class="btn btn-success">
+                            <span class="fa fa-download" aria-hidden="true"></span> Bulk Stations Template
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

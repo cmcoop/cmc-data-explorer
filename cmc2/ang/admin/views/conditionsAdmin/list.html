@@ -1,0 +1,81 @@
+﻿<div  ng-init="getConditions()">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-responsive" >
+                <caption>
+                    <span class="col-md-3">Conditions</span>                    
+                    <div class="col-md-offset-3 col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon">Filter</span>
+                            <input id="search" class="filterTable form-control"  ng-model="search" type="text" placeholder="Search Conditions...">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <a class="btn btn-info" data-toggle="modal" data-backdrop="static" data-keyboard="false" 
+                           data-target="#addConditionModal">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Condition
+                        </a>
+                    </div>    
+                </caption>
+                <thead>
+                    <tr>
+                        <th ng-click="sort('Name')">Name 
+                            <span class="glyphicon sort-icon" ng-show="sortKeyName=='Name'" 
+                                  ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                        </th>
+                        <th ng-click="sort('Code')">
+                            Code
+                            <span class="glyphicon sort-icon" ng-show="sortKeyName=='Code'"
+                                  ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                        </th>
+                        <th ng-click="sort('Description')">
+                            Description
+                            <span class="glyphicon sort-icon" ng-show="sortKeyName=='Description'"
+                                  ng-class="{'glyphicon-chevron-up':!reverse,'glyphicon-chevron-down':reverse}"></span>
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr pagination-id="paginateConditions" dir-paginate="condition in conditions | orderBy:sortKey:reverse | filter:search | itemsPerPage:10">
+                        <td>{{condition.Name}}</td>
+                        <td>{{condition.Code}}</td>
+                        <td>{{condition.Description}}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary pull-right" data-backdrop="static" data-keyboard="false" 
+                                    ng-click="setCondition(condition)" data-toggle="modal" data-target="#editConditionModal">
+                                <span class="glyphicon glyphicon-th-list" aria-hidden="true" ></span> View Details / Edit
+                            </button>
+                        </td>
+                        <!--<td>
+                            <button type="button" class="btn btn-danger" ng-click="deleteLab(lab)" data-dismiss="modal">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
+                            </button>
+                        </td>-->
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls pagination-id="paginateConditions" max-size="5"
+                                     direction-links="true"
+                                     boundary-links="true">
+            </dir-pagination-controls>
+        </div>
+        <div class="modal " id="addConditionModal" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div ui-view="add"></div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        
+        <div class="modal " id="editConditionModal" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div ui-view="edit"></div>
+                </div>
+            </div>
+        </div><!-- /.modal -->
+    </div>
+    
+</div>

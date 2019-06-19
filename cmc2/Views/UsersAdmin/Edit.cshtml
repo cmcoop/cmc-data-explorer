@@ -1,0 +1,167 @@
+﻿@model cmc2.Models.EditUserViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>  
+<div id="formOuter">
+    <div class="hidden" id="testText">@ViewBag.test</div>
+
+    @using (Ajax.BeginForm("Edit", "UsersAdmin", null, new AjaxOptions()
+    {
+        HttpMethod = "Post",
+        UpdateTargetId = "formOuter",
+        OnSuccess = "onSubmitSuccess"
+    }
+        ))
+
+    {
+        @Html.AntiForgeryToken()
+
+        <div>
+            
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.sendEmail)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, new { @class = "control-label " })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email)
+                <div class="danger" id="duplicateEmail"></div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FirstName, new { @class = "control-label " })
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastName, new { @class = "control-label " })
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.LastName)
+            </div>
+            <div class="form-group">
+
+                @Html.Label("Roles", new { @class = "control-label " })
+                <div class="row">
+                    <div class="leftSpaceFormModal">
+                        @foreach (var item in ViewBag.RolesList)
+                        {
+                            <label><input type="radio" name="SelectedRole" value="@item.Value" checked="@item.Selected" class="checkbox-inline" />@item.Value</label>
+
+                        }
+                    </div>
+                </div>
+                <div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Code, new { @class = "control-label " })
+                    @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Code)
+                </div>
+                <div class="form-group hide">
+                    @Html.LabelFor(model => model.GroupUpdatedDateTime, new { @class = "control-label " })
+                    @Html.TextBoxFor(m => m.GroupUpdatedDateTime, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.GroupUpdatedDateTime)
+                </div>
+                <div class="verticalSpace10"></div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CellPhone, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.CellPhone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CellPhone, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.HomePhone, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.HomePhone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.HomePhone, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmergencyPhone, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.EmergencyPhone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.EmergencyPhone, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AddressFirst, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.AddressFirst, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.AddressFirst, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AddressSecond, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.AddressSecond, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.AddressSecond, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.City, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        Select State
+                    </label>
+                    <div class="row">
+                        <select class="selectpicker leftSpaceFormModal" id="stateSelect" name="State" data-width="auto" data-live-search="true" title="Choose a State...">
+                            <option></option>
+                            @foreach (var item in ViewBag.StateList)
+                            {
+                                <option selected="@item.Selected" value="@Html.Raw(item.Value)">
+                                    @Html.Raw(item.Text)
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Zip, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.Zip, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Zip, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">
+                        Select Group
+                    </label>
+                    <div class="row">
+                        <select class="selectpicker leftSpaceFormModal" id="groupSelect" name="SelectedGroup" data-width="auto"
+                                data-live-search="true" title="Choose a Group...">
+                            <option></option>
+                            @foreach (var item in ViewBag.GroupList)
+                            {
+                                <option selected="@item.Selected">
+                                    @Html.Raw(item.Value)
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.CertificationDate, new { @class = " control-label" })
+                    @Html.EditorFor(m => m.CertificationDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                    @Html.ValidationMessageFor(m => m.CertificationDate, "", new { @class = "text-danger" })
+                </div>
+                <!--<div class="form-group">
+                    @Html.LabelFor(m => m.VolunteerHours, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.VolunteerHours, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.VolunteerHours, "", new { @class = "text-danger" })
+                </div>-->
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Status, new { @class = "control-label " })
+                    <div class="row">
+                        <div class="leftSpaceFormModal">
+                            @Html.CheckBoxFor(m => m.Status, new { @id = "chkUserStatus", @class = "checkbox-inline" })
+                            Activate
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-success btnSubmit" />
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,392 @@
+﻿<div ng-init="initialize()" ng-cloak>
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="bright" ng-show='isMonitorOrCoordinator'>
+                Hi {{userName}}, welcome to the data upload page! Using the fields below, you can enter data into the Chesapeake Data Explorer for Sampling Sites belonging to {{userGroup}}.
+            </h4>
+            <h4 class="bright" ng-show='!isMonitorOrCoordinator'>
+                Hi {{userName}}, welcome to the data upload page! Here you can enter data for any group and station in the Chesapeake Data Explorer.
+            </h4>
+        </div>
+    </div>   
+    <div class="verticalSpace20"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class='row' ng-show="loading">
+                <div class="col-md-7">
+                    <h3><span class="fa fa-spinner fa-spin"> </span>  Loading...</h3>
+                </div>
+            </div>
+            <form name="addSampleForm" >
+                <h3 ng-show="groupHasNoMethod">A benthic macroinvertebrate assessment method has not been assigned to your group yet.</h3>
+                <div ng-show="!loading && !groupHasNoMethod">
+                    <div class="form-group" ng-hide='isMonitorOrCoordinator' ng-class="{ 'has-error': !addSampleForm.$pristine && addSampleForm.Group.$error.required }">
+                        <label>Group</label>
+                        <selectpicker name="Group" data-array="groupsList" data-model="slctGroupId"></selectpicker>
+                        <span class="help-block" ng-show="addSampleForm.Group.$error.required && !addSampleForm.$pristine">Must Select a Group</span>
+                        <div class="help-block" ng-messages="addSampleForm.Group.$error.required" ng-show="addSampleForm.Group.$touched">
+                            <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                        </div>
+                        <div class="danger" ng-messages="addSampleForm.Group.$error">
+                            <div ng-message="eventExistsError">
+                                Sampling Event exists in database.
+                                Please check that this combination of Group, Station, Sample Date, and Sample Time does not exist in the database.
+                            </div>
+                        </div>
+                        <div class="formElementInfo">Use the dropdown list to choose the group for which you will be uploading data.</div>
+
+                    </div>
+                    <div class="row">
+                        <div class="danger">{{noParameters}}</div>
+                        <div class="danger ">
+                            <div ng-show='userRole == "Monitor" && benthicParametersError'>
+                                Your group has not defined a method for calculating benthic metrics. A method for calculating benthic metrics must be selected before proceeding. Notify your group coordinator that this need to be changed
+                                in the "Manage Groups" sections of this website.
+                            </div>
+                            <div ng-show='userRole == "Coordinator" && benthicParametersError'>
+                                Your group has not defined a method for calculating benthic metrics. A method for calculating benthic metrics must be selected before proceeding.
+                                Click here to and click 'View Details / Edit' for your group to add benthic method: <a class="" href="../Admin/#/groupsAdmin/list" )">Manage Groups</a>
+                            </div>
+                            <div ng-show='!isMonitorOrCoordinator && benthicParametersError'>
+                                The group you selected does not have a defined a method for calculating benthic metrics. A method for calculating benthic metrics must be selected before proceeding.
+                                Click here and click 'View Details / Edit' for this group to add benthic method: <a class="" href="../Admin/#/groupsAdmin/list" )">Manage Groups</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': !addSampleForm.$pristine && addSampleForm.Station.$error.required }">
+                        <label>Sampling Site</label>
+                        <selectpicker name="Station" data-array="stationsList" data-model="newEvent.StationId" required></selectpicker>
+                        <span class="help-block" ng-show="addSampleForm.Station.$error.required && !addSampleForm.$pristine">Must Select a Station</span>
+                        <div class="help-block" ng-messages="addSampleForm.Station.$error.required" ng-show="addSampleForm.Station.$touched">
+                            <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                        </div>
+                        <div class="danger">{{noStations}}</div>
+                        <div class="danger" ng-messages="addSampleForm.Station.$error">
+                            <div ng-message="eventExistsError">
+                                Sampling Event exists in database.
+                                Please check that this combination of Group, Station, Sample Date, and Sample Time does not exist in the database.
+                            </div>
+                        </div>
+                        <div class="formElementInfo">Use the dropdown list to choose the sampling station for which you will be uploading data.</div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': addSampleForm.SampleDate.$touched && addSampleForm.SampleDate.$invalid }">
+                        <label>Sample Date</label>
+                        <input name="SampleDate" class="form-control" placeholder="Enter Sample Date"
+                               ng-model="newEvent.SampleDate"
+                               ng-model-options="{ updateOn: 'blur' }"
+                               format="YYYY-MM-DD"
+                               max-date="maxDateMoment"
+                               moment-picker="newEvent.SampleDate"
+                               autocomplete="off"
+                               required>
+                        <div class="help-block" ng-messages="addSampleForm.SampleDate.$error" ng-show="addSampleForm.SampleDate.$touched">
+                            <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                        </div>
+                        <div class="danger" ng-messages="addSampleForm.SampleDate.$error">
+                            <div ng-message="eventExistsError">
+                                Sampling Event exists in database.
+                                Please check that this combination of Group, Station, Sample Date, and Sample Time does not exist in the database.
+                            </div>
+                        </div>
+                        <div class="formElementInfo">Click on text box above and use the calendar that opens to choose the sample date</div>
+                    </div>
+                    <div ng-hide="noStations !== ''">
+                        <div class="form-group" ng-class="{ 'has-error': addSampleForm.SampleTime.$touched && addSampleForm.SampleTime.$invalid }">
+                            <label>Time of Day</label>
+                            <input name="SampleTime" class="form-control" placeholder="Enter Sample Time"
+                                   moment-picker="newEvent.SampleTime"
+                                   format="h:mm A"
+                                   ng-model="newEvent.SampleTime"
+                                   ng-model-options="{ updateOn: 'blur' }"
+                                   autocomplete="off"
+                                   show-header=false
+                                   required>
+                            <div class="help-block" ng-messages="addSampleForm.SampleTime.$error" ng-show="addSampleForm.SampleTime.$touched">
+                                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                            </div>
+                            <div class="danger" ng-messages="addSampleForm.SampleTime.$error">
+                                <div ng-message="eventExistsError">
+                                    Sampling Event exists in database.
+                                    Please check that this combination of Group, Station, Sample Date, and Sample Time does not exist in the database.
+                                </div>
+                            </div>
+                            <div class="formElementInfo">Click on the text box above to select the sample time</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="bright">
+                                    Conditions During Sampling
+                                </h4>
+                                <p class="success"> Use the fields in this section to describe conditions at the sampling location at the time sampling occurred.</p>
+                            </div>
+                        </div>
+                        <div class="verticalSpace20"></div>
+                        <div class="row benthicConditions">
+
+                            <div ng-repeat="condition in conditions | filter: conditionMethodFilter" ng-if="condition.Code !== 'DOO' && condition.Code !== 'BT' ">
+                                <!--<div class="clearfix" ng-if="($index) % 3 == 0"></div>-->
+                                <div class="col-md-4">
+                                    <label>{{condition.Name}}</label>
+                                    <div class="form-group" ng-if="!condition.isCategorical" ng-class="{ 'has-error': addSampleForm[condition.Name].$touched && addSampleForm[condition.Name].$invalid }">
+                                        <input ng-model="condition.Value"
+                                               name="{{condition.Name}}"
+                                               class="form-control"
+                                               type="text"
+                                               placeholder="Enter {{condition.Name}}" />
+                                        <div class="help-block" ng-messages="addSampleForm[condition.Name].$error" ng-show="addSampleForm[condition.Name].$touched">
+                                            <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                        </div>
+                                        <div class="formElementInfo" ng-show="condition.Name == 'Stream Conditions'">("Calm, Ripple, Waves, or Whitecaps")</div>
+                                        <div class="formElementInfo" ng-show="condition.Name == 'Stream Flow'">("High, Normal, Low, or NA")</div>
+                                        <div class="formElementInfo" ng-show="condition.Name == 'Water Color'">("Normal or Abnormal")</div>
+                                        <div class="formElementInfo" ng-show="condition.Name == 'Water Color Description'">(ex. "Clear, Brown, Green, etc")</div>
+                                        <div class="formElementInfo" ng-show="condition.Name == 'Weather Conditions'">(ex. "Sunny or Partly Cloudy or Overcast or Fog/Haze or Drizzle or Intermittent Rain or Rain or Snow")</div>
+                                        <div class="formElementInfo" ng-show="condition.Name == 'Rainfall'">(Total in mm the week prior to sampling; ex. 2.3)</div>
+                                        <div class="formElementInfo" ng-show="condition.Name == 'Tide State'">("High, Outgoing, Incoming, Low, NA")</div>
+                                        <div class="formElementInfo" ng-show="condition.Name == 'Rainfall Within 48 Hours'">(Total in mm 48 hours prior to sampling; ex. 1.2)</div>
+                                        <div class="formElementInfo" ng-show="condition.Name == 'Other Conditions'">(ex. "Sea Nettles or Dead Fish or Dead Crabs or SAV or Oil Slick or Ice or Debris or Erosion or Foam or Bubbles or Odor")</div>
+                                    </div>
+                                    <div class="form-group" ng-if="condition.isCategorical">
+                                        <selectpicker name="{{condition.Name}}" data-array="condition.Categories" data-model="condition.Value" title=""></selectpicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="benthicMethod=='iwl'">
+                            <div class="verticalSpace20"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4 class="bright">Collection Times</h4>
+                                    <div ng-repeat="condition in conditions | filter: collectionTimeFilter">
+                                        <label>Net {{$index + 1}} (seconds)</label>
+                                        <div class="form-group" ng-if="condition.isCategorical">
+                                            <selectpicker name="{{condition.Name}}" data-array="condition.Categories" data-model="condition.Value" title=""></selectpicker>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4 class="bright">Type of Sampling</h4>
+                                    <div class="form-group" ng-class="{ 'has-error': !addSampleForm.$pristine && addSampleForm.BottomType.$error.required }">
+                                        <div ng-repeat="condition in conditions" ng-if="condition.Code == 'BT'">
+                                            <!--<div class="clearfix" ng-if="($index) % 3 == 0"></div>-->
+                                                <label>{{condition.Name}}</label>
+                                                <div class="form-group" >
+                                                    <selectpicker name="{{condition.Name}}" data-array="condition.Categories" data-model="condition.Value"title=""></selectpicker>
+                                                </div>
+                                        </div>          
+                                        <span class="help-block" ng-show="addSampleForm.BottomType.$error.required && !addSampleForm.$pristine">Must Select a Group</span>
+                                        <div class="help-block" ng-messages="addSampleForm.BottomType.$error.required" ng-show="addSampleForm.BottomType.$touched">
+                                            <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                        </div>                          
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="verticalSpace20"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="bright">Macroinvertebrate Tallies</h4>
+                                <p class="success">Use the fields in this section to input benthic macroinvertebrate counts for this sampling event</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="danger">{{noParameters}}</div>
+                            <div ng-repeat="prm in parameters | filter: bottomTypeFilter | orderBy:orderByMethod">
+                                <div class="col-md-6">
+                                    <label>{{prm.Name}}</label>
+                                    <div class="form-group " ng-class="{ 'has-error': addSampleForm[prm.Code + ind +'_Value'].$touched && addSampleForm[prm.Code + ind +'_Value'].$invalid }">
+                                        <input ng-model="newSamples[prm.Code]['Value']"
+                                               name="{{prm.Code}}_Value"
+                                               class="form-control"
+                                               type="text" ng-change="calculateMetrics()"
+                                               placeholder="Enter {{prm.Name}}"
+                                               ng-pattern="/^[0-9]*$/" />
+                                        <div class="help-block" ng-messages="addSampleForm[prm.Code + ind +'_Value'].$error" ng-show="addSampleForm[prm.Code + ind +'_Value'].$touched">
+                                            <p ng-message="pattern">Must be a valid integer (ex. 1,22,etc.).</p>
+                                            <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-repeat="condition in conditions | filter: conditionMethodFilter" ng-if="condition.Code === 'DOO'">
+                                <div class="col-md-6">
+                                    <label>{{condition.Name}}</label>
+                                    <div class="form-group" ng-if="!condition.isCategorical" ng-class="{ 'has-error': addSampleForm[condition.Name].$touched && addSampleForm[condition.Name].$invalid }">
+                                        <input ng-model="condition.Value"
+                                               name="{{condition.Name}}"
+                                               class="form-control"
+                                               type="text"
+                                               placeholder="Enter {{condition.Name}}" />
+                                        <div class="help-block" ng-messages="addSampleForm[condition.Name].$error" ng-show="addSampleForm[condition.Name].$touched">
+                                            <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="bright">Metrics</h4>
+                                <p class="success">
+                                    These metric calcuations will update automatically as the user
+                                    inputs counts in the 'Macroinvetebrate Tallies' section of this form.
+                                </p>
+                                <p ng-show="showIwlMetrics==false && showAllarmMetrics==false" class="text-warning">
+                                    Please enter at least one value in the 'Macroinvertebrate Tallies' section to calculate metrics
+                                </p>
+                            </div>
+                        </div>
+
+                        <div ng-if="benthicMethod=='allarm' && showAllarmMetrics">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Group I Index Value</label><div class="clearfix"></div>
+                                    <span class="success">{{allarmMetrics.grp1Total.toFixed(2)}}</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Group II Index Value</label><div class="clearfix"></div>
+                                    <span class="success">{{allarmMetrics.grp2Total.toFixed(2)}}</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Group III Index Value</label><div class="clearfix"></div>
+                                    <span class="success">{{allarmMetrics.grp3Total.toFixed(2)}}</span>
+                                </div>
+                            </div>
+
+                            <div class="verticalSpace10"></div>
+                            <div class="row">
+                                <div class="col-md-offset-4 col-md-4">
+                                    <label>Water Quality Score</label><div class="clearfix"></div>
+                                    <span class="success">{{allarmMetrics.wqs.toFixed(2)}}</span>
+                                    <span>: Water quality conditions are </span>
+                                    <span ng-class="{'gradeFair':isFair,'gradeGood':isGood,'gradePoor':isPoor}">{{allarmMetrics.wqsGrade}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-if="benthicMethod=='iwl' && showIwlMetrics && bottomType=='Rocky'">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Mayflies + Stoneflies + Most Caddisflies</label><div class="clearfix"></div>
+                                    <span class="success">{{iwlMetrics.metric1.toFixed(3)}}</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Common Netspinners</label><div class="clearfix"></div>
+                                    <span class="success">{{iwlMetrics.metric2.toFixed(3)}}</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Lunged Snails</label><div class="clearfix"></div>
+                                    <span class="success">{{iwlMetrics.metric3.toFixed(3)}}</span>
+                                </div>
+                            </div>
+                            <div class="verticalSpace10"></div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Beetles</label><div class="clearfix"></div>
+                                    <span class="success">{{iwlMetrics.metric4.toFixed(3)}}</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>% Tolerant</label><div class="clearfix"></div>
+                                    <span class="success">{{iwlMetrics.metric5.toFixed(3)}}</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>% Non-Insects</label><div class="clearfix"></div>
+                                    <span class="success">{{iwlMetrics.metric6.toFixed(3)}}</span>
+                                </div>
+                            </div>
+                            <div class="verticalSpace10"></div>
+                            <div class="row">
+                                <div class="col-md-offset-4 col-md-4">
+                                    <label>Multimetric Index Score</label><div class="clearfix"></div>
+                                    <span class="success">{{iwlMetrics.mis.toFixed(0)}}</span>
+                                    <span>: Ecological condition </span>
+                                    <span ng-class="{'gradeFair':isFair,'gradeGood':isGood,'gradePoor':isPoor}">{{iwlMetrics.ecologicalCondition}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="benthicMethod=='iwl' && showIwlMetrics && bottomType=='Muddy'">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Mayflies + Stoneflies + Most Caddisflies</label><div class="clearfix"></div>
+                                    <span class="success">{{iwlMetrics.metric1.toFixed(3)}}</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Gomphidae</label><div class="clearfix"></div>
+                                    <span class="success">{{iwlMetrics.metric2.toFixed(3)}}</span>
+                                </div>
+                            </div>
+                            <div class="verticalSpace10"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>% Tolerant</label><div class="clearfix"></div>
+                                    <span class="success">{{iwlMetrics.metric3.toFixed(3)}}</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>% Non-Insects</label><div class="clearfix"></div>
+                                    <span class="success">{{iwlMetrics.metric4.toFixed(3)}}</span>
+                                </div>
+                            </div>
+                            <div class="verticalSpace10"></div>
+                            <div class="row">
+                                <div class="col-md-offset-4 col-md-4">
+                                    <label>Multimetric Index Score</label><div class="clearfix"></div>
+                                    <span class="success">{{iwlMetrics.mis.toFixed(0)}}</span>
+                                    <span>: Ecological condition </span>
+                                    <span ng-class="{'gradeFair':isFair,'gradeGood':isGood,'gradePoor':isPoor}">{{iwlMetrics.ecologicalCondition}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="verticalSpace20"></div>
+
+
+                        <div class="row bright">
+                            <div class="col-md-12">
+                                <h4>Volunteer Hours</h4>
+                            </div>
+                        </div>
+                        <div ng-repeat="monitor in monitors track by $index">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <selectpicker class="selectpicker" name="{{'monitor' + $index + 'Name'}}" data-array="groupUsersList" data-model="monitor.Id" title="Choose Monitor"></selectpicker>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group " ng-class="{ 'has-error': addSampleForm['monitor' + $index + 'Hours'].$touched && addSampleForm['monitor' + $index + 'Hours'].$invalid }">
+                                        <input ng-model="monitor.Hours"
+                                               name="{{'monitor' + $index + 'Hours'}}"
+                                               class="form-control"
+                                               type="text"
+                                               placeholder="Enter Monitoring Hours for selected User"
+                                               ng-pattern="/^-?[0-9]\d*(\.\d+)?$/" step="0.00001">
+                                        <div class="help-block" ng-messages="addSampleForm['monitor' + $index + 'Hours'].$error" ng-show="addSampleForm['monitor' + $index + 'Hours'].$touched">
+                                            <p ng-message="pattern">Must be a valid decimal (ex. 1, -76.0646, 0.2353).</p>
+                                            <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="verticalSpace20"></div>
+                        <div class="form-group" ng-class="{ 'has-error': addSampleForm.Comments.$touched && addSampleForm.Comments.$invalid }">
+                            <label>Comments</label>
+                            <textarea name="Comments" rows="5" class="form-control" placeholder="Enter Comments"
+                                      ng-model="newEvent.Comments"
+                                      ng-minlength="1"></textarea>
+                            <div class="help-block" ng-messages="addSampleForm.Comments.$error" ng-show="addSampleForm.Comments.$touched">
+                                <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success " ng-click="addSamples(addSampleForm)">
+                            <span class="glyphicon glyphicon-check " aria-hidden="true"></span> Save
+                        </button>
+
+                        <!--<pre>{{newSamples | json}}</pre>-->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+{
+  "name": "ASP.NET",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "3.3.5",
+    "bootstrap-select": "1.11.2",
+    "jquery": "2.1.4",
+    "Microsoft.jQuery.Unobtrusive.Validation": "~3.2.3",
+    "modernizr": "2.6.2",
+    "respond": "1.4.2",
+    "angular": "1.5.8",
+    "angular-ui-router": "0.3.2",
+    "angular-route": "1.5.8",
+    "angular-resource": "1.5.8",
+    "angular-messages": "1.6.0",
+    "angular-http-batcher": "1.12.0",
+    "angular-utils-pagination": "0.11.1",
+    "angular-ui-grid": "4.0.4",
+    "ng-file-upload": "^12.2.13",
+    "angular-sanitize": "1.5.8",
+    "angular-touch": "1.6.9",
+    "angular-animate": "1.6.9",
+    "d3-to-image": "^1.0.0",
+    "ng-csv": "0.3.6",
+    "moment-picker": "0.9.10",
+    "ui-leaflet": "2.0.0",
+    "leaflet": "1.3.4",
+    "olingo-odatajs": "4.0.0",
+    "toastr": "2.1.3",
+    "font-awesome": "4.7.0",
+    "angular-nvd3": "1.0.9",
+    "angular-file-saver": "1.1.3",
+    "saveSvgAsPng": "*"
+  },
+  "resolutions": {
+    "angular": ">=1.2.x",
+    "leaflet": "1.3.4"
+  }
+}

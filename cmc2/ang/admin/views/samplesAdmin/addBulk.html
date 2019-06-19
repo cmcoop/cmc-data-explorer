@@ -1,0 +1,85 @@
+﻿<div ng-controller="samplesAddBulkController as ctrl" ng-init="initialize()">
+    <div class="row">
+        <div class="col-md-12">
+            <p ng-show="ctrl.isCoordinator">
+                Welcome to the bulk data upload page! Here you can upload a spreadsheet file (.csv) containing data from {{ctrl.userGroup}}
+                for multiple sampling locations and dates. The file needs to adhere to a very specific file format, a template for which can be downloaded
+                <a class="success" href="../../../../Documents/Templates/cmcBulkSamplesTemplate.csv">here</a>.
+                Additional details can be found in the <a class="success" href="../../../../Documents/UserGuide.pdf">Data Explorer User’s Manual</a>.
+            </p>
+            <p ng-show="!ctrl.isCoordinator">
+                Welcome to the bulk data upload page! Here you can upload a spreadsheet file (.csv) containing data for multiple sampling locations and dates for any monitoring group in the Data Explorer. 
+                The file needs to adhere to a very specific file format, a template for which can be downloaded
+                <a class="success" href="../../../../Documents/Templates/cmcBulkSamplesTemplate.csv">here</a>.
+                Additional details can be found in the <a class="success" href="../../../../Documents/UserGuide.pdf">Data Explorer User’s Manual</a>.
+            </p>
+            <form name="addBulkSampleForm">
+                <label ng-show="ctrl.errors.length==0||ctrl.errors.length>0">Errors</label>
+                <p  ng-show="ctrl.errors.length>0">
+                    The file you submitted has not been uploaded. The file has the following associated errors. This file will not be uploaded until these errors are fixed. Please fix the errors in the file and reupload.
+                </p>
+                <p ng-show="ctrl.errors.length==0" class="green">
+                    There are no errors detected in the file. 
+                </p>
+                
+                <div class="form-validation-group errorList" ng-show="ctrl.errors.length>0">                    
+                    <ul>
+                        <li ng-repeat="error in ctrl.errors">{{error.value}}</li>
+                    </ul>
+                </div>
+                <label ng-show="ctrl.warnings.length>0">Warnings</label>
+                <p ng-show="ctrl.warnings.length>0 && ctrl.errors==0">
+                    The file you submitted has not been uploaded. The file has the following associated warnings. Please double check these warnings and click the "Proceed with Upload" button at the bottom of this form 
+                    if these warnings are acceptable; otherwise, 
+                    click the "Cancel" button and reupload the file with any additional changes.
+                </p>
+                <p ng-show="ctrl.warnings.length>0 && ctrl.errors.length>0">
+                    The file you submitted has not been uploaded. The file has the following associated warnings along with the errors listed above. A file is allowed to be uploaded with associated warnings, 
+                    but we recommend double checking these warnings as you fix the errors listed above. 
+                </p>
+                <div class="alert-warning" ng-show="ctrl.warnings.length>0">
+                    <ul>
+                        <li ng-repeat="warn in ctrl.warnings">{{warn.value}}</li>
+                    </ul>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': !addBulkSampleForm.$pristine }">
+                    <label>File</label>
+                    <input type="file" ngf-select ng-model="ctrl.file" name="file" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+                    <span class="help-block" ng-show="addBulkSampleForm.file.$error.maxSize">
+                        File too large
+                        {{errorFile.size / 1000000|number:1}}MB: max 2M
+                    </span>
+                    <span class="help-block" ng-show="addBulkSampleForm.file.$error.required && !addBulkSampleForm.$pristine && !addBulkSampleForm.file.$error.maxSize">Must Select a File</span>
+                    <div class="help-block" ng-messages="addBulkSampleForm.file.$error.required" ng-show="addBulkSampleForm.file.$touched">
+                        <div ng-messages-include="../../ang/admin/helpers/validationMessages.html"></div>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="false">
+                    <input type="checkbox" name="hasWarning" ng-model="ctrl.hasWarning">
+                </div>
+
+                <button type="button" class="btn btn-success" ng-click="ctrl.uploadBulk()" ng-show="!ctrl.uploading && !ctrl.hasWarning" ng-disabled="ctrl.file == null">
+                    <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Save
+                </button>
+                <button type="button" class="btn btn-success" ng-show="ctrl.uploading" ng-disabled="ctrl.uploading">
+                    <span class="fa fa-spinner fa-spin" aria-hidden="true"></span> Uploading
+                </button>
+                <button type="button" class="btn btn-success" ng-click="ctrl.uploadBulk()" ng-show="!ctrl.uploading && ctrl.hasWarning" ng-disabled="ctrl.file == null">
+                    <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Proceed with Upload
+                </button>
+                <button type="button" class="btn btn-danger" ng-click="ctrl.reloadRoute()">
+                    <span class="fa fa-times" aria-hidden="true"></span> Cancel
+                </button>
+                <div class="verticalSpace20"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="bright">Samples bulk upload file format: </p>
+                        <a href="../Documents/Templates/cmcBulkSamplesTemplate.csv" role="button" class="btn btn-success">
+                            <span class="fa fa-download" aria-hidden="true"></span> Bulk Samples Template
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

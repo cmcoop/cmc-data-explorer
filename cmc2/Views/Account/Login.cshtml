@@ -1,0 +1,78 @@
+﻿@using cmc2.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Welcome to the Chesapeake Monitoring Explorer!";
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="verticalSpace20"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-5">
+            <section id="loginForm">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    
+                    <div class="form-group">
+                        <!--@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })-->
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <!--@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })-->
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group" id="loginCheckbox">
+                        <div class="">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="">
+                            <input type="submit" value="Log in" class="btn btn-lg btn-block btn-success btnLogin" />
+                        </div>
+                        <div class="">
+                            <a href="@Url.Action("ForgotPassword", "Account")" class="btn btn-warning btn-lg btn-block btnLogin">
+                                Forgot Password?
+                            </a>
+                            <!--@Html.ActionLink("Forgot your password?", "ForgotPassword", new { @class = "btn" })-->
+                        </div>
+                    </div>
+                }
+            </section>
+        </div>
+        <div class="col-sm-6 col-sm-offset-1">
+            <div >
+                <h4>Do you wish to register for an account?</h4>
+            </div>
+            <div>
+                <a href="@Url.Action("Register", "Account")" class="btn btn-success btn-lg btn-block btnLogin">
+                    Register
+                </a>
+                <!--@Html.ActionLink("Register as a new user", "Register", new { @class = "btn btn-lg btn block btnLogin" })-->
+            </div>
+        </div>
+       
+        
+        <!--<div class="col-md-4">
+            <section id="socialLoginForm">
+                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+            </section>
+        </div>-->
+    </div>
+    
+</div>

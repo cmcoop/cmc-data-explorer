@@ -1,0 +1,21 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div ng-app="cmcApp">
+    <div ui-view></div>
+</div>
+@section viewScripts{
+    @Scripts.Render("~/Scripts/angularModule")
+    @Scripts.Render("~/Scripts/allAngularCustom")
+   
+    <script>
+        $('[data-toggle="tooltip"]').tooltip();
+        angular.module("cmcApp").value("userName", "@ViewBag.Name");
+        angular.module("cmcApp").value("userRole", "@ViewBag.Role");
+        angular.module("cmcApp").value("userId", "@ViewBag.UserId");
+        angular.module("cmcApp").value("subTitle", "@ViewBag.SubTitle");
+        angular.module("cmcApp").value("userGroup", "@ViewBag.Group");
+        angular.module("cmcApp").value("userGroupId", "@ViewBag.GroupId");
+    </script>
+ }

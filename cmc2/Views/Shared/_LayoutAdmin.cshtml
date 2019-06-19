@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chesapeake Monitoring Cooperative</title>
+    <!--<link href="@Url.Content("~/Content/allStyles.css")" rel="stylesheet" type="text/css" />-->
+    @Styles.Render("~/Content/css")
+    <link href="@Url.Content("~/Content/fonts/css/font-awesome.css")" rel="stylesheet" type="text/css" />
+    
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-default  navbar-fixed-top" bs-active-link>
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" rel="home" href=@Url.Action("Index", "Home")>
+                    <img src="~/Images/Logo/CMC_logo_highres.png">
+                </a>
+                <!--<a href="#" class="navbar-left menuLogo"><img src="~/Images/Logo/CMC_logo_highres.png"></a>-->
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Admin", "Index", "Admin")</li>
+                    <li id="menuData" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="Data">
+                            Data
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Content("~/Admin/#/samplesAdmin/index")">Upload Water Quality</a></li>
+                            <li><a href="@Url.Content("~/Admin/#/samplesAdmin/list")">Edit & Review Water Quality</a></li>
+                            <!--<li><a href="@Url.Content("~/Admin/#/benthicSamplesAdmin/add")">Upload Macroinvertebrates</a></li>-->
+                            <li><a href="@Url.Content("~/Admin/#/benthicSamplesAdmin/index")">Upload Macroinvertebrates</a></li>
+                            <li><a href="@Url.Content("~/Admin/#/benthicSamplesAdmin/edit")">Edit & Review Macroinvertebrates</a></li>
+                            <!--<li><a href="#">Data Interactions</a></li>-->
+                            <li><a href="@Url.Content("~/Admin/#/stationsSubmit/add")">Submit Station</a></li>
+                        </ul>
+                    </li>
+                    <!--<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Documents" | 
+                        ViewContext.RouteData.Values["Action"].ToString() == "Documents" ? "active" : "")">@Html.ActionLink("Documents", "Documents", "Admin")</li>-->
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "userProfile" ? "active" : "")">@Html.ActionLink("Profile", "userProfile", "Admin")</li>
+             
+                    @if (User.IsInRole("Admin") | User.IsInRole("Officer") | User.IsInRole("Member") | User.IsInRole("Coordinator") )
+                        
+                    { 
+                        <li id="menuManage" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="Data">
+                                Manage
+                                <span class="caret"></span>
+                            </a>
+                            <ul  class="dropdown-menu">
+                                <li><a href="@Url.Action("Index", "UsersAdmin")">Manage Users</a></li>
+                                <!--<li><a href="@Url.Content("~/Admin/#/usersAdmin/list")">Manage Users</a></li>-->
+                                <li><a href="@Url.Content("~/Admin/#/groupsAdmin/list")">Manage Groups</a></li>
+                                @if (User.IsInRole("Admin") | User.IsInRole("Officer") | User.IsInRole("Member"))
+                                {
+                                    <li><a href="@Url.Content("~/Admin/#/parametersAdmin/list")">Manage Parameters</a></li>
+                                    <li><a href="@Url.Content("~/Admin/#/calibrationParametersAdmin/list")">Manage Calibration Parameters</a></li>
+                                    <li><a href="@Url.Content("~/Admin/#/labsAdmin/list")">Manage Labs</a></li>
+                                }
+                                <li><a href="@Url.Content("~/Admin/#/stationsAdmin/list")">Manage Stations</a></li>                                
+                                <!--<li><a href="@Url.Content("~/Admin/#/conditionsAdmin/list")">Manage Conditions</a></li>-->
+                            </ul>
+                        </li>
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content" >
+        @RenderBody()
+        
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Chesapeake Monitoring Cooperative</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/Scripts/allJsLibrariesBundle")
+
+    @RenderSection("scripts", required: false)
+    @RenderSection("viewScripts", required: false)
+    
+</body>
+</html>

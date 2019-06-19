@@ -1,0 +1,23 @@
+﻿<div class="modal-header">
+    <h4 class="modal-title">Warnings</h4>
+</div>
+<div class="modal-body" novalidate>  
+    <p>During the bulk publish operation, we reached a value that is out of range. The value is allowed to be published with associated warnings,
+            but we recommend double checking these warnings. If you would like to proceed with the bulk publish, 
+            please click "Proceed with Publish" button below. Otherwise, 
+            click the "Cancel" button to stop publishing the selected events and return to the edit form. </p>
+    <div class="form-validation-group errorList" >
+        <ul>
+            <li ng-repeat="warn in warnings" >The value submitted for {{warn.name}} was {{warn.value}} {{warn.units}} on {{warn.dt.substring(0,10)}} {{warn.dt.substring(11,19)}}. 
+            This is {{warn.type}} the range check limit of {{warn.limit}} {{warn.units}} for {{warn.name}}.</li>
+        </ul>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-success" ng-click="confirmPublishWarnings()" data-dismiss="modal">
+        <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Proceed with Publish
+    </button>
+    <button type="button" class="btn btn-danger" ng-click="closePublishModal()" data-dismiss="modal">
+        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Cancel
+    </button>
+</div>
