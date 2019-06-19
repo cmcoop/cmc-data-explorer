@@ -969,7 +969,6 @@
     <Content Include="Documents\submissionsPilot\2016.zip" />
     <Content Include="Documents\UserGuide.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <Content Include="README.md" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\allJsLibraries.js" />
     <Content Include="Scripts\bootstrap.js" />
