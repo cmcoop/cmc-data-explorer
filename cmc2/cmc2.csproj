@@ -1000,6 +1000,7 @@
     <Content Include="Scripts\UserAdmin\editUser.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="ang\admin\views\groupsAdmin\list.html" />
+    <Content Include="test.txt" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
